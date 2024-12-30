@@ -31,13 +31,12 @@
 
 // export default AuctionCard;
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { calculateTimeLeft } from "../utils/timeUtils"; // External utility function
 
 function AuctionCard({ auction }) {
   const [timeLeft, setTimeLeft] = useState("00:00:00");
-
   // Memoized function to calculate time left
   const calcTimeLeftMemo = useCallback(() => {
     if (auction && auction.auctionEndTime) {
@@ -76,7 +75,7 @@ function AuctionCard({ auction }) {
 
       {/* Current Bid */}
       <div className="flex items-center h-10 bg-red-300">
-        <h3>Current Bid: ${auction.currentHighestBid}</h3>
+        <h3>Current Bid: ${auction.currentHighestBid?.amount}</h3>
       </div>
 
       {/* View Auction Link */}

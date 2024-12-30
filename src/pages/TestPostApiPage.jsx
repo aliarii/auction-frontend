@@ -7,12 +7,15 @@ import {
   getAuctionCategories,
 } from "../store/slices/categorySlice"; // Example POST actions for categories
 import { createProduct, getProducts } from "../store/slices/productSlice"; // Example POST action for product
+import { checkAuth } from "../store/slices/authSlice";
+import { createBid } from "../store/slices/bidSlice";
 
 function TestPostApiPage() {
   // State variables to hold the data
   const { products, product } = useSelector((state) => state.product);
   const { auctions, auction } = useSelector((state) => state.auction);
-  const { users, user } = useSelector((state) => state.user);
+  // const { users, user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
   const { productCategories, productCategory } = useSelector(
     (state) => state.category
   );
@@ -21,6 +24,12 @@ function TestPostApiPage() {
   );
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (!products) dispatch(getProducts());
+    if (!auctionCategories) dispatch(getAuctionCategories());
+    if (!user) dispatch(checkAuth());
+  }, [dispatch, products, auctionCategories]);
+
   // Local state for POST request payloads
   const [productData, setProductData] = useState({
     name: "",
@@ -28,6 +37,11 @@ function TestPostApiPage() {
     description: "",
     category: null, // Category ID
     image: "",
+  });
+  const [bidData, setBidData] = useState({
+    auctionId: "",
+    user: null,
+    amount: "",
   });
   const [auctionData, setAuctionData] = useState({
     title: "",
@@ -50,15 +64,15 @@ function TestPostApiPage() {
     image: "",
   });
 
-  useEffect(() => {
-    if (!products) dispatch(getProducts());
-    if (!auctionCategories) dispatch(getAuctionCategories());
-  }, [dispatch, products, auctionCategories]);
-
   // POST request handlers
   const handleProductSubmit = (e) => {
     e.preventDefault();
     dispatch(createProduct(productData));
+  };
+  const handleBidSubmit = (e) => {
+    e.preventDefault();
+    bidData.user = user;
+    dispatch(createBid(bidData));
   };
 
   const handleAuctionSubmit = (e) => {
@@ -145,6 +159,42 @@ function TestPostApiPage() {
               className="w-full bg-indigo-600 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-indigo-700"
             >
               Add Product
+            </button>
+          </form>
+        </section>
+
+        {/* Product POST Form */}
+        <section>
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+            Create Bid
+          </h2>
+          <form onSubmit={handleBidSubmit} className="space-y-4">
+            <input
+              type="text"
+              name="name"
+              value={bidData.auctionId}
+              onChange={(e) =>
+                setBidData({ ...bidData, auctionId: e.target.value })
+              }
+              placeholder="Auction Id"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              type="number"
+              name="quantity"
+              value={bidData.amount}
+              onChange={(e) =>
+                setBidData({ ...bidData, amount: +e.target.value })
+              }
+              placeholder="Amount"
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+
+            <button
+              type="submit"
+              className="w-full bg-indigo-600 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-indigo-700"
+            >
+              Create Bid
             </button>
           </form>
         </section>
