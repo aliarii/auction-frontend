@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
-import { getAuctionById } from "../store/slices/auctionSlice";
 import { getBidById } from "../store/slices/bidSlice";
 const socket = io("http://localhost:5000");
 
@@ -15,21 +14,6 @@ function AuctionHighestBid() {
       dispatch(getBidById(auction.currentHighestBid));
     }
   }, [auction, bid, dispatch]);
-
-  //   useEffect(() => {
-  //     socket.emit("joinAuction", auction._id);
-
-  //     socket.on("updateBid", (newBid) => {
-  //       console.log("Yeni teklif alındı:", newBid);
-  //       if (newBid.auctionId === auction._id) {
-  //         dispatch(getBidById(newBid.bid._id));
-  //       }
-  //     });
-
-  //     return () => {
-  //       socket.off("updateBid");
-  //     };
-  //   }, [auction, dispatch]);
 
   useEffect(() => {
     socket.on("updateBid", (newBid) => {

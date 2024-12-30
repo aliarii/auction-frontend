@@ -17,10 +17,7 @@ function AuctionPreviousBids() {
   }, [auction, bids, dispatch]);
 
   useEffect(() => {
-    socket.emit("joinAuction", auction._id);
-
     socket.on("updateBid", (newBid) => {
-      console.log("Yeni teklif alındı:", newBid);
       if (newBid.auctionId === auction._id) {
         dispatch(getBidsByAuction(auction._id));
       }
