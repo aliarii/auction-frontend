@@ -7,15 +7,14 @@ import {
   getAuctionCategories,
 } from "../store/slices/categorySlice"; // Example POST actions for categories
 import { createProduct, getProducts } from "../store/slices/productSlice"; // Example POST action for product
-import { checkAuth } from "../store/slices/authSlice";
+import { validateToken } from "../store/slices/authSlice";
 import { createBid } from "../store/slices/bidSlice";
 
 function TestPostApiPage() {
   // State variables to hold the data
   const { products, product } = useSelector((state) => state.product);
   const { auctions, auction } = useSelector((state) => state.auction);
-  // const { users, user } = useSelector((state) => state.user);
-  const { user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.user);
   const { productCategories, productCategory } = useSelector(
     (state) => state.category
   );
@@ -23,12 +22,12 @@ function TestPostApiPage() {
     (state) => state.category
   );
   const dispatch = useDispatch();
-
+  const jwt = localStorage.getItem("token");
   useEffect(() => {
     if (!products) dispatch(getProducts());
     if (!auctionCategories) dispatch(getAuctionCategories());
-    if (!user) dispatch(checkAuth());
-  }, [dispatch, products, auctionCategories]);
+    if (!user) dispatch(validateToken(jwt));
+  }, [dispatch, products, auctionCategories, user, jwt]);
 
   // Local state for POST request payloads
   const [productData, setProductData] = useState({

@@ -1,36 +1,3 @@
-// import React from "react";
-// import { Link, useNavigate } from "react-router-dom";
-
-// function AuctionCard() {
-//   const navigate = useNavigate();
-
-//   const handleNavigate = (target) => {
-//     navigate("/auction");
-//   };
-
-//   return (
-//     <div className="flex flex-col h-64 min-w-48 w-48 gap-2 p-2 rounded-lg bg-dark-3">
-//       <div className="h-28 rounded-md bg-red-300 relative">
-//         <h1 className="absolute flex justify-center items-center right-1 bottom-1 w-20 rounded-full bg-green-300">
-//           00:00:00
-//         </h1>
-//         <div className="h-full w-full rounded-md bg-blue-200" />
-//       </div>
-//       <div className="flex items-center h-8  bg-blue-300">
-//         <h1>asd</h1>
-//       </div>
-//       <div className="flex items-center h-10 bg-red-300">
-//         <h1>asd</h1>
-//       </div>
-//       <div className="flex justify-center items-center h-8 rounded-md bg-red-300 cursor-pointer">
-//         <Link to={"/auction"}>View Auction</Link>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default AuctionCard;
-
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { calculateTimeLeft } from "../utils/timeUtils"; // External utility function
@@ -59,10 +26,10 @@ function AuctionCard({ auction }) {
   }, [auction, calcTimeLeftMemo]);
 
   return (
-    <div className="flex flex-col h-64 min-w-48 w-48 gap-2 p-2 rounded-lg bg-dark-3">
+    <div className="flex flex-col h-full min-w-48 w-48 gap-2 p-2 rounded-lg bg-dark-3">
       {/* Auction Time Left */}
       <div className="h-28 rounded-md bg-red-300 relative">
-        <h1 className="absolute flex justify-center items-center right-1 bottom-1 w-20 rounded-full bg-green-300">
+        <h1 className="absolute flex justify-center items-center right-1 bottom-1 w-24 text-dark-7 rounded-full bg-green-300">
           {timeLeft}
         </h1>
         <div className="h-full w-full rounded-md bg-blue-200" />

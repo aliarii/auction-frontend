@@ -32,16 +32,25 @@ const LoginPage = () => {
       else setPasswordError("Enter Password");
     } else {
       try {
-        dispatch(loginUser({ email, password }))
-          .then((data) =>
-            login({
-              user: data?.payload?.data?.user,
-              token: data?.payload?.data?.token,
-            })
-          )
-          .then(() => {
-            return navigate("/");
-          });
+        const result = await dispatch(loginUser({ email, password }));
+        if (!result.payload.success) return;
+
+        await login({
+          user: result.payload.data.user,
+          token: result.payload.data.token,
+        });
+        // console.log(localStorage.getItem("token"));
+        // navigate("/");
+        // navigate("/");
+        // .then((data) => {
+        //   return login({
+        //     user: data?.payload?.data?.user,
+        //     token: data?.payload?.data?.token,
+        //   });
+        // })
+        // .then(() => {
+        //   return navigate("/");
+        // });
       } catch (error) {
         console.error(error);
         setErrorMessage(error.response.data.error);

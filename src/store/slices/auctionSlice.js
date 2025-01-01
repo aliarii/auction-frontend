@@ -4,7 +4,7 @@ import { api } from "../../Config/api";
 const initialState = {
     auctions: null,
     auction: null,
-    isLoading: true,
+    isLoading: false,
     error: null,
 };
 export const createAuction = createAsyncThunk(
@@ -79,9 +79,7 @@ export const getAuctionsByCategory = createAsyncThunk(
 export const getAuctionsByStatus = createAsyncThunk(
     "auction/auctionsByStatus",
     async (statuses) => {
-
         const response = await api.get(`/api/auctions/status?status=${statuses}`);
-
 
         return response.data;
     }

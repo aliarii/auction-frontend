@@ -3,8 +3,9 @@ import { api } from "../../Config/api";
 
 const initialState = {
     user: null,
+    token: null,
     isAuthenticated: false,
-    isLoading: true,
+    isLoading: false,
     error: null,
 };
 
@@ -44,9 +45,10 @@ export const logoutUser = createAsyncThunk(
     "/auth/logout",
 
     async () => {
+        console.log("logOut 3");
+
         const response = await api.post(
             "/api/auth/logout",
-            {},
             {
                 withCredentials: true,
             }
@@ -56,17 +58,16 @@ export const logoutUser = createAsyncThunk(
     }
 );
 
-export const checkAuth = createAsyncThunk(
-    "/auth/checkauth",
+export const validateToken = createAsyncThunk(
+    "/auth/validateToken",
 
-    async () => {
+    async (jwt) => {
 
         const response = await api.get(
-            "/api/auth/check-auth",
+            "/api/auth/validate-token",
             {
-                withCredentials: true,
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    Authorization: `Bearer ${jwt}`,
                 },
             }
         );
@@ -86,46 +87,48 @@ const authSlice = createSlice({
             })
             .addCase(registerUser.fulfilled, (state) => {
                 state.isLoading = false;
-                state.user = null;
                 state.isAuthenticated = false;
             })
             .addCase(registerUser.rejected, (state) => {
                 state.isLoading = false;
-                state.user = null;
                 state.isAuthenticated = false;
             })
             .addCase(loginUser.pending, (state) => {
                 state.isLoading = true;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
-
                 state.isLoading = false;
-                state.user = action.payload.success ? action.payload.data.user : null;
                 state.isAuthenticated = action.payload.success;
+                state.token = action.payload.success ? action.payload.data.token : null;
+                state.user = action.payload.success ? action.payload.data.user : null;
             })
             .addCase(loginUser.rejected, (state) => {
                 state.isLoading = false;
-                state.user = null;
                 state.isAuthenticated = false;
+                state.token = null;
+                state.user = null;
             })
-            .addCase(checkAuth.pending, (state) => {
+            .addCase(validateToken.pending, (state) => {
                 state.isLoading = true;
             })
-            .addCase(checkAuth.fulfilled, (state, action) => {
+            .addCase(validateToken.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.user = action.payload.success ? action.payload.data.user : null;
                 state.isAuthenticated = action.payload.success;
+                state.user = action.payload.success ? action.payload.data.user : null;
+                state.token = action.payload.success ? action.payload.data.token : null;
             })
-            .addCase(checkAuth.rejected, (state) => {
+            .addCase(validateToken.rejected, (state) => {
                 state.isLoading = false;
-                state.user = null;
                 state.isAuthenticated = false;
+                state.token = null;
+                state.user = null;
             })
             .addCase(logoutUser.fulfilled, (state) => {
                 state.isLoading = false;
-                state.user = null;
                 state.isAuthenticated = false;
-            });
+                state.token = null;
+                state.user = null;
+            })
     },
 });
 

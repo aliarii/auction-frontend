@@ -4,7 +4,7 @@ import { api } from "../../Config/api";
 const initialState = {
     bids: null,
     bid: null,
-    isLoading: true,
+    isLoading: false,
     error: null,
 };
 
@@ -43,14 +43,17 @@ const bidSlice = createSlice({
 
             .addCase(createBid.pending, (state) => {
                 state.isLoading = true;
+                state.error = null;
             })
             .addCase(createBid.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.bid = action.payload.success ? action.payload.data.bid : null;
+                state.error = action.payload.success ? null : action.payload.error;
             })
-            .addCase(createBid.rejected, (state) => {
+            .addCase(createBid.rejected, (state, action) => {
                 state.isLoading = false;
-                state.bid = null;
+                // state.bid = null;
+                state.error = action.error;
             })
             .addCase(getBidById.pending, (state) => {
                 state.isLoading = true;

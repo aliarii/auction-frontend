@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../store/slices/productSlice";
 import { getAuctions } from "../store/slices/auctionSlice";
-import { getUsers } from "../store/slices/userSlice";
 import {
   getAuctionCategories,
   getProductCategories,
 } from "../store/slices/categorySlice";
+import { getProducts } from "../store/slices/productSlice";
+import { getUsers } from "../store/slices/userSlice";
 
 function TestGetApiPage() {
   // State variables to hold the data
-  const { products, product } = useSelector((state) => state.product);
-  const { auctions, auction } = useSelector((state) => state.auction);
-  const { users, user } = useSelector((state) => state.user);
-  const { productCategories, productCategory } = useSelector(
-    (state) => state.category
-  );
-  const { auctionCategories, auctionCategory } = useSelector(
-    (state) => state.category
-  );
+  const { products } = useSelector((state) => state.product);
+  const { auctions } = useSelector((state) => state.auction);
+  const { users } = useSelector((state) => state.user);
+  const { productCategories } = useSelector((state) => state.category);
+  const { auctionCategories } = useSelector((state) => state.category);
   const dispatch = useDispatch();
 
   // Fetch data from all APIs

@@ -4,7 +4,7 @@ import { api } from "../../Config/api";
 const initialState = {
     products: null,
     product: null,
-    isLoading: true,
+    isLoading: false,
     error: null,
 };
 export const createProduct = createAsyncThunk(

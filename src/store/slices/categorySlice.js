@@ -6,7 +6,7 @@ const initialState = {
     productCategory: null,
     auctionCategories: null,
     auctionCategory: null,
-    isLoading: true,
+    isLoading: false,
     error: null,
 };
 export const createAuctionCategory = createAsyncThunk(
@@ -159,8 +159,6 @@ const categorySlice = createSlice({
                 state.isLoading = true;
             })
             .addCase(getAuctionCategories.fulfilled, (state, action) => {
-                console.log("action", action);
-
                 state.isLoading = false;
                 state.auctionCategories = action.payload.success ? action.payload.data.categories : null;
             })

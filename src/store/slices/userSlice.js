@@ -4,7 +4,7 @@ import { api } from "../../Config/api";
 const initialState = {
     users: null,
     user: null,
-    isLoading: true,
+    isLoading: false,
     error: null,
 };
 
@@ -48,12 +48,29 @@ export const getUsers = createAsyncThunk(
 export const getUserById = createAsyncThunk(
     "user/user",
     async (id) => {
-        const response = await api.get(`/api/users/${id}`);
+        // console.log(localStorage.getItem("token"));
+
+        const response = await api.get(`/api/users/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
         return response.data;
     }
 );
 
+export const getUserByToken = createAsyncThunk(
+    "user/profile",
+    async (token) => {
 
+        const response = await api.get(`/api/users/profile`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    }
+);
 const userSlice = createSlice({
     name: "user",
     initialState,
@@ -105,6 +122,22 @@ const userSlice = createSlice({
                 state.isLoading = false;
                 state.user = null;
             })
+            .addCase(getUserByToken.pending, (state) => {
+                console.log("getUserByToken.pending");
+
+                state.isLoading = true;
+            })
+            .addCase(getUserByToken.fulfilled, (state, action) => {
+                console.log("getUserByToken.fulfilled");
+                state.isLoading = false;
+                state.user = action.payload.success ? action.payload.data.user : null;
+            })
+            .addCase(getUserByToken.rejected, (state) => {
+                console.log("getUserByToken.rejected");
+                state.isLoading = false;
+                state.user = null;
+            })
+
 
     },
 });
