@@ -132,16 +132,19 @@ function AuctionPage() {
       setAsdVisible(true);
     }
   };
+
   return (
-    <div className="flex flex-col size-full p-2 gap-1 bg-red-200  overflow-auto">
+    <div className="flex flex-col self-center size-full max-w-6xl gap-1 overflow-auto">
       <HighestBidCard />
-      <div className="flex flex-row size-full gap-1  overflow-auto">
+      <div className="flex flex-row size-full gap-1 overflow-auto">
         <div className="flex flex-col size-full bg-dark-2 rounded-lg overflow-auto">
           <ProductImages />
-          <HorizontalLine />
-          <ProductDetails />
+
+          {/* <HorizontalLine /> */}
+          {/* <ProductDetails /> */}
         </div>
-        <div className="flex flex-col size-full bg-dark-2 rounded-lg  overflow-auto">
+        <div className="size-full max-w-80 bg-dark-2"></div>
+        <div className="flex flex-col size-full max-w-80 bg-dark-2 rounded-lg  overflow-auto">
           <div className="flex flex-col gap-1">
             <h1 className="text-center">Teklif Ver</h1>
             <HorizontalLine />

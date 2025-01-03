@@ -67,15 +67,6 @@ export const getAuctionsByCategory = createAsyncThunk(
     }
 );
 
-// export const getAuctionsByStatus = createAsyncThunk(
-//     "auction/auctionsByStatus",
-//     async (status) => {
-//         console.log(status);
-
-//         const response = await api.get(`/api/auctions/status/${status}`);
-//         return response.data;
-//     }
-// );
 export const getAuctionsByStatus = createAsyncThunk(
     "auction/auctionsByStatus",
     async (statuses) => {
@@ -88,7 +79,7 @@ export const getAuctionsByStatus = createAsyncThunk(
 const auctionSlice = createSlice({
     name: "auction",
     initialState,
-
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(createAuction.pending, (state) => {

@@ -11,7 +11,7 @@ function PreviousBidsCard() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (auction && !bids) {
+    if (auction && !bids && auction.previousBids.length > 0) {
       dispatch(getBidsByAuction(auction._id));
     }
   }, [auction, bids, dispatch]);

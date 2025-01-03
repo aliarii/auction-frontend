@@ -10,7 +10,7 @@ function HighestBidCard() {
   const dispatch = useDispatch();
   const [prevBidAmount, setPrevBidAmount] = useState(0);
   useEffect(() => {
-    if (auction && !bid) {
+    if (auction && !bid && auction.currentHighestBid) {
       dispatch(getBidById(auction.currentHighestBid)).then((data) => {
         return setPrevBidAmount(data.payload.data.bid.amount);
       });

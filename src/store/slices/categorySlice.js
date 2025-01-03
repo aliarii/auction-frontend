@@ -118,7 +118,7 @@ export const getProductCategoryById = createAsyncThunk(
 const categorySlice = createSlice({
     name: "category",
     initialState,
-
+    reducers: {},
     extraReducers: (builder) => {
         builder
             // auction category

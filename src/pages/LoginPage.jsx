@@ -6,9 +6,11 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { loginUser } from "../store/slices/authSlice";
+import { useUser } from "../contexts/UserContext";
 
 const LoginPage = () => {
   const { login } = useAuth();
+  const { setRole } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -39,8 +41,9 @@ const LoginPage = () => {
           user: result.payload.data.user,
           token: result.payload.data.token,
         });
+        await setRole(result.payload.data.user.role);
         // console.log(localStorage.getItem("token"));
-        // navigate("/");
+        navigate("/");
         // navigate("/");
         // .then((data) => {
         //   return login({

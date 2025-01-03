@@ -7,12 +7,14 @@ const initialState = {
     isLoading: false,
     error: null,
 };
+
 export const createProduct = createAsyncThunk(
     "product/createProduct",
     async (data) => {
 
         const response = await api.post("/api/products/create", data, {
             headers: {
+                "Content-Type": "multipart/form-data",
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         });
@@ -74,7 +76,7 @@ export const getProductsByCategory = createAsyncThunk(
 const productSlice = createSlice({
     name: "product",
     initialState,
-
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(createProduct.pending, (state) => {

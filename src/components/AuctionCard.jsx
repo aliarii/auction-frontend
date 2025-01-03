@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { calculateTimeLeft } from "../utils/timeUtils"; // External utility function
-
+import { Grid2 } from "@mui/material";
 function AuctionCard({ auction }) {
   const [timeLeft, setTimeLeft] = useState("00:00:00");
   // Memoized function to calculate time left
@@ -26,30 +26,56 @@ function AuctionCard({ auction }) {
   }, [auction, calcTimeLeftMemo]);
 
   return (
-    <div className="flex flex-col h-full min-w-48 w-48 gap-2 p-2 rounded-lg bg-dark-3">
-      {/* Auction Time Left */}
-      <div className="h-28 rounded-md bg-red-300 relative">
-        <h1 className="absolute flex justify-center items-center right-1 bottom-1 w-24 text-dark-7 rounded-full bg-green-300">
-          {timeLeft}
-        </h1>
-        <div className="h-full w-full rounded-md bg-blue-200" />
-      </div>
+    // <div className="flex flex-col h-fit min-w-48 w-48 gap-2 p-2 rounded-lg bg-dark-3">
+    //   {/* Auction Time Left */}
+    //   <div className="h-28 rounded-md bg-red-300 relative">
+    //     <h1 className="absolute flex justify-center items-center right-1 bottom-1 w-24 text-dark-7 rounded-full bg-green-300">
+    //       {timeLeft}
+    //     </h1>
+    //     <div className="h-full w-full rounded-md bg-blue-200" />
+    //   </div>
 
-      {/* Auction Title */}
-      <div className="flex items-center h-8 bg-blue-300">
-        <h2>{auction.title}</h2>
-      </div>
+    //   {/* Auction Title */}
+    //   <div className="flex items-center h-8 bg-blue-300">
+    //     <h2>{auction?.title}</h2>
+    //   </div>
 
-      {/* Current Bid */}
-      <div className="flex items-center h-10 bg-red-300">
-        <h3>Current Bid: ${auction.currentHighestBid?.amount}</h3>
-      </div>
+    //   {/* Current Bid */}
+    //   <div className="flex items-center h-10 bg-red-300">
+    //     <h3>Current Bid: ${auction?.currentHighestBid?.amount}</h3>
+    //   </div>
 
-      {/* View Auction Link */}
-      <div className="flex justify-center items-center h-8 rounded-md bg-red-300 cursor-pointer">
-        <Link to={`/auction/${auction._id}`}>View Auction</Link>
+    //   {/* View Auction Link */}
+    //   <div className="flex justify-center items-center h-8 rounded-md bg-red-300 cursor-pointer">
+    //     <Link to={`/auction/${auction?._id}`}>View Auction</Link>
+    //   </div>
+    // </div>
+    <Grid2 size={{ xs: 2, sm: 3, md: 4, lg: 5 }}>
+      <div className="flex flex-col h-fit min-w-64 w-full gap-2 p-2 rounded-lg bg-dark-3">
+        {/* Auction Time Left */}
+        <div className="h-28 rounded-md bg-red-300 relative">
+          <h1 className="absolute flex justify-center items-center right-1 bottom-1 w-24 text-dark-7 rounded-full bg-green-300">
+            {timeLeft}
+          </h1>
+          <div className="h-full w-full rounded-md bg-blue-200" />
+        </div>
+
+        {/* Auction Title */}
+        <div className="flex items-center h-8 bg-blue-300">
+          <h2>{auction?.name}</h2>
+        </div>
+
+        {/* Current Bid */}
+        <div className="flex items-center h-10 bg-red-300">
+          <h3>Current Bid: ${auction?.currentHighestBid?.amount}</h3>
+        </div>
+
+        {/* View Auction Link */}
+        <div className="flex justify-center items-center h-8 rounded-md bg-red-300 cursor-pointer">
+          <Link to={`/auction/${auction?._id}`}>View Auction</Link>
+        </div>
       </div>
-    </div>
+    </Grid2>
   );
 }
 

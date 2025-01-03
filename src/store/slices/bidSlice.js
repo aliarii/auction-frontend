@@ -37,7 +37,7 @@ export const getBidsByAuction = createAsyncThunk(
 const bidSlice = createSlice({
     name: "bid",
     initialState,
-
+    reducers: {},
     extraReducers: (builder) => {
         builder
 

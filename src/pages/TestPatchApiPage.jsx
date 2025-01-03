@@ -24,7 +24,7 @@ function TestPatchApiPage() {
 
   const [auctionData, setAuctionData] = useState({
     id: auction?.id || "",
-    title: auction?.title || "",
+    name: auction?.name || "",
     description: auction?.description || "",
     product: auction?.product || "", // Product ID
     category: auction?.category || null, // Auction Category ID
@@ -163,12 +163,12 @@ function TestPatchApiPage() {
             />
             <input
               type="text"
-              name="title"
-              value={auctionData.title}
+              name="name"
+              value={auctionData.name}
               onChange={(e) =>
-                setAuctionData({ ...auctionData, title: e.target.value })
+                setAuctionData({ ...auctionData, name: e.target.value })
               }
-              placeholder="Auction Title"
+              placeholder="Auction Name"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <textarea

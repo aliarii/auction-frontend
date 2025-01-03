@@ -12,7 +12,7 @@ const initialState = {
 export const updateUser = createAsyncThunk(
     "user/updateUser",
     async (data) => {
-        const response = await api.patch(`/api/users/update/${data.id}`, data, {
+        const response = await api.patch(`/api/users/update/${data._id}`, data, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
@@ -23,8 +23,8 @@ export const updateUser = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
     "user/deleteUser",
-    async (data) => {
-        const response = await api.delete(`/api/users/delete/${data.id}`, {
+    async (id) => {
+        const response = await api.delete(`/api/users/delete/${id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
@@ -74,7 +74,7 @@ export const getUserByToken = createAsyncThunk(
 const userSlice = createSlice({
     name: "user",
     initialState,
-
+    reducers: {},
     extraReducers: (builder) => {
         builder
 

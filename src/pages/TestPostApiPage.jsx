@@ -14,7 +14,7 @@ function TestPostApiPage() {
   // State variables to hold the data
   const { products, product } = useSelector((state) => state.product);
   const { auctions, auction } = useSelector((state) => state.auction);
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
   const { productCategories, productCategory } = useSelector(
     (state) => state.category
   );
@@ -26,7 +26,6 @@ function TestPostApiPage() {
   useEffect(() => {
     if (!products) dispatch(getProducts());
     if (!auctionCategories) dispatch(getAuctionCategories());
-    if (!user) dispatch(validateToken(jwt));
   }, [dispatch, products, auctionCategories, user, jwt]);
 
   // Local state for POST request payloads
@@ -35,7 +34,7 @@ function TestPostApiPage() {
     quantity: 1,
     description: "",
     category: null, // Category ID
-    image: "",
+    images: [],
   });
   const [bidData, setBidData] = useState({
     auctionId: "",
@@ -43,7 +42,7 @@ function TestPostApiPage() {
     amount: "",
   });
   const [auctionData, setAuctionData] = useState({
-    title: "",
+    name: "",
     description: "",
     product: "", // Product ID
     category: null, // AuctionCategory ID
@@ -63,10 +62,19 @@ function TestPostApiPage() {
     image: "",
   });
 
-  // POST request handlers
   const handleProductSubmit = (e) => {
     e.preventDefault();
-    dispatch(createProduct(productData));
+    const formData = new FormData();
+    formData.append("name", productData.name);
+    formData.append("quantity", productData.quantity);
+    formData.append("description", productData.description);
+    formData.append("category", productData.category);
+
+    productData.images.forEach((image) => {
+      formData.append("images", image);
+    });
+
+    dispatch(createProduct(formData));
   };
   const handleBidSubmit = (e) => {
     e.preventDefault();
@@ -92,6 +100,19 @@ function TestPostApiPage() {
   const handleAuctionCategorySubmit = (e) => {
     e.preventDefault();
     dispatch(createAuctionCategory(auctionCategoryData));
+  };
+
+  // Handle file input change (multiple files)
+  const handleFileChange = (e) => {
+    const files = e.target.files;
+    if (files.length <= 5) {
+      setProductData((prevData) => ({
+        ...prevData,
+        images: Array.from(files), // Convert FileList to Array
+      }));
+    } else {
+      alert("You can only upload up to 5 images.");
+    }
   };
 
   return (
@@ -143,7 +164,7 @@ function TestPostApiPage() {
               placeholder="Category ID"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            <input
+            {/* <input
               type="text"
               name="image"
               value={productData.image}
@@ -152,7 +173,17 @@ function TestPostApiPage() {
               }
               placeholder="Image URL"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            /> */}
+            <input
+              type="file"
+              name="images"
+              onChange={handleFileChange}
+              multiple
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
+            <p className="text-sm text-gray-500">
+              You can upload up to 5 images.
+            </p>
             <button
               type="submit"
               className="w-full bg-indigo-600 text-white px-4 py-2 rounded-md focus:outline-none hover:bg-indigo-700"
@@ -206,12 +237,12 @@ function TestPostApiPage() {
           <form onSubmit={handleAuctionSubmit} className="space-y-4">
             <input
               type="text"
-              name="title"
-              value={auctionData.title}
+              name="name"
+              value={auctionData.name}
               onChange={(e) =>
-                setAuctionData({ ...auctionData, title: e.target.value })
+                setAuctionData({ ...auctionData, name: e.target.value })
               }
-              placeholder="Auction Title"
+              placeholder="Auction Name"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <textarea
