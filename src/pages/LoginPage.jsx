@@ -3,7 +3,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useState } from "react";
 
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { loginUser } from "../store/slices/authSlice";
 import { useUser } from "../contexts/UserContext";
@@ -12,31 +12,30 @@ import { getUserById } from "../store/slices/userSlice";
 const LoginPage = () => {
   const { login } = useAuth();
   const { setRole } = useUser();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
+
   const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState("");
   const [userNameError, setUserNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const routeToRegister = () => {
-    navigate(`/register`);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === "" || password === "") {
-      if (email === "" && password === "") {
+    if (userData.email === "" || userData.password === "") {
+      if (userData.email === "" && userData.password === "") {
         setUserNameError("Enter Username");
         setPasswordError("Enter Password");
-      } else if (email === "") setUserNameError("Enter Username Or Email");
+      } else if (userData.email === "") setUserNameError("Enter Email");
       else setPasswordError("Enter Password");
     } else {
       try {
-        const result = await dispatch(loginUser({ email, password }));
-        if (!result.payload.success) return;
+        const result = await dispatch(loginUser(userData));
+        if (!result.payload.success) return setError(result.payload.message);
 
         await login({
           user: result.payload.data.user,
@@ -44,21 +43,10 @@ const LoginPage = () => {
         });
         await setRole(result.payload.data.user.role);
         await dispatch(getUserById(result.payload.data.user._id));
-        // console.log(localStorage.getItem("token"));
         navigate("/");
-        // navigate("/");
-        // .then((data) => {
-        //   return login({
-        //     user: data?.payload?.data?.user,
-        //     token: data?.payload?.data?.token,
-        //   });
-        // })
-        // .then(() => {
-        //   return navigate("/");
-        // });
       } catch (error) {
         console.error(error);
-        setErrorMessage(error.response.data.error);
+        setError(error.response.data.error);
       }
     }
   };
@@ -66,14 +54,14 @@ const LoginPage = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-    setErrorMessage("");
+  const handleEmailChange = (e) => {
+    setUserData({ ...userData, email: e.target.value });
+    setError("");
     setUserNameError("");
   };
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-    setErrorMessage("");
+  const handlePasswordChange = (e) => {
+    setUserData({ ...userData, password: e.target.value });
+    setError("");
     setPasswordError("");
   };
 
@@ -85,9 +73,7 @@ const LoginPage = () => {
             {"Login"}
           </h1>
         </div>
-        {errorMessage && (
-          <div className="text-red-500">{errorMessage || "Error"}</div>
-        )}
+        {error && <div className="text-red-500">{error || "Error"}</div>}
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
@@ -96,8 +82,8 @@ const LoginPage = () => {
             autoCapitalize="off"
             autoComplete="on"
             className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
-            placeholder={"Username or email address"}
-            value={email}
+            placeholder={"Email address"}
+            value={userData.email}
             onChange={handleEmailChange}
           />
           {userNameError && (
@@ -110,7 +96,7 @@ const LoginPage = () => {
               name="password"
               className="w-full py-3 px-3 border-l border-y border-light-10 outline-none bg-white rounded-l-lg"
               placeholder={"Password"}
-              value={password}
+              value={userData.password}
               onChange={handlePasswordChange}
             />
             <div
@@ -130,23 +116,22 @@ const LoginPage = () => {
             <h2>{"Login"}</h2>
           </button>
 
-          <a
+          {/* <a
             className="text-center cursor-pointer text-blue-700 dark:text-blue-500 font-bold no-underline text-sm"
             href="https://www.google.com"
           >
             {"Forgot password?"}
-          </a>
+          </a> */}
           <span className="text-dark-7 dark:text-light-8 text-center font-medium">
-            {"Or"}
+            Or
           </span>
 
-          <button
-            className="w-full rounded-lg py-2 px-3 cursor-pointer bg-light-8 font-semibold text-xl"
-            type="button"
-            onClick={routeToRegister}
+          <Link
+            className="text-center w-full rounded-lg py-2 px-3 bg-light-8 font-semibold text-xl"
+            to={"/register"}
           >
-            {"Create an account"}
-          </button>
+            Create an account
+          </Link>
         </form>
       </div>
     </div>

@@ -1,11 +1,11 @@
+import { Grid2 } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuctionsByStatus } from "../store/slices/auctionSlice";
-import AuctionCard from "../components/Auction/AuctionCard";
-import { Grid2 } from "@mui/material";
 import { Link } from "react-router-dom";
-import Loading from "../components/Loading";
+import AuctionCard from "../components/Auction/AuctionCard";
 import HorizontalLine from "../components/HorizontalLine";
+import Loading from "../components/Loading";
+import { getAuctionsByStatus } from "../store/slices/auctionSlice";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -15,14 +15,6 @@ function HomePage() {
   useEffect(() => {
     dispatch(getAuctionsByStatus("Active,Pending,Closed"));
   }, []);
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>Error loading auctions</div>;
-  // }
 
   return (
     <div className="flex flex-col self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
@@ -50,14 +42,6 @@ function HomePage() {
           </Grid2>
         )}
       </div>
-      {/* </div> */}
-
-      {/* Active Auctions */}
-      {/* <AuctionsListCard type={"Active"} auctions={auctions?.activeAuctions} /> */}
-      {/* Pending Auctions */}
-      {/* <AuctionsListCard type={"Pending"} auctions={auctions?.pendingAuctions} /> */}
-      {/* Closed Auctions */}
-      {/* <AuctionsListCard type={"Closed"} auctions={auctions?.closedAuctions} /> */}
     </div>
   );
 }

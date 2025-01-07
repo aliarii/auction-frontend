@@ -24,8 +24,9 @@ function HighestBidCard() {
 
   return (
     <div className="flex flex-col justify-center items-center w-full p-2 bg-dark-2 rounded-xl">
+      <h1 className="font-semibold text-2xl text-light-2">En Yüksek Teklif</h1>
       <h1 className="font-semibold text-2xl text-light-2">
-        En Yüksek Teklif: {highestBid({ bid, auction })}
+        {highestBid({ bid, auction })}
       </h1>
     </div>
   );

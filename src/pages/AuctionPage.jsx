@@ -1,21 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import AuctionDetails from "../components/Auction/AuctionDetails";
 import HighestBidCard from "../components/Bid/HighestBidCard";
 import PreviousBids from "../components/Bid/PreviousBids";
-import CustomModal from "../components/CustomModal";
 import HorizontalLine from "../components/HorizontalLine";
 import Loading from "../components/Loading";
 import ConfirmModal from "../components/Modal/ConfirmModal";
+import InfoModal from "../components/Modal/InfoModal";
 import ProductDetails from "../components/Product/ProductDetails";
 import ProductImages from "../components/Product/ProductImages";
 import { getAuctionById } from "../store/slices/auctionSlice";
-import { createBid } from "../store/slices/bidSlice";
+import { createBid, getBidById } from "../store/slices/bidSlice";
 import { joinAuction } from "../store/slices/userSlice";
 import { calculateTimeLeft } from "../utils/timeUtils";
-import InfoModal from "../components/Modal/InfoModal";
 const socket = io("http://localhost:5000");
 
 function AuctionPage() {
@@ -24,7 +23,6 @@ function AuctionPage() {
   const { bid } = useSelector((state) => state.bid);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(null);
 
   const [showConfirm, setShowConfirm] = useState(false);
@@ -33,25 +31,32 @@ function AuctionPage() {
 
   const [showInfo, setShowInfo] = useState(false);
   const [infoAction, setInfoAction] = useState(null);
-  const [infoMessage, setInfoMessage] = useState(null);
-
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
+  const [infoData, setInfoData] = useState(null);
 
   useEffect(() => {
     socket.emit("joinAuction", auctionId);
     socket.on("closeAuction", (completedAuction) => {
       console.log("closeAuction event received:", completedAuction);
-      if (completedAuction.auctionId === auctionId) {
-        console.log("Açık arttırma tamamlandı:", completedAuction);
-        navigate("/");
+      if (completedAuction.auction._id === auctionId) {
+        handleAuctionEnd(completedAuction);
       }
     });
 
     return () => {
       socket.off("closeAuction");
     };
-  }, [auctionId, navigate]);
+  }, [auctionId]);
+
+  const handleAuctionEnd = async (completedAuction) => {
+    await dispatch(getAuctionById(completedAuction.auction._id));
+    dispatch(getBidById(completedAuction.auction.currentHighestBid)).then(
+      (data) => {
+        if (data.payload.success) {
+          setEndModal(data.payload.data.bid);
+        }
+      }
+    );
+  };
 
   useEffect(() => {
     if (auctionId) {
@@ -60,21 +65,10 @@ function AuctionPage() {
   }, [dispatch, auctionId]);
 
   // useEffect(() => {
-  //   if (user) {
-  //     console.log("user", user, auctionId, user._id);
+  //   if (auction) {
+  //     console.log("auction", auction);
   //   }
-  // }, [user]);
-  useEffect(() => {
-    if (auction) {
-      console.log("auction", auction);
-    }
-  }, [auction]);
-
-  // useEffect(() => {
-  //   if (bid) {
-  //     console.log("bid", bid);
-  //   }
-  // }, [bid]);
+  // }, [auction]);
 
   const calcTimeLeftMemo = useCallback(() => {
     if (auction && auction.auctionEndTime) {
@@ -113,7 +107,8 @@ function AuctionPage() {
   };
 
   const setBidModal = (amount) => {
-    if (auction?.currentHighestBid?.user === user._id) return;
+    if (bid?.auction === auctionId && bid.user === user._id) return;
+
     const bidAction = async () => {
       const result = await dispatch(
         createBid({
@@ -123,58 +118,38 @@ function AuctionPage() {
         })
       );
       if (result.error) {
-        setModalMessage({
-          message: "Teklif başarısız oldu.",
+        setInfoData({
+          title: "Teklif başarısız oldu.",
           success: false,
         });
-        setModalVisible(true);
+        setShowInfo(true);
       } else {
-        setModalMessage({
-          message: "Teklif başarıyla verildi.",
+        setInfoData({
+          title: "Teklif başarıyla verildi.",
           success: true,
         });
-        setModalVisible(true);
+        setShowInfo(true);
       }
     };
     setConfirmAction(() => bidAction);
     setShowConfirm(true); // Show confirmation modal
   };
 
-  // const handleJoinAuction = () => {
-  //   const reqData = {
-  //     userId: user._id,
-  //     auctionId: auctionId,
-  //   };
-  //   dispatch(joinAuction(reqData));
-  // };
-
-  // const handleBid = (amount) => {
-  //   if (auction?.currentHighestBid?.user === user._id) return;
-  //   const bidAction = async () => {
-  //     const result = await dispatch(
-  //       createBid({
-  //         auctionId,
-  //         userId: user._id,
-  //         amount: amount + (bid?.amount || auction.startingPrice || 0),
-  //       })
-  //     );
-  //     if (result.error) {
-  //       setModalMessage({
-  //         message: "Teklif başarısız oldu.",
-  //         success: false,
-  //       });
-  //       setModalVisible(true);
-  //     } else {
-  //       setModalMessage({
-  //         message: "Teklif başarıyla verildi.",
-  //         success: true,
-  //       });
-  //       setModalVisible(true);
-  //     }
-  //   };
-  //   setConfirmAction(() => bidAction);
-  //   setShowConfirm(true); // Show confirmation modal
-  // };
+  const setEndModal = (winnerBid) => {
+    if (winnerBid.user === user._id)
+      setInfoData({
+        title: "Açık Arttırma Sona Erdi.",
+        message: "Tebrikler! Kazandınız.",
+        success: true,
+      });
+    else
+      setInfoData({
+        title: "Açık Arttırma Sona Erdi.",
+        message: "Kazanamadınız.",
+        success: false,
+      });
+    setShowInfo(true);
+  };
 
   const confirmHandler = () => {
     if (confirmAction) {
@@ -229,15 +204,10 @@ function AuctionPage() {
           <PreviousBids />
         </div>
       </div>
-      <CustomModal
-        isVisible={modalVisible}
-        onClose={() => setModalVisible(false)}
-        message={modalMessage}
-      />
       <InfoModal
         isVisible={showInfo}
         onClose={() => setShowInfo(false)}
-        message={infoMessage}
+        data={infoData}
       />
       <ConfirmModal
         isVisible={showConfirm}
@@ -259,6 +229,18 @@ const ActiveAuctionController = ({
 }) => {
   const { auction } = useSelector((state) => state.auction);
   const { user } = useSelector((state) => state.user);
+  const { bid } = useSelector((state) => state.bid);
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    if (bid && bid.auction === auctionId) setUserId(bid.user);
+  }, [auctionId, bid]);
+
+  useEffect(() => {
+    if (auction && auction.currentHighestBid)
+      setUserId(auction.currentHighestBid.user);
+  }, [auction]);
+
   return (
     <>
       <div className="flex flex-col h-fit w-full p-2 gap-1 rounded-lg bg-dark-2">
@@ -268,20 +250,8 @@ const ActiveAuctionController = ({
         <HorizontalLine />
         {user.auctions?.includes(auctionId) ? (
           <>
-            {/* <div
-              className={`${bid?.user === user._id ? "bg-light-7 cursor-not-allowed" : "bg-success cursor-pointer"} p-3 rounded-lg`}
-              onClick={() => handleBid(1000)}
-            >
-              <h1 className="text-center font-semibold text-light-2">
-                + 1000 TL
-              </h1>
-            </div>
             <div
-              className={`${bid?.user === user._id ? "bg-light-7 cursor-not-allowed" : "bg-success cursor-pointer"} p-3 rounded-lg `}
-              onClick={() => handleBid(2000)}
-            > */}
-            <div
-              className={`${auction?.currentHighestBid?.user === user._id ? "bg-light-7 cursor-not-allowed" : "bg-success cursor-pointer"} p-3 rounded-lg`}
+              className={`${userId === user._id ? "bg-light-7 cursor-not-allowed" : "bg-success cursor-pointer"} p-3 rounded-lg`}
               onClick={() => setBidModal(1000)}
             >
               <h1 className="text-center font-semibold text-light-2">
@@ -289,7 +259,7 @@ const ActiveAuctionController = ({
               </h1>
             </div>
             <div
-              className={`${auction?.currentHighestBid?.user === user._id ? "bg-light-7 cursor-not-allowed" : "bg-success cursor-pointer"} p-3 rounded-lg `}
+              className={`${userId === user._id ? "bg-light-7 cursor-not-allowed" : "bg-success cursor-pointer"} p-3 rounded-lg `}
               onClick={() => setBidModal(2000)}
             >
               <h1 className="text-center font-semibold text-light-2">
@@ -298,13 +268,6 @@ const ActiveAuctionController = ({
             </div>
           </>
         ) : (
-          // <div
-          //   className="bg-success p-3 rounded-lg cursor-pointer"
-          //   onClick={() => {
-          //     setConfirmAction(() => handleJoinAuction);
-          //     setShowConfirm(true);
-          //   }}
-          // >
           <div
             className="bg-success p-3 rounded-lg cursor-pointer"
             onClick={setJoinModal}

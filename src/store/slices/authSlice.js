@@ -13,15 +13,20 @@ export const registerUser = createAsyncThunk(
     "/auth/register",
 
     async (data) => {
-        const response = await api.post(
-            "/api/auth/register",
-            data,
-            {
-                withCredentials: true,
-            }
-        );
+        try {
+            const response = await api.post(
+                "/api/auth/register",
+                data,
+                {
+                    withCredentials: true,
+                }
+            );
+            return response.data;
 
-        return response.data;
+        } catch (error) {
+            return error.response.data;
+        }
+
     }
 );
 
@@ -29,15 +34,20 @@ export const loginUser = createAsyncThunk(
     "/auth/login",
 
     async (data) => {
-        const response = await api.post(
-            "/api/auth/login",
-            data,
-            {
-                withCredentials: true,
-            }
-        );
+        try {
 
-        return response.data;
+            const response = await api.post(
+                "/api/auth/login",
+                data,
+                {
+                    withCredentials: true,
+                }
+            );
+
+            return response.data;
+        } catch (error) {
+            return error.response.data;
+        }
     }
 );
 
