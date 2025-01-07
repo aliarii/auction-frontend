@@ -38,7 +38,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
-
+          <Route path="/auctions" element={<AuctionsPage />} />
           <Route
             path="/auction/:auctionId"
             element={
@@ -47,14 +47,14 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/auctions"
             element={
               <ProtectedRoute role="user" user={user}>
                 <AuctionsPage />
               </ProtectedRoute>
             }
-          />
+          /> */}
           <Route
             path="/admin"
             element={

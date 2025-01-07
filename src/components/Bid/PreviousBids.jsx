@@ -1,25 +1,28 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { io } from "socket.io-client";
-import { getBidsByAuction } from "../store/slices/bidSlice";
+import { getBidById, getBidsByAuction } from "../../store/slices/bidSlice";
 import BidCard from "./BidCard";
+import Loading from "../Loading";
 const socket = io("http://localhost:5000");
 
-function PreviousBidsCard() {
+function PreviousBids() {
   const { auction } = useSelector((state) => state.auction);
-  const { bids, isLoading, error } = useSelector((state) => state.bid);
+  const { bids, isLoading } = useSelector((state) => state.bid);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (auction && !bids && auction.previousBids.length > 0) {
+    if (auction) {
       dispatch(getBidsByAuction(auction._id));
     }
-  }, [auction, bids, dispatch]);
+  }, [auction, dispatch]);
 
   useEffect(() => {
     socket.on("updateBid", (newBid) => {
       if (newBid.auctionId === auction._id) {
         dispatch(getBidsByAuction(auction._id));
+        dispatch(getBidById(newBid.bid._id));
+        // console.log(newBid);
       }
     });
 
@@ -27,6 +30,10 @@ function PreviousBidsCard() {
       socket.off("updateBid");
     };
   }, [auction, dispatch]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex flex-col max-h-full w-full gap-1 overflow-auto ">
@@ -42,4 +49,4 @@ function PreviousBidsCard() {
   );
 }
 
-export default PreviousBidsCard;
+export default PreviousBids;

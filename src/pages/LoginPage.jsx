@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { loginUser } from "../store/slices/authSlice";
 import { useUser } from "../contexts/UserContext";
+import { getUserById } from "../store/slices/userSlice";
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -42,6 +43,7 @@ const LoginPage = () => {
           token: result.payload.data.token,
         });
         await setRole(result.payload.data.user.role);
+        await dispatch(getUserById(result.payload.data.user._id));
         // console.log(localStorage.getItem("token"));
         navigate("/");
         // navigate("/");

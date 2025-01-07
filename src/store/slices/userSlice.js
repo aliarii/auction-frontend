@@ -32,7 +32,17 @@ export const deleteUser = createAsyncThunk(
         return response.data;
     }
 );
-
+export const joinAuction = createAsyncThunk(
+    "auction/joinAuction",
+    async (data) => {
+        const response = await api.post(`/api/auctions/join`, data, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        return response.data;
+    }
+);
 export const getUsers = createAsyncThunk(
     "user/users",
     async () => {
@@ -99,6 +109,16 @@ const userSlice = createSlice({
             .addCase(deleteUser.rejected, (state) => {
                 state.isLoading = false;
                 state.user = null;
+            })
+            .addCase(joinAuction.pending, (state) => {
+                state.isLoading = true;
+            })
+            .addCase(joinAuction.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.user = action.payload.success ? action.payload.data.user : null;
+            })
+            .addCase(joinAuction.rejected, (state) => {
+                state.isLoading = false;
             })
             .addCase(getUsers.pending, (state) => {
                 state.isLoading = true;

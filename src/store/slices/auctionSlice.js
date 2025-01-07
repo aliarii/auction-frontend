@@ -42,7 +42,17 @@ export const deleteAuction = createAsyncThunk(
         return response.data;
     }
 );
-
+// export const joinAuction = createAsyncThunk(
+//     "auction/joinAuction",
+//     async (data) => {
+//         const response = await api.post(`/api/auctions/join`, data, {
+//             headers: {
+//                 Authorization: `Bearer ${localStorage.getItem("token")}`,
+//             },
+//         });
+//         return response.data;
+//     }
+// );
 export const getAuctions = createAsyncThunk(
     "auction/auctions",
     async () => {
@@ -115,6 +125,15 @@ const auctionSlice = createSlice({
                 state.isLoading = false;
                 state.auction = null;
             })
+            // .addCase(joinAuction.pending, (state) => {
+            //     state.isLoading = true;
+            // })
+            // .addCase(joinAuction.fulfilled, (state) => {
+            //     state.isLoading = false;
+            // })
+            // .addCase(joinAuction.rejected, (state) => {
+            //     state.isLoading = false;
+            // })
             .addCase(getAuctions.pending, (state) => {
                 state.isLoading = true;
             })

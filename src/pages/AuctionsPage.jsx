@@ -1,18 +1,21 @@
-import { Grid2, Checkbox, FormControlLabel, Typography } from "@mui/material";
+import { Checkbox, FormControlLabel, Grid2, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AuctionCard from "../components/AuctionCard";
+import AuctionCard from "../components/Auction/AuctionCard";
 import HorizontalLine from "../components/HorizontalLine";
 import { getAuctionsByStatus } from "../store/slices/auctionSlice";
 import { getAuctionCategories } from "../store/slices/categorySlice";
+import { useLocation } from "react-router-dom";
 
 const AuctionsPage = () => {
+  const location = useLocation();
+  const { status } = location.state || "";
   const { auctions } = useSelector((state) => state.auction);
   const { auctionCategories } = useSelector((state) => state.category);
   const [categories, setCategories] = useState([]);
   const [filteredAuctions, setFilteredAuctions] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState(["Tümü"]); // Başlangıçta Tümü seçili
-  const [selectedStatus, setSelectedStatus] = useState(["Tümü"]); // Başlangıçta Tümü seçili
+  const [selectedStatus, setSelectedStatus] = useState([status || "Tümü"]); // Başlangıçta Tümü seçili
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -110,7 +113,7 @@ const AuctionsPage = () => {
   };
 
   return (
-    <div className="flex flex-row size-full p-2 gap-2 overflow-auto">
+    <div className="flex flex-row self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
       {/* Filtreleme Paneli */}
       <div className="flex flex-col h-fit w-72 max-w-72 p-2 gap-2 rounded-lg bg-dark-1">
         <h1 className="text-lg text-light-2 font-semibold">Filtreleme</h1>
@@ -191,17 +194,20 @@ const AuctionsPage = () => {
           </h1>
         </div>
         <HorizontalLine />
-        <div className="h-full w-full p-2 bg-light-6 rounded-md overflow-auto">
-          <Grid2
-            container
-            spacing={1}
-            columns={{ xs: 2, sm: 6, md: 12, lg: 20, xl: 30 }}
-          >
-            {filteredAuctions.map((auction, idx) => (
-              <AuctionCard key={idx} auction={auction} />
-            ))}
-          </Grid2>
-        </div>
+        <Grid2
+          container
+          spacing={1}
+          columns={{ xs: 2, sm: 6, md: 12, lg: 16 }}
+          className="size-full overflow-auto"
+        >
+          {filteredAuctions.map((auction, idx) => (
+            <AuctionCard key={idx} auction={auction} />
+          ))}
+          {/* {Array.from(Array(10)).map((auction, idx) => (
+              <AuctionCard key={idx} />
+            ))} */}
+        </Grid2>
+        {/* </div> */}
       </div>
     </div>
   );
