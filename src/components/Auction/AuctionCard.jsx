@@ -47,7 +47,7 @@ function AuctionCard({ auction, onView }) {
   return (
     <Grid2
       size={{ xs: 2, sm: 3, md: 4, lg: 4 }}
-      className="flex flex-col h-fit pb-2 gap-2 rounded-lg bg-light-3"
+      className="flex flex-col h-fit pb-2 gap-2 rounded-lg bg-light-3 border border-light-10"
     >
       {/* Image Container */}
 
