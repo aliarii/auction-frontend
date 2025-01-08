@@ -77,7 +77,7 @@ function AuctionCard({ auction }) {
         to={`/auction/${auction?._id}`}
         className="h-8 w-[85%] max-w-56 self-center text-center place-content-center text-light-2 font-semibold rounded-full bg-info"
       >
-        View Details
+        Görüntüle
       </Link>
     </Grid2>
   );

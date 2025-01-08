@@ -20,11 +20,14 @@ import BtnMdCancel from "../components/Button/BtnMdCancel";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import BtnMdSave from "../components/Button/BtnMdSave";
 import BtnMdDelete from "../components/Button/BtnMdDelete";
+import ProductImages from "../components/Product/ProductImages";
+import { Link } from "react-router-dom";
+import ProductCard from "../components/Product/ProductCard";
 
 const ProductSettingsPage = () => {
   const views = [
     {
-      id: "1",
+      id: 1,
       element: (props) => (
         <ProductsView
           {...props}
@@ -135,7 +138,7 @@ const ProductSettingsPage = () => {
             className={`text-center rounded-md cursor-pointer text-light-1 bg-success whitespace-nowrap overflow-hidden text-ellipsis`}
             onClick={() => handleAddNewCategorySelect()}
           >
-            + Ekle
+            + Kategori Ekle
           </h2>
 
           <div className="flex md:flex-col gap-1 overflow-auto">
@@ -175,7 +178,7 @@ const ProductsView = ({
   handleAddNewProductSelect,
   handleUpdateCategorySelect,
 }) => {
-  //   console.log(products);
+  console.log(products);
 
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
@@ -189,34 +192,25 @@ const ProductsView = ({
       </div>
 
       <HorizontalLine />
-
+      <h2
+        className={`text-center rounded-md cursor-pointer text-light-1 bg-success whitespace-nowrap overflow-hidden text-ellipsis`}
+        onClick={() => handleAddNewProductSelect()}
+      >
+        + Ürün Ekle
+      </h2>
       <Grid2
         container
         spacing={1}
         columns={{ xs: 4, sm: 8, md: 12, lg: 16 }}
         className="overflow-auto"
       >
-        <Grid2 size={{ xs: 2, sm: 4, md: 3, lg: 4 }}>
-          <div
-            className="flex flex-col justify-center items-center h-[calc(100vh*.151)] rounded-md cursor-pointer text-center bg-light-5 dark:bg-dark-5"
-            onClick={() => handleAddNewProductSelect()}
-          >
-            <h2 className="text-center">+</h2>
-            <h2 className="text-center">Add New Product</h2>
-          </div>
-        </Grid2>
         {products?.length > 0
           ? products.map((product, index) => (
-              <Grid2 key={index} size={{ xs: 2, sm: 4, md: 3, lg: 4 }}>
-                <div
-                  className="h-[calc(100vh*.151)] rounded-md cursor-pointer text-center bg-light-5 dark:bg-dark-5"
-                  onClick={() => handleUpdateProductSelect(product)}
-                >
-                  <h2>{product.name}</h2>
-                  <h2>{product.description}</h2>
-                  {/* <h2>{product.category || "-"}</h2> */}
-                </div>
-              </Grid2>
+              <ProductCard
+                key={index}
+                product={product}
+                onClick={() => handleUpdateProductSelect(product)}
+              />
             ))
           : ""}
       </Grid2>
@@ -276,16 +270,16 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
           />
         </div>
         <div className="flex w-full h-full gap-1 overflow-auto">
-          <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4 dark:bg-dark-5 overflow-auto">
+          <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4 overflow-auto">
             <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
               All Products
             </h2>
-            <div className="my-1 py-0.5 rounded-full bg-light-7 dark:bg-light-10 text-dark-1 dark:text-light-10" />
-            <div className="bg-light-2 dark:bg-dark-7 p-1 h-full rounded overflow-auto">
+            <div className="my-1 py-0.5 rounded-full bg-light-7 text-dark-1 " />
+            <div className="bg-light-2 p-1 h-full rounded overflow-auto">
               {notSelectedProducts?.map((product) => (
                 <h2
                   key={product._id}
-                  className="cursor-pointer rounded pl-1 hover:bg-light-5 hover:dark:bg-dark-5"
+                  className="cursor-pointer rounded pl-1 hover:bg-light-5 "
                   onClick={() => handleProductAdd(product)}
                 >
                   {product.name}
@@ -299,16 +293,16 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
             <ArrowRightAltIcon className="rotate-180" />
           </div>
 
-          <div className="flex flex-col w-full p-2 rounded-lg bg-light-4 dark:bg-dark-5 overflow-auto">
+          <div className="flex flex-col w-full p-2 rounded-lg bg-light-4  overflow-auto">
             <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
               Selected Products
             </h2>
-            <div className="my-1 py-0.5 rounded-full bg-light-7 dark:bg-light-10 text-dark-1 dark:text-light-10" />
-            <div className="bg-light-2 dark:bg-dark-7 p-1 h-full rounded overflow-auto">
+            <div className="my-1 py-0.5 rounded-full bg-light-7 text-dark-1 " />
+            <div className="bg-light-2 p-1 h-full rounded overflow-auto">
               {selectedProducts?.map((product) => (
                 <h2
                   key={product.id}
-                  className="cursor-pointer rounded pl-1 hover:bg-light-5 hover:dark:bg-dark-5"
+                  className="cursor-pointer rounded pl-1 hover:bg-light-5 "
                   onClick={() => handleProductRemove(product)}
                 >
                   {product.name}
@@ -400,16 +394,16 @@ const UpdateCategoryView = ({
             />
           </div>
           <div className="flex w-full h-full gap-1 overflow-auto">
-            <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4 dark:bg-dark-5 overflow-auto">
+            <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4  overflow-auto">
               <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
                 All Products
               </h2>
-              <div className="my-1 py-0.5 rounded-full bg-light-7 dark:bg-light-10 text-dark-1 dark:text-light-10" />
-              <div className="bg-light-2 dark:bg-dark-7 p-1 h-full rounded overflow-auto">
+              <div className="my-1 py-0.5 rounded-full bg-light-7  text-dark-1 " />
+              <div className="bg-light-2 p-1 h-full rounded overflow-auto">
                 {notSelectedProducts?.map((product) => (
                   <h2
                     key={product._id}
-                    className="cursor-pointer rounded pl-1 hover:bg-light-5 hover:dark:bg-dark-5"
+                    className="cursor-pointer rounded pl-1 hover:bg-light-5 "
                     onClick={() => handleProductAdd(product)}
                   >
                     {product.name}
@@ -423,16 +417,16 @@ const UpdateCategoryView = ({
               <ArrowRightAltIcon className="rotate-180" />
             </div>
 
-            <div className="flex flex-col w-full p-2 rounded-lg bg-light-4 dark:bg-dark-5 overflow-auto">
+            <div className="flex flex-col w-full p-2 rounded-lg bg-light-4  overflow-auto">
               <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
                 Selected Products
               </h2>
-              <div className="my-1 py-0.5 rounded-full bg-light-7 dark:bg-light-10 text-dark-1 dark:text-light-10" />
-              <div className="bg-light-2 dark:bg-dark-7 p-1 h-full rounded overflow-auto">
+              <div className="my-1 py-0.5 rounded-full bg-light-7  text-dark-1 " />
+              <div className="bg-light-2  p-1 h-full rounded overflow-auto">
                 {selectedProducts?.map((product) => (
                   <h2
                     key={product._id}
-                    className="cursor-pointer rounded pl-1 hover:bg-light-5 hover:dark:bg-dark-5"
+                    className="cursor-pointer rounded pl-1 hover:bg-light-5 "
                     onClick={() => handleProductRemove(product)}
                   >
                     {product.name}
