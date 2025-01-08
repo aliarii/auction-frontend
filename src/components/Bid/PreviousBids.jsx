@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import { getBidById, getBidsByAuction } from "../../store/slices/bidSlice";
 import BidCard from "./BidCard";
 import Loading from "../Loading";
-const socket = io("http://localhost:5000");
+const socket = io(import.meta.env.VITE_API_BASE_URL);
 
 function PreviousBids() {
   const { auction } = useSelector((state) => state.auction);

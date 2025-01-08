@@ -15,7 +15,7 @@ import { getAuctionById } from "../store/slices/auctionSlice";
 import { createBid, getBidById } from "../store/slices/bidSlice";
 import { joinAuction } from "../store/slices/userSlice";
 import { calculateTimeLeft } from "../utils/timeUtils";
-const socket = io("http://localhost:5000");
+const socket = io(import.meta.env.VITE_API_BASE_URL);
 
 function AuctionPage() {
   const { auctionId } = useParams();
