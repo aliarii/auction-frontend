@@ -50,9 +50,9 @@ const AuctionsPage = () => {
 
     // Kategorilere göre filtreleme
     if (selectedCategories.length > 0 && !selectedCategories.includes("Tümü")) {
-      filtered = filtered.filter((auction) =>
-        selectedCategories.includes(auction.category.name)
-      );
+      filtered = filtered.filter((auction) => {
+        selectedCategories.includes(auction.category?.name);
+      });
     }
 
     // Duruma göre filtreleme
