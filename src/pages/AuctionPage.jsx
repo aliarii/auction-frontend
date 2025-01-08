@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import AuctionDetails from "../components/Auction/AuctionDetails";
 import HighestBidCard from "../components/Bid/HighestBidCard";
@@ -23,6 +23,7 @@ function AuctionPage() {
   const { bid } = useSelector((state) => state.bid);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState(null);
 
   const [showConfirm, setShowConfirm] = useState(false);
@@ -60,7 +61,9 @@ function AuctionPage() {
 
   useEffect(() => {
     if (auctionId) {
-      dispatch(getAuctionById(auctionId));
+      dispatch(getAuctionById(auctionId)).then((data) => {
+        if (data.error) navigate("/");
+      });
     }
   }, [dispatch, auctionId]);
 

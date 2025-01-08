@@ -93,7 +93,7 @@ const RegisterPage = () => {
     <div className="flex justify-center items-center w-screen h-screen bg-white dark:bg-dark-7">
       <div className="flex flex-col w-80 md:w-96 m-auto p-4 rounded-xl bg-light-3 dark:bg-dark-5 gap-4">
         <h1 className="text-dark-7 dark:text-light-8 text-4xl font-semibold ">
-          Register
+          Kayıt Ol
         </h1>
         {error && <div className="text-red-500">{error || "Error"}</div>}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -101,7 +101,7 @@ const RegisterPage = () => {
             type="text"
             autoCapitalize="off"
             className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
-            placeholder={"Name"}
+            placeholder="Ad"
             name="name"
             value={userData.name}
             onChange={(e) => setUserData({ ...userData, name: e.target.value })}
@@ -113,7 +113,7 @@ const RegisterPage = () => {
             type="text"
             autoCapitalize="off"
             className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
-            placeholder="Surname"
+            placeholder="Soyad"
             name="surname"
             value={userData.surname}
             onChange={(e) =>
@@ -129,7 +129,7 @@ const RegisterPage = () => {
             type="text"
             autoCapitalize="off"
             className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
-            placeholder="Username"
+            placeholder="Kullanıcı Adı"
             name="username"
             value={userData.username}
             onChange={(e) =>
@@ -145,7 +145,7 @@ const RegisterPage = () => {
             type="email"
             autoCapitalize="off"
             className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
-            placeholder="Email"
+            placeholder="E-posta"
             name="email"
             value={userData.email}
             onChange={(e) =>
@@ -160,7 +160,7 @@ const RegisterPage = () => {
               type={showPassword ? "text" : "password"}
               autoCapitalize="off"
               className="w-full py-3 px-3 border-l border-y border-light-10 outline-none bg-white rounded-l-lg"
-              placeholder="Password"
+              placeholder="Şifre"
               name="password"
               value={userData.password}
               onChange={(e) =>
@@ -184,14 +184,14 @@ const RegisterPage = () => {
             className="w-full rounded-lg py-2 px-3 cursor-pointer bg-light-8 font-semibold text-xl"
             type="submit"
           >
-            {"Register"}
+            Kayıt Ol
           </button>
         </form>
         <Link
           className=" text-center text-blue-700 dark:text-blue-500 font-bold no-underline text-sm"
           to={"/login"}
         >
-          Back to Login
+          Giriş Yap
         </Link>
       </div>
     </div>

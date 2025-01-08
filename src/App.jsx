@@ -43,7 +43,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute roles={["user"]} user={user}>
+              <ProtectedRoute roles={["user", "admin"]} user={user}>
                 <ProfilePage />
               </ProtectedRoute>
             }
@@ -51,7 +51,7 @@ function App() {
           <Route
             path="/auction/:auctionId"
             element={
-              <ProtectedRoute roles={["user"]} user={user}>
+              <ProtectedRoute roles={["user", "admin"]} user={user}>
                 <AuctionPage />
               </ProtectedRoute>
             }
@@ -64,7 +64,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/getapi"
             element={
               <ProtectedRoute roles={["admin"]} user={user}>
@@ -95,15 +95,14 @@ function App() {
                 <TestDeleteApiPage />
               </ProtectedRoute>
             }
-          />
+          /> */}
 
-          {/* Public Rotalar */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 
           {/* 404 Sayfası */}
           {/* <Route path="*" element={<NotFound />} /> */}
-          {/* <Route path="*" element={<HomePage />} /> */}
+          <Route path="*" element={<HomePage />} />
         </Routes>
       </div>
     </UserProvider>

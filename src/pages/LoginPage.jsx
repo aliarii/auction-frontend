@@ -70,7 +70,7 @@ const LoginPage = () => {
       <div className="flex flex-col w-80 md:w-96 m-auto p-4 rounded-xl bg-light-2 dark:bg-dark-5 gap-4">
         <div className="flex justify-between items-center">
           <h1 className="text-dark-7 dark:text-light-8 text-4xl font-semibold ">
-            {"Login"}
+            Giriş Yap
           </h1>
         </div>
         {error && <div className="text-red-500">{error || "Error"}</div>}
@@ -82,7 +82,7 @@ const LoginPage = () => {
             autoCapitalize="off"
             autoComplete="on"
             className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
-            placeholder={"Email address"}
+            placeholder="E-posta"
             value={userData.email}
             onChange={handleEmailChange}
           />
@@ -95,7 +95,7 @@ const LoginPage = () => {
               autoCapitalize="off"
               name="password"
               className="w-full py-3 px-3 border-l border-y border-light-10 outline-none bg-white rounded-l-lg"
-              placeholder={"Password"}
+              placeholder="Şifre"
               value={userData.password}
               onChange={handlePasswordChange}
             />
@@ -113,7 +113,7 @@ const LoginPage = () => {
             className="w-full rounded-lg py-2 px-3 cursor-pointer bg-light-8 font-semibold text-xl"
             type="submit"
           >
-            <h2>{"Login"}</h2>
+            <h2>Giriş Yap</h2>
           </button>
 
           {/* <a
@@ -123,14 +123,14 @@ const LoginPage = () => {
             {"Forgot password?"}
           </a> */}
           <span className="text-dark-7 dark:text-light-8 text-center font-medium">
-            Or
+            Veya
           </span>
 
           <Link
             className="text-center w-full rounded-lg py-2 px-3 bg-light-8 font-semibold text-xl"
             to={"/register"}
           >
-            Create an account
+            Hesap Oluştur
           </Link>
         </form>
       </div>
