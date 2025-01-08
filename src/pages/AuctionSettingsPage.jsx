@@ -21,11 +21,12 @@ import BtnMdCancel from "../components/Button/BtnMdCancel";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import BtnMdSave from "../components/Button/BtnMdSave";
 import BtnMdDelete from "../components/Button/BtnMdDelete";
+import AuctionCard from "../components/Auction/AuctionCard";
 
 const AuctionSettingsPage = () => {
   const views = [
     {
-      id: "1",
+      id: 1,
       element: (props) => (
         <AuctionsView
           {...props}
@@ -134,7 +135,7 @@ const AuctionSettingsPage = () => {
             className={`text-center rounded-md cursor-pointer text-light-1 bg-success whitespace-nowrap overflow-hidden text-ellipsis`}
             onClick={() => handleAddNewCategorySelect()}
           >
-            + Ekle
+            + Kategori Ekle
           </h2>
 
           <div className="flex md:flex-col gap-1 overflow-auto">
@@ -188,34 +189,25 @@ const AuctionsView = ({
       </div>
 
       <HorizontalLine />
-
+      <h2
+        className={`text-center rounded-md cursor-pointer text-light-1 bg-success whitespace-nowrap overflow-hidden text-ellipsis`}
+        onClick={() => handleAddNewAuctionSelect()}
+      >
+        + Oluştur
+      </h2>
       <Grid2
         container
         spacing={1}
         columns={{ xs: 4, sm: 8, md: 12, lg: 16 }}
         className="overflow-auto"
       >
-        <Grid2 size={{ xs: 2, sm: 4, md: 3, lg: 4 }}>
-          <div
-            className="flex flex-col justify-center items-center h-[calc(100vh*.151)] rounded-md cursor-pointer text-center bg-light-5 dark:bg-dark-5"
-            onClick={() => handleAddNewAuctionSelect()}
-          >
-            <h2 className="text-center">+</h2>
-            <h2 className="text-center">Add New Auction</h2>
-          </div>
-        </Grid2>
         {auctions?.length > 0
           ? auctions.map((auction, index) => (
-              <Grid2 key={index} size={{ xs: 2, sm: 4, md: 3, lg: 4 }}>
-                <div
-                  className="h-[calc(100vh*.151)] rounded-md cursor-pointer text-center bg-light-5 dark:bg-dark-5"
-                  onClick={() => handleUpdateAuctionSelect(auction)}
-                >
-                  <h2>{auction.name}</h2>
-                  <h2>{auction.description}</h2>
-                  {/* <h2>{auction.category?.name || "-"}</h2> */}
-                </div>
-              </Grid2>
+              <AuctionCard
+                key={index}
+                auction={auction}
+                onView={() => handleUpdateAuctionSelect(auction)}
+              />
             ))
           : ""}
       </Grid2>
@@ -257,7 +249,7 @@ const AddNewCategoryView = ({ auctions, handleCancel }) => {
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Add New Category</h2>
+        <h2 className="font-semibold">Kategori Ekle</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
@@ -265,28 +257,28 @@ const AddNewCategoryView = ({ auctions, handleCancel }) => {
 
       <div className="flex flex-col w-full h-full gap-2 overflow-auto">
         <div className="flex flex-col w-full gap-2 px-2 pb-2">
-          <h2>Category Name:</h2>
+          <h2>Kategori Adı:</h2>
           <input
             type="text"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-            placeholder="Enter Category Name"
+            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg "
+            placeholder="Kategori Adı"
             name="categoryName"
             value={categoryName}
             onChange={(e) => setCategoryName(e.target.value)}
           />
         </div>
         <div className="flex w-full h-full gap-1 overflow-auto">
-          <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4 dark:bg-dark-5 overflow-auto">
+          <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4  overflow-auto">
             <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-              All Auctions
+              Tümü
             </h2>
-            <div className="my-1 py-0.5 rounded-full bg-light-7 dark:bg-light-10 text-dark-1 dark:text-light-10" />
-            <div className="bg-light-2 dark:bg-dark-7 p-1 h-full rounded overflow-auto">
+            <div className="my-1 py-0.5 rounded-full bg-light-7  text-dark-1 " />
+            <div className="bg-light-2  p-1 h-full rounded overflow-auto">
               {notSelectedAuctions?.map((auction) => (
                 <h2
                   key={auction._id}
-                  className="cursor-pointer rounded pl-1 hover:bg-light-5 hover:dark:bg-dark-5"
+                  className="cursor-pointer rounded pl-1 hover:bg-light-5 "
                   onClick={() => handleAuctionAdd(auction)}
                 >
                   {auction.name}
@@ -300,16 +292,16 @@ const AddNewCategoryView = ({ auctions, handleCancel }) => {
             <ArrowRightAltIcon className="rotate-180" />
           </div>
 
-          <div className="flex flex-col w-full p-2 rounded-lg bg-light-4 dark:bg-dark-5 overflow-auto">
+          <div className="flex flex-col w-full p-2 rounded-lg bg-light-4  overflow-auto">
             <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-              Selected Auctions
+              Seçilen
             </h2>
-            <div className="my-1 py-0.5 rounded-full bg-light-7 dark:bg-light-10 text-dark-1 dark:text-light-10" />
-            <div className="bg-light-2 dark:bg-dark-7 p-1 h-full rounded overflow-auto">
+            <div className="my-1 py-0.5 rounded-full bg-light-7  text-dark-1 " />
+            <div className="bg-light-2  p-1 h-full rounded overflow-auto">
               {selectedAuctions?.map((auction) => (
                 <h2
                   key={auction._id}
-                  className="cursor-pointer rounded pl-1 hover:bg-light-5 hover:dark:bg-dark-5"
+                  className="cursor-pointer rounded pl-1 hover:bg-light-5 "
                   onClick={() => handleAuctionRemove(auction)}
                 >
                   {auction.name}
@@ -380,7 +372,7 @@ const UpdateCategoryView = ({
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Update Category: {name}</h2>
+        <h2 className="font-semibold">Kategori Güncelle: {name}</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
@@ -389,28 +381,28 @@ const UpdateCategoryView = ({
       <div className="flex flex-col w-full h-full overflow-auto">
         <div className="flex flex-col w-full h-full gap-2 overflow-auto">
           <div className="flex flex-col w-full gap-2 px-2 pb-2">
-            <h2>Category Name:</h2>
+            <h2>Kategori Adı:</h2>
             <input
               type="text"
               autoCapitalize="off"
-              className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-              placeholder="Enter Category Name"
+              className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg "
+              placeholder="Kategori Adı"
               name="categoryName"
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
             />
           </div>
           <div className="flex w-full h-full gap-1 overflow-auto">
-            <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4 dark:bg-dark-5 overflow-auto">
+            <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4 overflow-auto">
               <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-                All Auctions
+                Tümü
               </h2>
-              <div className="my-1 py-0.5 rounded-full bg-light-7 dark:bg-light-10 text-dark-1 dark:text-light-10" />
-              <div className="bg-light-2 dark:bg-dark-7 p-1 h-full rounded overflow-auto">
+              <div className="my-1 py-0.5 rounded-full bg-light-7  text-dark-1 " />
+              <div className="bg-light-2  p-1 h-full rounded overflow-auto">
                 {notSelectedAuctions?.map((auction) => (
                   <h2
                     key={auction._id}
-                    className="cursor-pointer rounded pl-1 hover:bg-light-5 hover:dark:bg-dark-5"
+                    className="cursor-pointer rounded pl-1 hover:bg-light-5 "
                     onClick={() => handleAuctionAdd(auction)}
                   >
                     {auction.name}
@@ -424,16 +416,16 @@ const UpdateCategoryView = ({
               <ArrowRightAltIcon className="rotate-180" />
             </div>
 
-            <div className="flex flex-col w-full p-2 rounded-lg bg-light-4 dark:bg-dark-5 overflow-auto">
+            <div className="flex flex-col w-full p-2 rounded-lg bg-light-4  overflow-auto">
               <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-                Selected Auctions
+                Seçilen
               </h2>
-              <div className="my-1 py-0.5 rounded-full bg-light-7 dark:bg-light-10 text-dark-1 dark:text-light-10" />
-              <div className="bg-light-2 dark:bg-dark-7 p-1 h-full rounded overflow-auto">
+              <div className="my-1 py-0.5 rounded-full bg-light-7  text-dark-1 " />
+              <div className="bg-light-2  p-1 h-full rounded overflow-auto">
                 {selectedAuctions?.map((auction) => (
                   <h2
                     key={auction._id}
-                    className="cursor-pointer rounded pl-1 hover:bg-light-5 hover:dark:bg-dark-5"
+                    className="cursor-pointer rounded pl-1 hover:bg-light-5 "
                     onClick={() => handleAuctionRemove(auction)}
                   >
                     {auction.name}
@@ -488,7 +480,7 @@ const AddNewAuctionView = ({ _id, name, handleCancel }) => {
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Add New auction</h2>
+        <h2 className="font-semibold">Oluştur</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
@@ -505,8 +497,8 @@ const AddNewAuctionView = ({ _id, name, handleCancel }) => {
               onChange={(e) =>
                 setAuctionData({ ...auctionData, name: e.target.value })
               }
-              placeholder="Auction Name"
-              className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+              placeholder="Başlık"
+              className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg "
             />
             <textarea
               name="description"
@@ -514,7 +506,7 @@ const AddNewAuctionView = ({ _id, name, handleCancel }) => {
               onChange={(e) =>
                 setAuctionData({ ...auctionData, description: e.target.value })
               }
-              placeholder="Auction Description"
+              placeholder="Açıklama"
               rows="4"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -526,7 +518,7 @@ const AddNewAuctionView = ({ _id, name, handleCancel }) => {
               }
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="">Select Product</option>
+              <option value="">Ürün Seç</option>
               {products &&
                 products.map((product) => (
                   <option key={product._id} value={product._id}>
@@ -542,7 +534,7 @@ const AddNewAuctionView = ({ _id, name, handleCancel }) => {
               }
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="">Select Auction Category</option>
+              <option value="">Kategori Seç</option>
               {auctionCategories &&
                 auctionCategories.map((category) => (
                   <option key={category._id} value={category._id}>
@@ -550,7 +542,7 @@ const AddNewAuctionView = ({ _id, name, handleCancel }) => {
                   </option>
                 ))}
             </select>
-            <h2>Product Condition:</h2>
+            <h2>Ürün Durumu:</h2>
             <select
               name="condition"
               value={auctionData.condition}
@@ -559,10 +551,10 @@ const AddNewAuctionView = ({ _id, name, handleCancel }) => {
               }
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="New">New</option>
-              <option value="Used">Used</option>
+              <option value="New">Yeni</option>
+              <option value="Used">Kullanılmış</option>
             </select>
-            <h2>Auction Status:</h2>
+            <h2>Açık Arttırma Durumu:</h2>
             <select
               name="status"
               value={auctionData.status}
@@ -571,11 +563,11 @@ const AddNewAuctionView = ({ _id, name, handleCancel }) => {
               }
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="Active">Active</option>
-              <option value="Pending">Pending</option>
-              <option value="Closed">Closed</option>
+              <option value="Active">Aktif</option>
+              <option value="Pending">Bekleyen</option>
+              <option value="Closed">Biten</option>
             </select>
-            <h2>Starting Price:</h2>
+            <h2>Başlangıç Fiyatı:</h2>
             <input
               type="number"
               name="startingPrice"
@@ -586,10 +578,10 @@ const AddNewAuctionView = ({ _id, name, handleCancel }) => {
                   startingPrice: +e.target.value,
                 })
               }
-              placeholder="Starting Price"
+              placeholder="Başlangıç Fiyatı"
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            <h2>Start Date:</h2>
+            <h2>Başlangıç Tarihi:</h2>
             <input
               type="datetime-local"
               name="auctionStartTime"
@@ -602,7 +594,7 @@ const AddNewAuctionView = ({ _id, name, handleCancel }) => {
               }
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            <h2>End Date:</h2>
+            <h2>Bitiş Tarihi:</h2>
             <input
               type="datetime-local"
               name="auctionEndTime"
@@ -692,7 +684,7 @@ const UpdateAuctionView = ({ auction, handleCancel }) => {
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Update: {auction?.name}</h2>
+        <h2 className="font-semibold">Güncelle: {auction?.name}</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
@@ -708,8 +700,8 @@ const UpdateAuctionView = ({ auction, handleCancel }) => {
             onChange={(e) =>
               setAuctionData({ ...auctionData, name: e.target.value })
             }
-            placeholder="Auction Name"
-            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+            placeholder="Başlık"
+            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg "
           />
           <textarea
             name="description"
@@ -717,7 +709,7 @@ const UpdateAuctionView = ({ auction, handleCancel }) => {
             onChange={(e) =>
               setAuctionData({ ...auctionData, description: e.target.value })
             }
-            placeholder="Auction Description"
+            placeholder="Açıklama"
             rows="4"
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
@@ -729,7 +721,7 @@ const UpdateAuctionView = ({ auction, handleCancel }) => {
             }
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            <option value="">Select Product</option>
+            <option value="">Ürün Seç</option>
             {products &&
               products.map((product) => (
                 <option key={product._id} value={product._id}>
@@ -745,7 +737,7 @@ const UpdateAuctionView = ({ auction, handleCancel }) => {
             }
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            <option value="">Select Auction Category</option>
+            <option value="">Kategori Seç</option>
             {auctionCategories &&
               auctionCategories.map((category) => (
                 <option key={category._id} value={category._id}>
@@ -753,7 +745,7 @@ const UpdateAuctionView = ({ auction, handleCancel }) => {
                 </option>
               ))}
           </select>
-          <h2>Product Condition:</h2>
+          <h2>Ürün Durumu:</h2>
           <select
             name="condition"
             value={auctionData.condition}
@@ -762,10 +754,10 @@ const UpdateAuctionView = ({ auction, handleCancel }) => {
             }
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            <option value="New">New</option>
-            <option value="Used">Used</option>
+            <option value="New">Yeni</option>
+            <option value="Used">Kullanılmış</option>
           </select>
-          <h2>Auction Status:</h2>
+          <h2>Açık Arttırma Durumu:</h2>
           <select
             name="status"
             value={auctionData.status}
@@ -774,11 +766,11 @@ const UpdateAuctionView = ({ auction, handleCancel }) => {
             }
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            <option value="Active">Active</option>
-            <option value="Pending">Pending</option>
-            <option value="Closed">Closed</option>
+            <option value="Active">Aktif</option>
+            <option value="Pending">Bekleyen</option>
+            <option value="Closed">Biten</option>
           </select>
-          <h2>Starting Price:</h2>
+          <h2>Başlangıç Fiyatı:</h2>
           <input
             type="number"
             name="startingPrice"
@@ -792,7 +784,7 @@ const UpdateAuctionView = ({ auction, handleCancel }) => {
             placeholder="Starting Price"
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          <h2>Start Date:</h2>
+          <h2>Başlangıç Tarihi:</h2>
           <input
             type="datetime-local"
             name="auctionStartTime"
@@ -805,7 +797,7 @@ const UpdateAuctionView = ({ auction, handleCancel }) => {
             }
             className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          <h2>End Date:</h2>
+          <h2>Bitiş Tarihi:</h2>
           <input
             type="datetime-local"
             name="auctionEndTime"

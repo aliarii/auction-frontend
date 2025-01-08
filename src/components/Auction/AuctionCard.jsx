@@ -6,7 +6,7 @@ import { getBidById } from "../../store/slices/bidSlice";
 import { calculateTimeLeft } from "../../utils/timeUtils";
 import { highestBid } from "../../utils/highestBid";
 import ProductImages from "../Product/ProductImages";
-function AuctionCard({ auction }) {
+function AuctionCard({ auction, onView }) {
   const [timeLeft, setTimeLeft] = useState("00:00:00");
   const [bid, setBid] = useState(null);
 
@@ -73,12 +73,21 @@ function AuctionCard({ auction }) {
           </span>
         </div>
       </div>
-      <Link
-        to={`/auction/${auction?._id}`}
-        className="h-8 w-[85%] max-w-56 self-center text-center place-content-center text-light-2 font-semibold rounded-full bg-info"
-      >
-        Görüntüle
-      </Link>
+      {onView ? (
+        <div
+          className="h-8 w-[85%] max-w-56 self-center text-center place-content-center text-light-2 font-semibold rounded-full bg-info cursor-pointer"
+          onClick={onView}
+        >
+          <span>Görüntüle</span>
+        </div>
+      ) : (
+        <Link
+          to={`/auction/${auction?._id}`}
+          className="h-8 w-[85%] max-w-56 self-center text-center place-content-center text-light-2 font-semibold rounded-full bg-info"
+        >
+          Görüntüle
+        </Link>
+      )}
     </Grid2>
   );
 }

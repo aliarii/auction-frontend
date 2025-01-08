@@ -2,7 +2,7 @@ import { Grid2 } from "@mui/material";
 import React from "react";
 import ProductImages from "./ProductImages";
 
-const ProductCard = ({ product, onClick }) => {
+const ProductCard = ({ product, onView }) => {
   return (
     <Grid2
       size={{ xs: 2, sm: 3, md: 4, lg: 4 }}
@@ -20,7 +20,7 @@ const ProductCard = ({ product, onClick }) => {
       </div>
       <div
         className="h-8 w-[85%] max-w-56 self-center text-center place-content-center text-light-2 font-semibold rounded-full bg-info cursor-pointer"
-        onClick={onClick}
+        onClick={onView}
       >
         <span>Görüntüle</span>
       </div>

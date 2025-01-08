@@ -1,5 +1,14 @@
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { Grid2 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import BtnMdCancel from "../components/Button/BtnMdCancel";
+import BtnMdDelete from "../components/Button/BtnMdDelete";
+import BtnMdEdit from "../components/Button/BtnMdEdit";
+import BtnMdSave from "../components/Button/BtnMdSave";
+import HorizontalLine from "../components/HorizontalLine";
+import ProductCard from "../components/Product/ProductCard";
 import {
   createProductCategory,
   deleteProductCategory,
@@ -12,17 +21,6 @@ import {
   getProducts,
   updateProduct,
 } from "../store/slices/productSlice";
-import { Grid2 } from "@mui/material";
-import HorizontalLine from "../components/HorizontalLine";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import BtnMdEdit from "../components/Button/BtnMdEdit";
-import BtnMdCancel from "../components/Button/BtnMdCancel";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import BtnMdSave from "../components/Button/BtnMdSave";
-import BtnMdDelete from "../components/Button/BtnMdDelete";
-import ProductImages from "../components/Product/ProductImages";
-import { Link } from "react-router-dom";
-import ProductCard from "../components/Product/ProductCard";
 
 const ProductSettingsPage = () => {
   const views = [
@@ -178,8 +176,6 @@ const ProductsView = ({
   handleAddNewProductSelect,
   handleUpdateCategorySelect,
 }) => {
-  console.log(products);
-
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
@@ -209,7 +205,7 @@ const ProductsView = ({
               <ProductCard
                 key={index}
                 product={product}
-                onClick={() => handleUpdateProductSelect(product)}
+                onView={() => handleUpdateProductSelect(product)}
               />
             ))
           : ""}
@@ -250,7 +246,7 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Add New Category</h2>
+        <h2 className="font-semibold">Kategori Ekle</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
@@ -258,12 +254,12 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
 
       <div className="flex flex-col w-full h-full gap-2 overflow-auto">
         <div className="flex flex-col w-full gap-2 px-2 pb-2">
-          <h2>Category Name:</h2>
+          <h2>Kategori Adı:</h2>
           <input
             type="text"
             autoCapitalize="off"
             className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-            placeholder="Enter Category Name"
+            placeholder="Kategori Adı"
             name="categoryName"
             value={categoryName}
             onChange={(e) => setCategoryName(e.target.value)}
@@ -272,7 +268,7 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
         <div className="flex w-full h-full gap-1 overflow-auto">
           <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4 overflow-auto">
             <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-              All Products
+              Tüm Ürünler
             </h2>
             <div className="my-1 py-0.5 rounded-full bg-light-7 text-dark-1 " />
             <div className="bg-light-2 p-1 h-full rounded overflow-auto">
@@ -295,7 +291,7 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
 
           <div className="flex flex-col w-full p-2 rounded-lg bg-light-4  overflow-auto">
             <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-              Selected Products
+              Seçilen Ürünler
             </h2>
             <div className="my-1 py-0.5 rounded-full bg-light-7 text-dark-1 " />
             <div className="bg-light-2 p-1 h-full rounded overflow-auto">
@@ -373,7 +369,7 @@ const UpdateCategoryView = ({
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Update Category: {name}</h2>
+        <h2 className="font-semibold">Kategori Güncelle: {name}</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
@@ -382,12 +378,12 @@ const UpdateCategoryView = ({
       <div className="flex flex-col w-full h-full overflow-auto">
         <div className="flex flex-col w-full h-full gap-2 overflow-auto">
           <div className="flex flex-col w-full gap-2 px-2 pb-2">
-            <h2>Category Name:</h2>
+            <h2>Kategori Adı:</h2>
             <input
               type="text"
               autoCapitalize="off"
               className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-              placeholder="Enter Category Name"
+              placeholder="Kategori Adı"
               name="categoryName"
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
@@ -396,7 +392,7 @@ const UpdateCategoryView = ({
           <div className="flex w-full h-full gap-1 overflow-auto">
             <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4  overflow-auto">
               <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-                All Products
+                Tüm Ürünler
               </h2>
               <div className="my-1 py-0.5 rounded-full bg-light-7  text-dark-1 " />
               <div className="bg-light-2 p-1 h-full rounded overflow-auto">
@@ -419,7 +415,7 @@ const UpdateCategoryView = ({
 
             <div className="flex flex-col w-full p-2 rounded-lg bg-light-4  overflow-auto">
               <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-                Selected Products
+                Seçilen Ürünler
               </h2>
               <div className="my-1 py-0.5 rounded-full bg-light-7  text-dark-1 " />
               <div className="bg-light-2  p-1 h-full rounded overflow-auto">
@@ -451,7 +447,7 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
     name: "",
     quantity: 1,
     description: "",
-    category: null, // Category ID
+    category: null,
     images: [],
   });
   const handleProductSave = () => {
@@ -471,7 +467,7 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
           name: "",
           quantity: 1,
           description: "",
-          category: null, // Category ID
+          category: null,
           images: [],
         })
       );
@@ -484,13 +480,13 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
         images: Array.from(files),
       }));
     } else {
-      alert("You can only upload up to 5 images.");
+      alert("Maksimum 5 resim.");
     }
   };
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Add New Product</h2>
+        <h2 className="font-semibold">Ürün Ekle</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
@@ -499,24 +495,24 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
       <div className="flex flex-col w-full h-full overflow-auto">
         <div className="flex flex-col w-full gap-2 px-2 pb-2 overflow-auto">
           <div className="flex flex-col w-full gap-2 ">
-            <h2>Product Name:</h2>
+            <h2>Ürün Adı:</h2>
             <input
               type="text"
               autoCapitalize="off"
               className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-              placeholder="Enter Product Name"
+              placeholder="Ürün Adı"
               name="name"
               value={productData.name}
               onChange={(e) =>
                 setProductData({ ...productData, name: e.target.value })
               }
             />
-            <h2>Product Quantity:</h2>
+            <h2>Ürün Adedi:</h2>
             <input
               type="number"
               autoCapitalize="off"
               className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg dark:text-dark-8"
-              placeholder="Enter Product Quantity"
+              placeholder="Ürün Adedi"
               name="quantity"
               value={productData.quantity}
               onChange={(e) =>
@@ -529,7 +525,7 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
               onChange={(e) =>
                 setProductData({ ...productData, description: e.target.value })
               }
-              placeholder="Description"
+              placeholder="Açıklama"
               rows="4"
               className="w-full py-1 px-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -540,9 +536,7 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
               multiple
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            <p className="text-sm text-gray-500">
-              You can upload up to 5 images.
-            </p>
+            <p className="text-sm text-gray-500">Maksimum 5 resim.</p>
           </div>
           <div className="flex justify-end w-full gap-2">
             <BtnMdSave clickEvent={handleProductSave} />
@@ -573,7 +567,7 @@ const UpdateProductView = ({ product, handleCancel }) => {
           name: "",
           quantity: 1,
           description: "",
-          category: null, // Category ID
+          category: null,
           images: [],
         })
       );
@@ -589,7 +583,7 @@ const UpdateProductView = ({ product, handleCancel }) => {
           name: "",
           quantity: 1,
           description: "",
-          category: null, // Category ID
+          category: null,
           images: [],
         })
       );
@@ -597,7 +591,7 @@ const UpdateProductView = ({ product, handleCancel }) => {
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Update: {product?.name}</h2>
+        <h2 className="font-semibold">Güncelle: {product?.name}</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
@@ -605,24 +599,24 @@ const UpdateProductView = ({ product, handleCancel }) => {
 
       <div className="flex flex-col w-full h-full overflow-auto">
         <div className="flex flex-col w-full h-full gap-2 px-2 pb-2 overflow-auto">
-          <h2>Product Name:</h2>
+          <h2>Ürün Adı:</h2>
           <input
             type="text"
             autoCapitalize="off"
             className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-            placeholder="Enter Product Name"
+            placeholder="Ürün Adı"
             name="name"
             value={productData.name}
             onChange={(e) =>
               setProductData({ ...productData, name: e.target.value })
             }
           />
-          <h2>Product Quantity:</h2>
+          <h2>Ürün Adedi:</h2>
           <input
             type="number"
             autoCapitalize="off"
             className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg dark:text-dark-8"
-            placeholder="Enter Product Quantity"
+            placeholder="Ürün Adedi"
             name="quantity"
             value={productData.quantity}
             onChange={(e) =>
@@ -635,7 +629,7 @@ const UpdateProductView = ({ product, handleCancel }) => {
             onChange={(e) =>
               setProductData({ ...productData, description: e.target.value })
             }
-            placeholder="Description"
+            placeholder="Açıklama"
             rows="4"
             className="w-full py-1 px-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
