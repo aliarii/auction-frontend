@@ -4,6 +4,7 @@ import { api } from "../../Config/api";
 const initialState = {
     users: null,
     user: null,
+    userProfile: null,
     isLoading: false,
     error: null,
 };
@@ -70,6 +71,19 @@ export const getUserById = createAsyncThunk(
 );
 
 export const getUserByToken = createAsyncThunk(
+    "user/token",
+    async (token) => {
+
+        const response = await api.get(`/api/users/token`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data;
+    }
+);
+
+export const getUserProfile = createAsyncThunk(
     "user/profile",
     async (token) => {
 
@@ -81,6 +95,7 @@ export const getUserByToken = createAsyncThunk(
         return response.data;
     }
 );
+
 const userSlice = createSlice({
     name: "user",
     initialState,
@@ -157,7 +172,20 @@ const userSlice = createSlice({
                 state.isLoading = false;
                 state.user = null;
             })
-
+            .addCase(getUserProfile.pending, (state) => {
+                console.log("getUserProfile.pending");
+                state.isLoading = true;
+            })
+            .addCase(getUserProfile.fulfilled, (state, action) => {
+                console.log("getUserProfile.fulfilled");
+                state.isLoading = false;
+                state.userProfile = action.payload.success ? action.payload.data.user : null;
+            })
+            .addCase(getUserProfile.rejected, (state) => {
+                console.log("getUserProfile.rejected");
+                state.isLoading = false;
+                state.userProfile = null;
+            })
 
     },
 });

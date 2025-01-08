@@ -16,6 +16,7 @@ import { logoutUser, validateToken } from "./store/slices/authSlice";
 import AuctionsPage from "./pages/AuctionsPage";
 import { UserProvider } from "./contexts/UserContext";
 import AdminPage from "./pages/AdminPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,25 +41,25 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/auctions" element={<AuctionsPage />} />
           <Route
+            path="/profile"
+            element={
+              <ProtectedRoute roles={["user"]} user={user}>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/auction/:auctionId"
             element={
-              <ProtectedRoute role="user" user={user}>
+              <ProtectedRoute roles={["user"]} user={user}>
                 <AuctionPage />
               </ProtectedRoute>
             }
           />
-          {/* <Route
-            path="/auctions"
-            element={
-              <ProtectedRoute role="user" user={user}>
-                <AuctionsPage />
-              </ProtectedRoute>
-            }
-          /> */}
           <Route
             path="/admin"
             element={
-              <ProtectedRoute role="admin" user={user}>
+              <ProtectedRoute roles={["admin"]} user={user}>
                 <AdminPage />
               </ProtectedRoute>
             }
@@ -66,7 +67,7 @@ function App() {
           <Route
             path="/getapi"
             element={
-              <ProtectedRoute role="admin" user={user}>
+              <ProtectedRoute roles={["admin"]} user={user}>
                 <TestGetApiPage />
               </ProtectedRoute>
             }
@@ -74,7 +75,7 @@ function App() {
           <Route
             path="/postapi"
             element={
-              <ProtectedRoute role="admin" user={user}>
+              <ProtectedRoute roles={["admin"]} user={user}>
                 <TestPostApiPage />
               </ProtectedRoute>
             }
@@ -82,7 +83,7 @@ function App() {
           <Route
             path="/patchapi"
             element={
-              <ProtectedRoute role="admin" user={user}>
+              <ProtectedRoute roles={["admin"]} user={user}>
                 <TestPatchApiPage />
               </ProtectedRoute>
             }
@@ -90,7 +91,7 @@ function App() {
           <Route
             path="/deleteapi"
             element={
-              <ProtectedRoute role="admin" user={user}>
+              <ProtectedRoute roles={["admin"]} user={user}>
                 <TestDeleteApiPage />
               </ProtectedRoute>
             }
@@ -102,6 +103,7 @@ function App() {
 
           {/* 404 Sayfası */}
           {/* <Route path="*" element={<NotFound />} /> */}
+          {/* <Route path="*" element={<HomePage />} /> */}
         </Routes>
       </div>
     </UserProvider>

@@ -38,9 +38,12 @@ function Navbar() {
       <div className="flex flex-row items-center w-fit gap-5 p-2">
         {auth?.isAuthenticated && auth?.user ? (
           <>
-            <p className="cursor-pointer">
+            {/* <p className="cursor-pointer">
               {auth?.user ? auth?.user.name : "Loading..."}
-            </p>
+            </p> */}
+            <Link to={"/profile"}>
+              {auth?.user ? auth?.user.name : "Loading..."}
+            </Link>
             <p className="cursor-pointer" onClick={handleLogout}>
               Logout
             </p>
