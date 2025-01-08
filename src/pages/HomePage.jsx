@@ -28,7 +28,7 @@ function HomePage() {
         <HorizontalLine />
         {isLoading ? (
           <Loading />
-        ) : (
+        ) : auctions && auctions?.activeAuctions.length > 0 ? (
           <Grid2
             container
             spacing={1}
@@ -40,6 +40,8 @@ function HomePage() {
                 <AuctionCard key={idx} auction={auction} />
               ))}
           </Grid2>
+        ) : (
+          <p className="text-center text-light-2">Aktif Kayıt Bulunamadı.</p>
         )}
       </div>
     </div>

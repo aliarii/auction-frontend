@@ -16,6 +16,7 @@ const ProfilePage = () => {
       element: <AuctionsInfo />,
     },
     { name: "Teklifler", element: <BidsInfo /> },
+    { name: "Kazandıklarım", element: <WonAuctionsInfo /> },
   ];
 
   const dispatch = useDispatch();
@@ -41,7 +42,7 @@ const ProfilePage = () => {
           {settings.map((setting, idx) => (
             <div
               key={idx}
-              className="relative flex flex-row bg-light-7 rounded-md font-semibold w-full p-2 cursor-pointer"
+              className="relative flex flex-row bg-light-4 rounded-md font-semibold w-full p-2 cursor-pointer"
               onClick={() => setSelectedSetting(setting)}
             >
               <span className="whitespace-nowrap overflow-hidden text-ellipsis">
@@ -84,7 +85,7 @@ const PersonalInfo = () => {
         )}
       </div>
 
-      <div className="flex flex-col size-full p-2 bg-light-8 rounded-md font-semibold text-lg text-dark-7">
+      <div className="flex flex-col size-full p-2 bg-light-4 rounded-md font-semibold text-lg text-dark-7">
         <dl className="table w-full table-fixed">
           <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-dark-1 ">
             Ad:
@@ -233,25 +234,25 @@ const AuctionsInfo = () => {
   }, [userProfile]);
 
   return (
-    <div className="flex flex-col size-full p-2 bg-light-8 rounded-md font-semibold text-lg text-dark-7">
+    <div className="flex flex-col size-full p-2 bg-light-4 rounded-md font-semibold text-lg text-dark-7">
       {sortedAuctions.length === 0 ? (
-        <p className="text-center text-light-2">Kayıt Bulunamadı.</p>
+        <p className="text-center text-dark-7">Kayıt Bulunamadı.</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="table-auto w-full text-sm text-dark-7">
             <thead>
               <tr>
-                <th className="px-4 py-2 text-left font-semibold text-light-2">
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
                   Başlık
                 </th>
 
-                <th className="px-4 py-2 text-left font-semibold text-light-2">
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
                   Başlangıç Tarihi
                 </th>
-                <th className="px-4 py-2 text-left font-semibold text-light-2">
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
                   Durum
                 </th>
-                <th className="px-4 py-2 text-left font-semibold text-light-2">
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
                   #
                 </th>
               </tr>
@@ -305,24 +306,24 @@ const BidsInfo = () => {
   }, [userProfile]);
 
   return (
-    <div className="flex flex-col size-full p-2 bg-light-8 rounded-md font-semibold text-lg text-dark-7">
+    <div className="flex flex-col size-full p-2 bg-light-4 rounded-md font-semibold text-lg text-dark-7">
       {sortedBids.length === 0 ? (
-        <p className="text-center text-light-2">Kayıt Bulunamadı.</p>
+        <p className="text-center text-dark-7">Kayıt Bulunamadı.</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="table-auto w-full text-sm text-dark-7">
             <thead>
               <tr>
-                <th className="px-4 py-2 text-left font-semibold text-light-2">
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
                   Id
                 </th>
-                <th className="px-4 py-2 text-left font-semibold text-light-2">
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
                   Teklif Miktarı
                 </th>
-                <th className="px-4 py-2 text-left font-semibold text-light-2">
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
                   Tarih
                 </th>
-                <th className="px-4 py-2 text-left font-semibold text-light-2">
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
                   #
                 </th>
               </tr>
@@ -341,6 +342,85 @@ const BidsInfo = () => {
                   <td className="px-4 py-2">
                     <Link
                       to={`/auction/${bid.auction}`}
+                      className="px-4 py-2 text-white bg-info rounded-md"
+                    >
+                      Görüntüle
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const WonAuctionsInfo = () => {
+  const { userProfile } = useSelector((state) => state.user);
+
+  const [sortedAuctions, setSortedAuctions] = useState([]);
+
+  useEffect(() => {
+    if (userProfile && userProfile.auctionsWon.length > 0) {
+      const auctions = [...(userProfile?.auctionsWon || [])].sort(
+        (a, b) => new Date(a.auctionStartTime) - new Date(b.auctionStartTime)
+      );
+      setSortedAuctions(auctions);
+    }
+  }, [userProfile]);
+
+  useEffect(() => {
+    if (userProfile) {
+      console.log("userProfile", userProfile);
+    }
+  }, [userProfile]);
+
+  return (
+    <div className="flex flex-col size-full p-2 bg-light-4 rounded-md font-semibold text-lg text-dark-7">
+      {sortedAuctions.length === 0 ? (
+        <p className="text-center text-dark-7">Kayıt Bulunamadı.</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="table-auto w-full text-sm text-dark-7">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
+                  Başlık
+                </th>
+
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
+                  Başlangıç Tarihi
+                </th>
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
+                  Durum
+                </th>
+                <th className="px-4 py-2 text-left font-semibold text-dark-7">
+                  #
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedAuctions.map((auction) => (
+                <tr
+                  key={auction._id}
+                  className="border-t border-light-10 hover:bg-light-9"
+                >
+                  <td className="px-4 py-2">{auction.name}</td>
+                  <td className="px-4 py-2">
+                    {new Date(auction.auctionStartTime).toLocaleString()}
+                  </td>
+                  <td className="px-4 py-2">
+                    {auction.status === "Active"
+                      ? "Aktif"
+                      : auction.status === "Pending"
+                        ? "Bekleyen"
+                        : "Biten"}
+                  </td>
+                  <td className="px-4 py-2">
+                    <Link
+                      to={`/auction/${auction._id}`}
                       className="px-4 py-2 text-white bg-info rounded-md"
                     >
                       Görüntüle
