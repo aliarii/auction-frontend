@@ -1,22 +1,17 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes } from "react-router-dom";
-import Loading from "./components/Loading";
 import Navbar from "./components/Navbar";
-import AuctionPage from "./pages/AuctionPage";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import TestDeleteApiPage from "./pages/TestDeleteApiPage";
-import TestGetApiPage from "./pages/TestGetApiPage";
-import TestPatchApiPage from "./pages/TestPatchApiPage";
-import TestPostApiPage from "./pages/TestPostApiPage";
-import ProtectedRoute from "./routes/ProtectedRoute";
-import { logoutUser, validateToken } from "./store/slices/authSlice";
-import AuctionsPage from "./pages/AuctionsPage";
 import { UserProvider } from "./contexts/UserContext";
 import AdminPage from "./pages/AdminPage";
+import AuctionPage from "./pages/AuctionPage";
+import AuctionsPage from "./pages/AuctionsPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
+import RegisterPage from "./pages/RegisterPage";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import { logoutUser, validateToken } from "./store/slices/authSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +30,7 @@ function App() {
 
   return (
     <UserProvider>
-      <div className="h-screen flex flex-col bg-dark-7">
+      <div className="flex flex-col h-screen bg-light-2 font-poppins">
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -64,39 +59,6 @@ function App() {
               </ProtectedRoute>
             }
           />
-          {/* <Route
-            path="/getapi"
-            element={
-              <ProtectedRoute roles={["admin"]} user={user}>
-                <TestGetApiPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/postapi"
-            element={
-              <ProtectedRoute roles={["admin"]} user={user}>
-                <TestPostApiPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/patchapi"
-            element={
-              <ProtectedRoute roles={["admin"]} user={user}>
-                <TestPatchApiPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/deleteapi"
-            element={
-              <ProtectedRoute roles={["admin"]} user={user}>
-                <TestDeleteApiPage />
-              </ProtectedRoute>
-            }
-          /> */}
-
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
 

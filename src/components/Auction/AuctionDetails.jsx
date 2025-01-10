@@ -5,64 +5,47 @@ import HorizontalLine from "../HorizontalLine";
 const AuctionDetails = () => {
   const { auction } = useSelector((state) => state.auction);
   return (
-    <div className="flex flex-col size-full p-2 gap-1 rounded-lg bg-dark-2 overflow-auto">
-      <h1 className="text-lg text-light-2 font-semibold text-center">
-        Açık Arttırma Detayları
-      </h1>
+    <div className="flex flex-col h-fit w-full p-2 gap-1 rounded-lg bg-white shadow-sm border">
+      <h1>Auction Details</h1>
       <HorizontalLine />
-      <h1 className="text-base text-light-2 font-medium text-center">
-        {auction?.name}
-      </h1>
-      <HorizontalLine />
+      <h1 className="font-semibold text-xl">{auction?.name}</h1>
 
-      <div className="flex flex-col size-full gap-1 overflow-auto">
+      <div className="flex flex-col size-full gap-1 overflow-auto text-sm">
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(38%)] text-sm text-light-5 ">
-            Kategori:
+          <label className="whitespace-nowrap min-w-[calc(38%)] font-medium">
+            Category:
           </label>
-          <span className="text-sm text-light-5 font-medium">
-            {auction?.category?.name}
-          </span>
+          <span>{auction?.category?.name || "-"}</span>
         </div>
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(38%)] text-sm text-light-5 ">
-            Başlangıç Fiyatı:
+          <label className="whitespace-nowrap min-w-[calc(38%)] font-medium">
+            Starting Price:
           </label>
-          <span className="text-sm text-light-5 font-medium">
-            {auction?.startingPrice} TL
-          </span>
+          <span>{auction?.startingPrice} TL</span>
         </div>
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(38%)] text-sm text-light-5 ">
-            Minimum Artış:
+          <label className="whitespace-nowrap min-w-[calc(38%)] font-medium">
+            Price Interval:
           </label>
-          <span className="text-sm text-light-5 font-medium">
-            {auction?.minimumBidInterval} TL
-          </span>
+          <span>{auction?.minimumBidInterval} TL</span>
         </div>
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(38%)] text-sm text-light-5 ">
-            Başlangıç Tarihi:
+          <label className="whitespace-nowrap min-w-[calc(38%)] font-medium">
+            Start Date:
           </label>
-          <span className="text-sm text-light-5 font-medium">
-            {new Date(auction?.auctionStartTime).toLocaleString()}
-          </span>
+          <span>{new Date(auction?.auctionStartTime).toLocaleString()}</span>
         </div>
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(38%)] text-sm text-light-5 ">
-            Bitiş Tarihi:
+          <label className="whitespace-nowrap min-w-[calc(38%)] font-medium">
+            End Date:
           </label>
-          <span className="text-sm text-light-5 font-medium">
-            {new Date(auction?.auctionEndTime).toLocaleString()}
-          </span>
+          <span>{new Date(auction?.auctionEndTime).toLocaleString()}</span>
         </div>
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(38%)] text-sm text-light-5 ">
-            Ek Açıklamalar:
+          <label className="whitespace-nowrap min-w-[calc(38%)] font-medium">
+            Description:
           </label>
-          <span className="text-sm text-light-5 font-medium">
-            {auction?.description}
-          </span>
+          <span>{auction?.description}</span>
         </div>
       </div>
     </div>

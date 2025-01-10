@@ -7,7 +7,6 @@ import BtnMdCancel from "../components/Button/BtnMdCancel";
 import BtnMdDelete from "../components/Button/BtnMdDelete";
 import BtnMdEdit from "../components/Button/BtnMdEdit";
 import BtnMdSave from "../components/Button/BtnMdSave";
-import HorizontalLine from "../components/HorizontalLine";
 import ProductCard from "../components/Product/ProductCard";
 import {
   createProductCategory,
@@ -41,21 +40,18 @@ const ProductSettingsPage = () => {
         <AddNewCategoryView {...props} handleCancel={handleCancel} />
       ),
     },
-
     {
       id: 3,
       element: (props) => (
         <UpdateCategoryView {...props} handleCancel={handleCancel} />
       ),
     },
-
     {
       id: 4,
       element: (props) => (
         <AddNewProductView {...props} handleCancel={handleCancel} />
       ),
     },
-
     {
       id: 5,
       element: (props) => (
@@ -79,7 +75,7 @@ const ProductSettingsPage = () => {
 
   useEffect(() => {
     if (productCategories) {
-      const newCategories = [{ name: "Tümü", products }, ...productCategories];
+      const newCategories = [{ name: "All", products }, ...productCategories];
       setCategories(newCategories);
 
       setSelectedCategory(newCategories[0]);
@@ -124,31 +120,28 @@ const ProductSettingsPage = () => {
 
   return (
     <div className="flex flex-col md:flex-row w-full h-full gap-1 overflow-auto">
-      <div className="flex flex-col w-full md:w-[calc(20%)] min-h-fit md:h-full p-2 gap-2 bg-light-4 rounded-lg overflow-auto">
-        <div className="hidden md:flex justify-between items-end w-full min-h-6">
-          <h2 className="font-semibold">Kategoriler</h2>
-        </div>
-
-        <HorizontalLine />
+      <div className="flex flex-col w-full md:w-[calc(20%)] min-h-fit md:h-full p-2 gap-2 overflow-auto">
+        <h1>Categories</h1>
+        <hr className="w-full border-green-200 border" />
 
         <div className="flex flex-col w-full h-fit gap-2 overflow-auto">
-          <h2
-            className={`text-center rounded-md cursor-pointer text-light-1 bg-success whitespace-nowrap overflow-hidden text-ellipsis`}
+          <button
+            className={`rounded-md text-white bg-green-500 py-1 whitespace-nowrap overflow-hidden text-ellipsis`}
             onClick={() => handleAddNewCategorySelect()}
           >
-            + Kategori Ekle
-          </h2>
+            + New Category
+          </button>
 
           <div className="flex md:flex-col gap-1 overflow-auto">
             {categories?.map((category, index) => (
               <div
-                className={`flex justify-between items-center rounded-md cursor-pointer hover:bg-light-8 ${selectedViewId !== 1 && category.name === selectedCategory.name ? "bg-light-8 " : ""}`}
+                className={`flex justify-between items-center py-1 rounded-md cursor-pointer hover:bg-green-200 ${selectedViewId !== 1 && category.name === selectedCategory.name ? "bg-green-200 " : ""}`}
                 key={index}
                 onClick={() => handleCategorySelect(category)}
               >
-                <h2 className="mr-2 md:mr-0 ml-2 whitespace-nowrap">
+                <span className="mr-2 md:mr-0 ml-2 whitespace-nowrap">
                   {category.name}
-                </h2>
+                </span>
                 {category === selectedCategory && (
                   <div className="hidden md:inline-flex justify-center">
                     <ChevronRightIcon />
@@ -160,6 +153,7 @@ const ProductSettingsPage = () => {
         </div>
       </div>
 
+      <div className="h-full w-0.5 bg-green-200" />
       <div className="w-full md:w-[calc(80%)] h-full overflow-auto">
         {selectedView}
       </div>
@@ -177,23 +171,23 @@ const ProductsView = ({
   handleUpdateCategorySelect,
 }) => {
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
+    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">{name}</h2>
-        {name !== "Tümü" ? (
+        <h1>{name}</h1>
+        {name !== "All" ? (
           <BtnMdEdit handleClick={() => handleUpdateCategorySelect()} />
         ) : (
           ""
         )}
       </div>
+      <hr className="w-full border-green-200 border" />
 
-      <HorizontalLine />
-      <h2
-        className={`text-center rounded-md cursor-pointer text-light-1 bg-success whitespace-nowrap overflow-hidden text-ellipsis`}
+      <button
+        className={`py-1 rounded-md text-white bg-green-500 `}
         onClick={() => handleAddNewProductSelect()}
       >
-        + Ürün Ekle
-      </h2>
+        + New Product
+      </button>
       <Grid2
         container
         spacing={1}
@@ -244,38 +238,37 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
     setNotSelectedProducts([...notSelectedProducts, product]);
   };
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
+    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Kategori Ekle</h2>
+        <h2>New Category</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
-      <HorizontalLine />
+      <hr className="w-full border-green-200 border" />
 
       <div className="flex flex-col w-full h-full gap-2 overflow-auto">
         <div className="flex flex-col w-full gap-2 px-2 pb-2">
-          <h2>Kategori Adı:</h2>
+          <h2>Category Name:</h2>
           <input
             type="text"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-            placeholder="Kategori Adı"
+            className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg"
+            placeholder="Category Name"
             name="categoryName"
             value={categoryName}
             onChange={(e) => setCategoryName(e.target.value)}
           />
         </div>
         <div className="flex w-full h-full gap-1 overflow-auto">
-          <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4 overflow-auto">
-            <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-              Tüm Ürünler
-            </h2>
-            <div className="my-1 py-0.5 rounded-full bg-light-7 text-dark-1 " />
-            <div className="bg-light-2 p-1 h-full rounded overflow-auto">
+          <div className="flex flex-col w-full h-full p-2 gap-1 rounded-lg border-2 shadow-md overflow-auto">
+            <h2>All Products</h2>
+            <hr className="w-full border-green-200 border" />
+
+            <div className="h-full overflow-auto">
               {notSelectedProducts?.map((product) => (
                 <h2
                   key={product._id}
-                  className="cursor-pointer rounded pl-1 hover:bg-light-5 "
+                  className="cursor-pointer rounded pl-1 hover:bg-green-200"
                   onClick={() => handleProductAdd(product)}
                 >
                   {product.name}
@@ -289,21 +282,24 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
             <ArrowRightAltIcon className="rotate-180" />
           </div>
 
-          <div className="flex flex-col w-full p-2 rounded-lg bg-light-4  overflow-auto">
-            <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-              Seçilen Ürünler
-            </h2>
-            <div className="my-1 py-0.5 rounded-full bg-light-7 text-dark-1 " />
-            <div className="bg-light-2 p-1 h-full rounded overflow-auto">
-              {selectedProducts?.map((product) => (
-                <h2
-                  key={product.id}
-                  className="cursor-pointer rounded pl-1 hover:bg-light-5 "
-                  onClick={() => handleProductRemove(product)}
-                >
-                  {product.name}
-                </h2>
-              ))}
+          <div className="flex flex-col w-full h-full p-2 gap-1 rounded-lg border-2 shadow-md overflow-auto">
+            <h2>Selected Products</h2>
+            <hr className="w-full border-green-200 border" />
+
+            <div className="h-full overflow-auto">
+              {selectedProducts.length > 0 ? (
+                selectedProducts?.map((product) => (
+                  <h2
+                    key={product.id}
+                    className="cursor-pointer rounded pl-1 hover:bg-green-200"
+                    onClick={() => handleProductRemove(product)}
+                  >
+                    {product.name}
+                  </h2>
+                ))
+              ) : (
+                <span>No products selected</span>
+              )}
             </div>
           </div>
         </div>
@@ -367,39 +363,38 @@ const UpdateCategoryView = ({
     setNotSelectedProducts([...notSelectedProducts, product]);
   };
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
+    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Kategori Güncelle: {name}</h2>
+        <h2>Update Category: {name}</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
-      <HorizontalLine />
+      <hr className="w-full border-green-200 border" />
 
       <div className="flex flex-col w-full h-full overflow-auto">
         <div className="flex flex-col w-full h-full gap-2 overflow-auto">
           <div className="flex flex-col w-full gap-2 px-2 pb-2">
-            <h2>Kategori Adı:</h2>
+            <h2>Category Name:</h2>
             <input
               type="text"
               autoCapitalize="off"
-              className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-              placeholder="Kategori Adı"
+              className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg "
+              placeholder="Category Name"
               name="categoryName"
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
             />
           </div>
           <div className="flex w-full h-full gap-1 overflow-auto">
-            <div className="flex flex-col w-full h-full p-2 rounded-lg bg-light-4  overflow-auto">
-              <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-                Tüm Ürünler
-              </h2>
-              <div className="my-1 py-0.5 rounded-full bg-light-7  text-dark-1 " />
-              <div className="bg-light-2 p-1 h-full rounded overflow-auto">
+            <div className="flex flex-col w-full h-full p-2 gap-1 rounded-lg border-2 shadow-md overflow-auto">
+              <h2>All Products</h2>
+              <hr className="w-full border-green-200 border" />
+
+              <div className="h-full overflow-auto">
                 {notSelectedProducts?.map((product) => (
                   <h2
                     key={product._id}
-                    className="cursor-pointer rounded pl-1 hover:bg-light-5 "
+                    className="cursor-pointer rounded pl-1 hover:bg-green-200"
                     onClick={() => handleProductAdd(product)}
                   >
                     {product.name}
@@ -413,21 +408,24 @@ const UpdateCategoryView = ({
               <ArrowRightAltIcon className="rotate-180" />
             </div>
 
-            <div className="flex flex-col w-full p-2 rounded-lg bg-light-4  overflow-auto">
-              <h2 className="whitespace-nowrap overflow-hidden text-ellipsis">
-                Seçilen Ürünler
-              </h2>
-              <div className="my-1 py-0.5 rounded-full bg-light-7  text-dark-1 " />
-              <div className="bg-light-2  p-1 h-full rounded overflow-auto">
-                {selectedProducts?.map((product) => (
-                  <h2
-                    key={product._id}
-                    className="cursor-pointer rounded pl-1 hover:bg-light-5 "
-                    onClick={() => handleProductRemove(product)}
-                  >
-                    {product.name}
-                  </h2>
-                ))}
+            <div className="flex flex-col w-full h-full p-2 gap-1 rounded-lg border-2 shadow-md overflow-auto">
+              <h2>Selected Products</h2>
+              <hr className="w-full border-green-200 border" />
+
+              <div className="h-full overflow-auto">
+                {selectedProducts.length > 0 ? (
+                  selectedProducts?.map((product) => (
+                    <h2
+                      key={product._id}
+                      className="cursor-pointer rounded pl-1 hover:bg-green-200"
+                      onClick={() => handleProductRemove(product)}
+                    >
+                      {product.name}
+                    </h2>
+                  ))
+                ) : (
+                  <span>No products selected</span>
+                )}
               </div>
             </div>
           </div>
@@ -455,7 +453,7 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
     formData.append("name", productData.name);
     formData.append("quantity", productData.quantity);
     formData.append("description", productData.description);
-    formData.append("category", name === "Tümü" ? null : _id);
+    formData.append("category", name === "All" ? null : _id);
 
     productData.images.forEach((image) => {
       formData.append("images", image);
@@ -484,35 +482,35 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
     }
   };
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
+    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Ürün Ekle</h2>
+        <h2>Add Product</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
-      <HorizontalLine />
+      <hr className="w-full border-green-200 border" />
 
       <div className="flex flex-col w-full h-full overflow-auto">
         <div className="flex flex-col w-full gap-2 px-2 pb-2 overflow-auto">
           <div className="flex flex-col w-full gap-2 ">
-            <h2>Ürün Adı:</h2>
+            <h2>Product Name:</h2>
             <input
               type="text"
               autoCapitalize="off"
-              className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-              placeholder="Ürün Adı"
+              className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg "
+              placeholder="Product Name"
               name="name"
               value={productData.name}
               onChange={(e) =>
                 setProductData({ ...productData, name: e.target.value })
               }
             />
-            <h2>Ürün Adedi:</h2>
+            <h2>Product Quantity:</h2>
             <input
               type="number"
               autoCapitalize="off"
-              className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg dark:text-dark-8"
-              placeholder="Ürün Adedi"
+              className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg "
+              placeholder="Product Quantity"
               name="quantity"
               value={productData.quantity}
               onChange={(e) =>
@@ -525,7 +523,7 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
               onChange={(e) =>
                 setProductData({ ...productData, description: e.target.value })
               }
-              placeholder="Açıklama"
+              placeholder="Description"
               rows="4"
               className="w-full py-1 px-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
@@ -536,7 +534,7 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
               multiple
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
-            <p className="text-sm text-gray-500">Maksimum 5 resim.</p>
+            <p className="text-sm text-gray-500">Max 5 file.</p>
           </div>
           <div className="flex justify-end w-full gap-2">
             <BtnMdSave clickEvent={handleProductSave} />
@@ -589,49 +587,49 @@ const UpdateProductView = ({ product, handleCancel }) => {
       );
   };
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
+    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2 className="font-semibold">Güncelle: {product?.name}</h2>
+        <h2>Update Product: {product?.name}</h2>
         <BtnMdCancel clickEvent={() => handleCancel()} />
       </div>
 
-      <HorizontalLine />
+      <hr className="w-full border-green-200 border" />
 
       <div className="flex flex-col w-full h-full overflow-auto">
         <div className="flex flex-col w-full h-full gap-2 px-2 pb-2 overflow-auto">
-          <h2>Ürün Adı:</h2>
+          <h2>Product Name:</h2>
           <input
             type="text"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-            placeholder="Ürün Adı"
+            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg "
+            placeholder="Product Name"
             name="name"
-            value={productData.name}
+            value={productData?.name}
             onChange={(e) =>
               setProductData({ ...productData, name: e.target.value })
             }
           />
-          <h2>Ürün Adedi:</h2>
+          <h2>Product Quantity:</h2>
           <input
             type="number"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg dark:text-dark-8"
-            placeholder="Ürün Adedi"
+            className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg "
+            placeholder="Product Quantity"
             name="quantity"
-            value={productData.quantity}
+            value={productData?.quantity}
             onChange={(e) =>
               setProductData({ ...productData, quantity: +e.target.value })
             }
           />
           <textarea
             name="description"
-            value={productData.description}
+            value={productData?.description}
             onChange={(e) =>
               setProductData({ ...productData, description: e.target.value })
             }
-            placeholder="Açıklama"
+            placeholder="Description"
             rows="4"
-            className="w-full py-1 px-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full py-1 px-2 border border-light-10 outline-none rounded-md"
           />
           <div className="flex justify-end w-full gap-2">
             <BtnMdDelete clickEvent={handleProductDelete} />

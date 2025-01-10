@@ -18,11 +18,11 @@ function HomePage() {
 
   return (
     <div className="flex flex-col self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
-      <div className="flex flex-col size-full p-2 gap-2 bg-dark-1  rounded-lg overflow-auto">
-        <div className="h-fit flex flex-row justify-between px-1 text-xl text-light-2 font-semibold">
-          <h1>Aktif Açık Arttırmalar</h1>
+      <div className="flex flex-col size-full p-2 gap-2 rounded-lg overflow-auto">
+        <div className="flex flex-row justify-between h-fit px-1 font-medium">
+          <h1>Live Auctions</h1>
           <Link to={"/auctions"} state={{ status: "Active" }}>
-            Tümünü Gör
+            See All
           </Link>
         </div>
         <HorizontalLine />
@@ -41,7 +41,7 @@ function HomePage() {
               ))}
           </Grid2>
         ) : (
-          <p className="text-center text-light-2">Aktif Kayıt Bulunamadı.</p>
+          <p className="text-center">Aktif Kayıt Bulunamadı.</p>
         )}
       </div>
     </div>

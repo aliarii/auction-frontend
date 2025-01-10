@@ -5,44 +5,34 @@ import HorizontalLine from "../HorizontalLine";
 function ProductDetails() {
   const { auction } = useSelector((state) => state.auction);
   return (
-    <div className="flex flex-col size-full p-2 gap-1 rounded-lg bg-dark-2 overflow-auto">
-      <h1 className="text-lg text-light-2 font-semibold text-center">
-        Ürün Detayları
-      </h1>
+    <div className="flex flex-col size-full p-2 gap-1 rounded-lg bg-white shadow-sm border overflow-auto">
+      <h1>Product Details</h1>
       <HorizontalLine />
 
-      <div className="flex flex-col size-full gap-1 overflow-auto">
+      <div className="flex flex-col size-full gap-1 overflow-auto text-sm">
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(38%)] text-sm text-light-5 ">
-            Ürün Adı:
+          <label className="whitespace-nowrap min-w-[calc(25%)] font-medium">
+            Product Name:
           </label>
-          <span className="text-sm text-light-5 font-medium">
-            {auction?.product.name}
-          </span>
+          <span>{auction?.product.name}</span>
         </div>
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(38%)] text-sm text-light-5 ">
-            Ürün Adedi:
+          <label className="whitespace-nowrap min-w-[calc(25%)] font-medium">
+            Product Adedi:
           </label>
-          <span className="text-sm text-light-5 font-medium">
-            {auction?.product.quantity}
-          </span>
+          <span>{auction?.product.quantity}</span>
         </div>
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(38%)] text-sm text-light-5 ">
-            Ürün Durumu:
+          <label className="whitespace-nowrap min-w-[calc(25%)] font-medium">
+            Product Durumu:
           </label>
-          <span className="text-sm text-light-5 font-medium">
-            {auction?.condition}
-          </span>
+          <span>{auction?.condition}</span>
         </div>
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(38%)] text-sm text-light-5 ">
-            Ürün Açıklaması:
+          <label className="whitespace-nowrap min-w-[calc(25%)] font-medium">
+            Product Açıklaması:
           </label>
-          <span className="text-sm text-light-5 font-medium">
-            {auction?.product.description}
-          </span>
+          <span>{auction?.product.description}</span>
         </div>
       </div>
     </div>

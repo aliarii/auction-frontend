@@ -10,13 +10,13 @@ import { getUserProfile } from "../store/slices/userSlice";
 
 const ProfilePage = () => {
   const settings = [
-    { name: "Kişisel Bilgiler", element: <PersonalInfo /> },
+    { name: "Personal Info", element: <PersonalInfo /> },
     {
-      name: "Açık Arttırmalar",
+      name: "Auctions",
       element: <AuctionsInfo />,
     },
-    { name: "Teklifler", element: <BidsInfo /> },
-    { name: "Kazandıklarım", element: <WonAuctionsInfo /> },
+    { name: "Bids", element: <BidsInfo /> },
+    { name: "Won Auctions", element: <WonAuctionsInfo /> },
   ];
 
   const dispatch = useDispatch();
@@ -29,20 +29,20 @@ const ProfilePage = () => {
   return (
     <div className="flex flex-row self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
       {/* Left Side */}
-      <div className="flex flex-col h-full min-w-72 w-72 max-w-72 p-2 gap-2 rounded-lg bg-dark-1">
+      <div className="flex flex-col h-full min-w-72 w-72 max-w-72 p-2 gap-2 rounded-lg bg-white">
         <div className="flex flex-col justify-center items-center w-full">
           <AccountCircleIcon sx={{ fontSize: 90 }} className="text-light-7" />
-          <span className="font-bold text-lg text-light-2">
+          <span className="font-medium text-lg">
             {userProfile?.name.toUpperCase()}{" "}
             {userProfile?.surname.toUpperCase()}
           </span>
         </div>
-        <HorizontalLine />
+        <hr className="w-full border-green-200 border" />
         <div className="flex flex-col w-full gap-2">
           {settings.map((setting, idx) => (
             <div
               key={idx}
-              className="relative flex flex-row bg-light-4 rounded-md font-semibold w-full p-2 cursor-pointer"
+              className={`relative flex flex-row w-full p-2 ${selectedSetting.name === setting.name ? "bg-green-200" : ""} hover:bg-green-200 rounded-md cursor-pointer`}
               onClick={() => setSelectedSetting(setting)}
             >
               <span className="whitespace-nowrap overflow-hidden text-ellipsis">
@@ -57,13 +57,11 @@ const ProfilePage = () => {
       </div>
 
       {/* Right Side */}
-      <div className="flex flex-col h-full w-full p-2 gap-2 rounded-lg bg-dark-1 overflow-auto">
+      <div className="flex flex-col h-full w-full p-2 gap-2 rounded-lg bg-white overflow-auto">
         <div className="flex flex-row w-full justify-between">
-          <h1 className="text-lg text-light-2 font-semibold">
-            {selectedSetting.name}
-          </h1>
+          <h1 className="font-medium">{selectedSetting.name}</h1>
         </div>
-        <HorizontalLine />
+        <hr className="w-full border-green-200 border" />
         {selectedSetting.element}
       </div>
     </div>
@@ -85,10 +83,10 @@ const PersonalInfo = () => {
         )}
       </div>
 
-      <div className="flex flex-col size-full p-2 bg-light-4 rounded-md font-semibold text-lg text-dark-7">
+      <div className="flex flex-col size-full p-2 rounded-md text-lg ">
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-dark-1 ">
-            Ad:
+          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+            Name:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
             <input
@@ -97,15 +95,15 @@ const PersonalInfo = () => {
               autoCapitalize="off"
               autoComplete="on"
               className="w-full py-3 px-3 border border-light-10 outline-none  rounded-lg"
-              placeholder={"Name"}
+              placeholder="Name"
               value={userProfile?.name || "-"}
               disabled={!isEditing}
             />
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-dark-1 ">
-            Soyad:
+          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+            Surname:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
             <input
@@ -121,8 +119,8 @@ const PersonalInfo = () => {
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-dark-1 ">
-            Kullanıcı Adı:
+          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+            Username:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
             <input
@@ -138,8 +136,8 @@ const PersonalInfo = () => {
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-dark-1 ">
-            Eposta:
+          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+            Email:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
             <input
@@ -155,8 +153,8 @@ const PersonalInfo = () => {
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-dark-1 ">
-            Adres:
+          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+            Address:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
             <input
@@ -172,8 +170,8 @@ const PersonalInfo = () => {
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-dark-1 ">
-            Telefon:
+          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+            Phone:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
             <input
@@ -189,8 +187,8 @@ const PersonalInfo = () => {
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-dark-1 ">
-            Bakiye:
+          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+            Bid Limit:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
             <div className="flex flex-row w-full items-center gap-1">
@@ -234,52 +232,34 @@ const AuctionsInfo = () => {
   }, [userProfile]);
 
   return (
-    <div className="flex flex-col size-full p-2 bg-light-4 rounded-md font-semibold text-lg text-dark-7">
+    <div className="flex flex-col size-full ">
       {sortedAuctions.length === 0 ? (
-        <p className="text-center text-dark-7">Kayıt Bulunamadı.</p>
+        <p className="text-center ">Not found.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="table-auto w-full text-sm text-dark-7">
+        <div>
+          <table className="table-auto w-full text-sm">
             <thead>
-              <tr>
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  Başlık
-                </th>
-
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  Başlangıç Tarihi
-                </th>
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  Durum
-                </th>
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  #
-                </th>
+              <tr className="text-left">
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">Start Date</th>
+                <th className="px-4 py-2">Status</th>
+                <th className="px-9 py-2">#</th>
               </tr>
             </thead>
             <tbody>
               {sortedAuctions.map((auction) => (
-                <tr
-                  key={auction._id}
-                  className="border-t border-light-10 hover:bg-light-9"
-                >
-                  <td className="px-4 py-2">{auction.name}</td>
-                  <td className="px-4 py-2">
+                <tr key={auction._id} className="border-t">
+                  <td className="px-4 py-3">{auction.name}</td>
+                  <td className="px-4 py-3">
                     {new Date(auction.auctionStartTime).toLocaleString()}
                   </td>
-                  <td className="px-4 py-2">
-                    {auction.status === "Active"
-                      ? "Aktif"
-                      : auction.status === "Pending"
-                        ? "Bekleyen"
-                        : "Biten"}
-                  </td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-3">{auction.status}</td>
+                  <td className="px-4 py-3">
                     <Link
                       to={`/auction/${auction._id}`}
-                      className="px-4 py-2 text-white bg-info rounded-md"
+                      className="px-3 py-2 text-white font-medium bg-info rounded-md"
                     >
-                      Görüntüle
+                      View
                     </Link>
                   </td>
                 </tr>
@@ -306,45 +286,34 @@ const BidsInfo = () => {
   }, [userProfile]);
 
   return (
-    <div className="flex flex-col size-full p-2 bg-light-4 rounded-md font-semibold text-lg text-dark-7">
+    <div className="flex flex-col size-full ">
       {sortedBids.length === 0 ? (
-        <p className="text-center text-dark-7">Kayıt Bulunamadı.</p>
+        <p className="text-center">Not found.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="table-auto w-full text-sm text-dark-7">
+        <div>
+          <table className="table-auto w-full text-sm">
             <thead>
-              <tr>
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  Id
-                </th>
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  Teklif Miktarı
-                </th>
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  Tarih
-                </th>
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  #
-                </th>
+              <tr className="text-left">
+                <th className="px-4 py-2">Id</th>
+                <th className="px-4 py-2">Bid</th>
+                <th className="px-4 py-2">Date</th>
+                <th className="px-9 py-2">#</th>
               </tr>
             </thead>
             <tbody>
               {sortedBids.map((bid) => (
-                <tr
-                  key={bid._id}
-                  className="border-t border-light-10 hover:bg-light-9"
-                >
-                  <td className="px-4 py-2">{bid.auction}</td>
-                  <td className="px-4 py-2">{bid.amount} TL</td>
-                  <td className="px-4 py-2">
+                <tr key={bid._id} className="border-t ">
+                  <td className="px-4 py-3">{bid.auction.slice(0, 8)}</td>
+                  <td className="px-4 py-3">{bid.amount} TL</td>
+                  <td className="px-4 py-3">
                     {new Date(bid.createdAt).toLocaleString()}
                   </td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-3">
                     <Link
                       to={`/auction/${bid.auction}`}
-                      className="px-4 py-2 text-white bg-info rounded-md"
+                      className="px-3 py-2 text-white font-medium bg-info rounded-md"
                     >
-                      Görüntüle
+                      View
                     </Link>
                   </td>
                 </tr>
@@ -378,52 +347,34 @@ const WonAuctionsInfo = () => {
   }, [userProfile]);
 
   return (
-    <div className="flex flex-col size-full p-2 bg-light-4 rounded-md font-semibold text-lg text-dark-7">
+    <div className="flex flex-col size-full ">
       {sortedAuctions.length === 0 ? (
-        <p className="text-center text-dark-7">Kayıt Bulunamadı.</p>
+        <p className="text-center">Not found.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="table-auto w-full text-sm text-dark-7">
+        <div>
+          <table className="table-auto w-full text-sm">
             <thead>
-              <tr>
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  Başlık
-                </th>
-
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  Başlangıç Tarihi
-                </th>
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  Durum
-                </th>
-                <th className="px-4 py-2 text-left font-semibold text-dark-7">
-                  #
-                </th>
+              <tr className="text-left">
+                <th className="px-4 py-2 ">Name</th>
+                <th className="px-4 py-2 ">Start Date</th>
+                <th className="px-4 py-2 ">Status</th>
+                <th className="px-9 py-2 ">#</th>
               </tr>
             </thead>
             <tbody>
               {sortedAuctions.map((auction) => (
-                <tr
-                  key={auction._id}
-                  className="border-t border-light-10 hover:bg-light-9"
-                >
-                  <td className="px-4 py-2">{auction.name}</td>
-                  <td className="px-4 py-2">
+                <tr key={auction._id} className="border-t">
+                  <td className="px-4 py-3">{auction.name}</td>
+                  <td className="px-4 py-3">
                     {new Date(auction.auctionStartTime).toLocaleString()}
                   </td>
-                  <td className="px-4 py-2">
-                    {auction.status === "Active"
-                      ? "Aktif"
-                      : auction.status === "Pending"
-                        ? "Bekleyen"
-                        : "Biten"}
-                  </td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-3">{auction.status}</td>
+                  <td className="px-4 py-3">
                     <Link
                       to={`/auction/${auction._id}`}
-                      className="px-4 py-2 text-white bg-info rounded-md"
+                      className="px-3 py-2 text-white font-medium bg-info rounded-md"
                     >
-                      Görüntüle
+                      View
                     </Link>
                   </td>
                 </tr>

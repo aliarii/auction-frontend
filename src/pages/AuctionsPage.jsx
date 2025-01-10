@@ -14,8 +14,8 @@ const AuctionsPage = () => {
   const { auctionCategories } = useSelector((state) => state.category);
   const [categories, setCategories] = useState([]);
   const [filteredAuctions, setFilteredAuctions] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState(["Tümü"]); // Başlangıçta Tümü seçili
-  const [selectedStatus, setSelectedStatus] = useState([status || "Tümü"]); // Başlangıçta Tümü seçili
+  const [selectedCategories, setSelectedCategories] = useState(["All"]);
+  const [selectedStatus, setSelectedStatus] = useState([status || "All"]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const AuctionsPage = () => {
         ...auctions.closedAuctions,
       ];
       const newCategories = [
-        { name: "Tümü", auctions: allAuctions },
+        { name: "All", auctions: allAuctions },
         ...auctionCategories,
       ];
       setCategories(newCategories);
@@ -49,14 +49,14 @@ const AuctionsPage = () => {
     ];
 
     // Kategorilere göre filtreleme
-    if (selectedCategories.length > 0 && !selectedCategories.includes("Tümü")) {
+    if (selectedCategories.length > 0 && !selectedCategories.includes("All")) {
       filtered = filtered.filter((auction) => {
         selectedCategories.includes(auction.category?.name);
       });
     }
 
     // Duruma göre filtreleme
-    if (selectedStatus.length > 0 && !selectedStatus.includes("Tümü")) {
+    if (selectedStatus.length > 0 && !selectedStatus.includes("All")) {
       filtered = filtered.filter((auction) =>
         selectedStatus.includes(auction.status)
       );
@@ -70,19 +70,16 @@ const AuctionsPage = () => {
     const { name, checked } = event.target;
 
     if (selectedCategories.length <= 1 && !checked) {
-      setSelectedCategories(["Tümü"]);
+      setSelectedCategories(["All"]);
     } else {
-      if (name === "Tümü") {
-        // "Tümü" seçilirse, diğer tüm seçenekleri kaldır
-        setSelectedCategories(checked ? ["Tümü"] : []);
+      if (name === "All") {
+        // "All" seçilirse, diğer tüm seçenekleri kaldır
+        setSelectedCategories(checked ? ["All"] : []);
       } else {
         setSelectedCategories(
           (prevSelectedCategories) =>
             checked
-              ? [
-                  ...prevSelectedCategories.filter((cat) => cat !== "Tümü"),
-                  name,
-                ] // "Tümü" yı kaldır ve yeni kategoriyi ekle
+              ? [...prevSelectedCategories.filter((cat) => cat !== "All"), name] // "All" yı kaldır ve yeni kategoriyi ekle
               : prevSelectedCategories.filter((category) => category !== name) // Seçili kategoriyi kaldır
         );
       }
@@ -93,19 +90,19 @@ const AuctionsPage = () => {
   const handleStatusChange = (event) => {
     const { name, checked } = event.target;
     if (selectedStatus.length <= 1 && !checked) {
-      setSelectedStatus(["Tümü"]);
+      setSelectedStatus(["All"]);
     } else {
-      if (name === "Tümü") {
-        // "Tümü" seçilirse, diğer tüm seçenekleri kaldır
-        setSelectedStatus(checked ? ["Tümü"] : []);
+      if (name === "All") {
+        // "All" seçilirse, diğer tüm seçenekleri kaldır
+        setSelectedStatus(checked ? ["All"] : []);
       } else {
         setSelectedStatus(
           (prevSelectedStatus) =>
             checked
               ? [
-                  ...prevSelectedStatus.filter((status) => status !== "Tümü"),
+                  ...prevSelectedStatus.filter((status) => status !== "All"),
                   name,
-                ] // "Tümü" yı kaldır ve yeni durumu ekle
+                ]
               : prevSelectedStatus.filter((status) => status !== name) // Seçili durumu kaldır
         );
       }
@@ -114,14 +111,15 @@ const AuctionsPage = () => {
 
   return (
     <div className="flex flex-row self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
-      {/* Filtreleme Paneli */}
-      <div className="flex flex-col h-fit w-72 max-w-72 p-2 gap-2 rounded-lg bg-dark-1">
-        <h1 className="text-lg text-light-2 font-semibold">Filtreleme</h1>
+      {/* Filters */}
+      <div className="flex flex-col h-fit w-72 max-w-72 p-2 gap-2 rounded-lg ">
+        <h1 className="font-medium">Filters</h1>
         <HorizontalLine />
 
-        {/* Kategoriler */}
-        <h1 className="text-base text-light-2 font-semibold">Kategoriler</h1>
-        <div className="flex flex-col h-60 max-h-60 px-2 bg-light-6 rounded-md overflow-auto">
+        {/* Categories */}
+        <div className="flex flex-col h-60 max-h-60 p-2 bg-white shadow-sm border rounded-lg overflow-auto">
+          <h1>Categories</h1>
+          <hr className="border-green-300" />
           {categories &&
             categories.map((category, idx) => (
               <FormControlLabel
@@ -138,7 +136,7 @@ const AuctionsPage = () => {
                   <Typography
                     sx={{
                       fontSize: 15,
-                      fontWeight: 600,
+                      fontFamily: "Poppins, sans-serif",
                     }}
                   >
                     {category.name}
@@ -150,10 +148,11 @@ const AuctionsPage = () => {
         </div>
         <HorizontalLine />
 
-        {/* Durum */}
-        <h1 className="text-md text-light-2 font-semibold">Durum</h1>
-        <div className="flex flex-col h-60 max-h-60 px-2 bg-light-6 rounded-md overflow-auto">
-          {["Tümü", "Active", "Pending", "Closed"].map((status, idx) => (
+        {/* Status */}
+        <div className="flex flex-col h-60 max-h-60 p-2 bg-white shadow-sm border rounded-lg overflow-auto">
+          <h1>Status</h1>
+          <hr className="border-green-300" />
+          {["All", "Active", "Pending", "Closed"].map((status, idx) => (
             <FormControlLabel
               key={idx}
               control={
@@ -168,16 +167,10 @@ const AuctionsPage = () => {
                 <Typography
                   sx={{
                     fontSize: 15,
-                    fontWeight: 600,
+                    fontFamily: "Poppins, sans-serif",
                   }}
                 >
-                  {status === "Tümü"
-                    ? "Tümü"
-                    : status === "Active"
-                      ? "Aktif"
-                      : status === "Pending"
-                        ? "Bekleyen"
-                        : "Biten"}
+                  {status}
                 </Typography>
               }
               className="-mb-3"
@@ -186,12 +179,10 @@ const AuctionsPage = () => {
         </div>
       </div>
 
-      {/* Açık Arttırmalar */}
-      <div className="flex flex-col h-full w-full p-2 gap-2 rounded-lg bg-dark-1 overflow-auto">
+      {/* Auctions */}
+      <div className="flex flex-col h-full w-full p-2 gap-2 rounded-lg overflow-auto">
         <div className="flex flex-row w-full justify-between">
-          <h1 className="text-lg text-light-2 font-semibold">
-            Açık Arttırmalar
-          </h1>
+          <h1 className="font-medium">Auctions</h1>
         </div>
         <HorizontalLine />
         <Grid2
@@ -203,11 +194,7 @@ const AuctionsPage = () => {
           {filteredAuctions.map((auction, idx) => (
             <AuctionCard key={idx} auction={auction} />
           ))}
-          {/* {Array.from(Array(10)).map((auction, idx) => (
-              <AuctionCard key={idx} />
-            ))} */}
         </Grid2>
-        {/* </div> */}
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import {
 } from "../store/slices/userSlice";
 import HorizontalLine from "../components/HorizontalLine";
 import { registerUser } from "../store/slices/authSlice";
+import { FaUserEdit } from "react-icons/fa";
 
 const UserSettingsPage = () => {
   const views = [
@@ -46,20 +47,18 @@ const UserSettingsPage = () => {
   };
   return (
     <div className="flex flex-col md:flex-row w-full h-full gap-2 overflow-auto">
-      <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4  overflow-auto">
-        <div className="hidden md:flex justify-between items-end w-full min-h-6">
-          <h2>Kullanıcılar</h2>
-        </div>
+      <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
+        <h2>Users</h2>
 
-        <HorizontalLine />
+        <hr className="w-full border-green-200 border" />
 
-        <div className="flex flex-col w-full h-full gap-2 overflow-auto">
-          <h2
-            className={`text-center rounded-md cursor-pointer text-light-1 bg-success`}
+        <div className="flex flex-col w-full h-fit gap-2 overflow-auto">
+          <button
+            className={`rounded-md text-white bg-green-500 py-1 whitespace-nowrap overflow-hidden text-ellipsis`}
             onClick={() => handleViewSelect(1)}
           >
-            + Ekle
-          </h2>
+            + New User
+          </button>
           <UsersTable users={users} handleEditClick={handleViewSelect} />
         </div>
       </div>
@@ -75,36 +74,35 @@ const UsersTable = ({ users, handleEditClick }) => {
 
   return (
     <div className="flex flex-col h-full w-full rounded-md text-xs  text-left overflow-auto">
-      <div className="flex items-center min-h-10 w-full px-1 bg-light-5  sticky top-0 z-10">
-        <h2 className="w-20 text-center ">#</h2>
-        <h2 className="w-full ">Ad Soyad</h2>
-        <h2 className="w-full ">Kullanıcı Adı</h2>
-        <h2 className="w-full ">Rol</h2>
-        <h2 className="w-20 ">Düzenle</h2>
-      </div>
-
-      <div className="flex flex-col h-full w-full bg-light-7  overflow-auto">
-        {users?.map((user, idx) => (
-          <div
-            key={user._id}
-            className="flex items-center min-h-8 w-full px-1 border-b dark:border-dark-7"
-          >
-            <h2 className="w-20 py-2 text-center">{idx + 1}</h2>
-            <h2 className="w-full py-2">
-              {user.name} {user.surname}
-            </h2>
-            <h2 className="w-full py-2">{user.username}</h2>
-            <h2 className="w-full py-2">{user.role}</h2>
-            <h2 className="w-20 py-2 text-center">
-              <EditIcon
-                className="cursor-pointer"
-                fontSize="small"
-                onClick={() => handleEditClick(0, user)}
-              />
-            </h2>
-          </div>
-        ))}
-      </div>
+      <table className="table-auto w-full text-left text-sm">
+        <thead>
+          <tr>
+            <th className="px-4">#</th>
+            <th className="px-4">Full Name</th>
+            <th className="px-4">User Name</th>
+            <th className="px-4">Role</th>
+            <th className="px-4">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users?.map((user, idx) => (
+            <tr key={idx} className="border-t">
+              <td className="px-4 py-2">{idx + 1}</td>
+              <td className="px-4 py-2">
+                {user.name} {user.surname}
+              </td>
+              <td className="px-4 py-2">{user.username}</td>
+              <td className="px-4 py-2">{user.role}</td>
+              <td className="pl-5 pr-4 py-2">
+                <FaUserEdit
+                  className="cursor-pointer text-2xl text-green-500 "
+                  onClick={() => handleEditClick(0, user)}
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
@@ -145,24 +143,24 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
+    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2>Kullanıcı Detayları</h2>
+        <h2>User Details</h2>
         {user && <BtnMdCancel clickEvent={handleCancelClick} />}
       </div>
-      <HorizontalLine />
+      <hr className="w-full border-green-200 border" />
 
       <div className="flex flex-col w-full h-full overflow-auto px-2 pb-2">
         {user ? (
           <div className="flex flex-col w-full h-full gap-2 overflow-auto">
             <div className="flex flex-col w-full h-full gap-2 overflow-auto">
               <h2>{userData.id}</h2>
-              <h2>Ad:</h2>
+              <h2>Name:</h2>
               <input
                 type="text"
                 autoCapitalize="off"
                 className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-                placeholder="Ad"
+                placeholder="Name"
                 name="name"
                 value={userData.name}
                 onChange={(e) =>
@@ -170,55 +168,55 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
                 }
               />
 
-              <h2>Soyad:</h2>
+              <h2>Surname:</h2>
               <input
                 type="text"
                 autoCapitalize="off"
                 className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-                placeholder="Soyad"
+                placeholder="Surname"
                 name="surname"
                 value={userData.surname}
                 onChange={(e) =>
                   setUserData({ ...userData, surname: e.target.value })
                 }
               />
-              <h2>Kullanıcı Adı:</h2>
+              <h2>Username:</h2>
               <input
                 type="text"
                 autoCapitalize="off"
                 className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-                placeholder="Kullanıcı Adı"
+                placeholder="Username"
                 name="username"
                 value={userData.username}
                 onChange={(e) =>
                   setUserData({ ...userData, username: e.target.value })
                 }
               />
-              <h2>Eposta:</h2>
+              <h2>Email:</h2>
               <input
                 type="email"
                 autoCapitalize="off"
                 className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-                placeholder="Eposta"
+                placeholder="Email"
                 name="email"
                 value={userData.email}
                 onChange={(e) =>
                   setUserData({ ...userData, email: e.target.value })
                 }
               />
-              <h2>Bakiye:</h2>
+              <h2>Bid Limit:</h2>
               <input
                 type="number"
                 autoCapitalize="off"
                 className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-                placeholder="Bakiye"
+                placeholder="Bid Limit"
                 name="bidlimit"
                 value={userData.bidLimit}
                 onChange={(e) =>
                   setUserData({ ...userData, bidLimit: e.target.value })
                 }
               />
-              <h2>Rol:</h2>
+              <h2>Role:</h2>
               <select
                 name="role"
                 value={userData.role}
@@ -230,11 +228,11 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
               </select>
-              <h2>Şifre:</h2>
+              <h2>Password:</h2>
               <input
                 className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg dark:text-dark-8"
                 type="password"
-                placeholder="Şifre"
+                placeholder="Password"
                 name="password"
                 value={userData.password}
                 onChange={(e) =>
@@ -248,7 +246,7 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
             </div>
           </div>
         ) : (
-          <h2>Kullanıcı Seç.</h2>
+          <h2>Select a user.</h2>
         )}
       </div>
     </div>
@@ -279,76 +277,76 @@ const AddNewUserView = ({ handleCancelClick }) => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 rounded-lg bg-light-4 overflow-auto">
+    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
-        <h2>Kullanıcı Ekle</h2>
+        <h2>New User</h2>
         <BtnMdCancel clickEvent={handleCancelClick} />
       </div>
 
-      <HorizontalLine />
+      <hr className="w-full border-green-200 border" />
 
       <div className="flex flex-col w-full h-full overflow-auto px-2 pb-2">
         <div className="flex flex-col w-full h-full gap-2 overflow-auto">
           <h2>{userData.id}</h2>
-          <h2>Ad:</h2>
+          <h2>Name:</h2>
           <input
             type="text"
             autoCapitalize="off"
             className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-            placeholder="Ad"
+            placeholder="Name"
             name="name"
             value={userData.name}
             onChange={(e) => setUserData({ ...userData, name: e.target.value })}
           />
-          <h2>Soyad:</h2>
+          <h2>Surname:</h2>
           <input
             type="text"
             autoCapitalize="off"
             className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-            placeholder="Soyad"
+            placeholder="Surname"
             name="surname"
             value={userData.surname}
             onChange={(e) =>
               setUserData({ ...userData, surname: e.target.value })
             }
           />
-          <h2>Kullanıcı Adı:</h2>
+          <h2>Username:</h2>
           <input
             type="text"
             autoCapitalize="off"
             className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-            placeholder="Kullanıcı Adı"
+            placeholder="Username"
             name="username"
             value={userData.username}
             onChange={(e) =>
               setUserData({ ...userData, username: e.target.value })
             }
           />
-          <h2>Eposta:</h2>
+          <h2>Email:</h2>
           <input
             type="email"
             autoCapitalize="off"
             className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-            placeholder="Eposta"
+            placeholder="Email"
             name="email"
             value={userData.email}
             onChange={(e) =>
               setUserData({ ...userData, email: e.target.value })
             }
           />
-          <h2>Bakiye:</h2>
+          <h2>Bid Limit:</h2>
           <input
             type="number"
             autoCapitalize="off"
             className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
-            placeholder="Bakiye"
+            placeholder="Bid Limit"
             name="bidlimit"
             value={userData.bidLimit}
             onChange={(e) =>
               setUserData({ ...userData, bidLimit: e.target.value })
             }
           />
-          <h2>Rol:</h2>
+          <h2>Role:</h2>
           <select
             name="role"
             value={userData.role}
@@ -358,13 +356,13 @@ const AddNewUserView = ({ handleCancelClick }) => {
             <option value="user">User</option>
             <option value="admin">Admin</option>
           </select>
-          <h2>Şifre:</h2>
+          <h2>Password:</h2>
           <div className="flex w-full">
             <input
               type={showPassword ? "text" : "password"}
               autoCapitalize="off"
               className="w-full py-1 px-2 border-l border-y border-light-10 outline-none bg-white rounded-l-lg dark:text-dark-8"
-              placeholder="Şifre"
+              placeholder="Password"
               name="password"
               value={userData.password}
               onChange={(e) =>

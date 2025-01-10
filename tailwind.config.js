@@ -6,6 +6,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        "open-sans": ['Open Sans', 'sans-serif'],
+        "roboto": ['Roboto', 'sans-serif'],
+        "poppins": ['Poppins', 'sans-serif'],
+      },
       colors: {
         "dark-1": "#767676",
         "dark-2": "#6c6c6c",
@@ -29,6 +34,8 @@ module.exports = {
         "light-9": "#a5a5a5",
         "light-10": "#9b9b9b",
 
+        "btn-green": "#52AF7A",
+        "navbar": "#1C4742",
         "success": "#28a745",
         "danger": "#dc3545",
         "warning": "#ffc107",

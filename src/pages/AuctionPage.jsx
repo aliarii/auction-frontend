@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { io } from "socket.io-client";
 import AuctionDetails from "../components/Auction/AuctionDetails";
-import HighestBidCard from "../components/Bid/HighestBidCard";
 import PreviousBids from "../components/Bid/PreviousBids";
 import HorizontalLine from "../components/HorizontalLine";
 import Loading from "../components/Loading";
@@ -15,6 +14,7 @@ import { getAuctionById } from "../store/slices/auctionSlice";
 import { createBid, getBidById } from "../store/slices/bidSlice";
 import { joinAuction } from "../store/slices/userSlice";
 import { calculateTimeLeft } from "../utils/timeUtils";
+import { highestBid } from "../utils/highestBid";
 const socket = io(import.meta.env.VITE_API_BASE_URL);
 
 function AuctionPage() {
@@ -156,54 +156,55 @@ function AuctionPage() {
 
   const confirmHandler = () => {
     if (confirmAction) {
-      confirmAction(); // Call the confirmed action
+      confirmAction();
     }
-    setShowConfirm(false); // Hide the confirmation modal after confirmation
+    setShowConfirm(false);
   };
 
   const cancelHandler = () => {
-    setShowConfirm(false); // Just close the modal without doing anything
+    setShowConfirm(false);
   };
 
   return (
     <div className="flex flex-col self-center size-full max-w-6xl p-2 gap-1 overflow-auto">
-      <HighestBidCard />
+      <div className="flex flex-row items-center gap-2 text-sm">
+        <Link to={"/"}>Home</Link>
+        <span>{">"}</span>
+        <Link to={"/auctions"}>Auctions</Link>
+        <span>{">"}</span>
+        <Link>{auction?.name}</Link>
+      </div>
 
-      <div className="flex flex-row size-full gap-1 overflow-auto">
+      <div className="flex flex-row size-full gap-2 overflow-auto">
         {/* Left Side */}
-
-        <div className="flex flex-col size-full gap-1 overflow-auto">
-          <div className="h-fit w-full p-2 rounded-lg bg-dark-2">
-            <div className="h-fit w-full">
-              <ProductImages product={auction?.product} showPreviews={true} />
-            </div>
+        <div className="w-[60%] flex flex-col gap-2">
+          <div className="flex flex-col min-h-[640px] p-2 gap-1 bg-white rounded-lg border shadow-sm">
+            <h1>Images</h1>
+            <HorizontalLine />
+            <ProductImages product={auction?.product} showPreviews={true} />
           </div>
           <ProductDetails />
         </div>
 
-        {/* Middle */}
-        <div className="flex flex-col size-full gap-1 overflow-auto">
-          {auction?.status === "Active" ? (
-            <ActiveAuctionController
-              auctionId={auctionId}
-              setBidModal={setBidModal}
-              setJoinModal={setJoinModal}
-              timeLeft={timeLeft}
-            />
-          ) : auction?.status === "Pending" ? (
-            <PendingAuctionController />
-          ) : (
-            <ClosedAuctionController />
-          )}
-          <AuctionDetails />
-        </div>
-
         {/* Right Side */}
-        <div className="flex flex-col size-full max-w-80  p-2 gap-1 bg-dark-2 rounded-lg overflow-auto">
-          <h1 className="text-lg text-light-2 font-semibold text-center">
-            Son Teklifler
-          </h1>
-          <HorizontalLine />
+
+        <div className="h-full w-[40%] flex flex-col gap-2 overflow-auto">
+          <AuctionDetails />
+          <div className="flex flex-col h-fit w-full py-6 px-2 gap-2 rounded-lg bg-white shadow-sm border">
+            <HighestBidCard />
+            {auction?.status === "Active" ? (
+              <ActiveAuctionController
+                auctionId={auctionId}
+                setBidModal={setBidModal}
+                setJoinModal={setJoinModal}
+                timeLeft={timeLeft}
+              />
+            ) : auction?.status === "Pending" ? (
+              <PendingAuctionController />
+            ) : (
+              <ClosedAuctionController />
+            )}
+          </div>
           <PreviousBids />
         </div>
       </div>
@@ -224,6 +225,55 @@ function AuctionPage() {
 
 export default AuctionPage;
 
+const HighestBidCard = () => {
+  const { auction } = useSelector((state) => state.auction);
+  const [bid, setBid] = useState(null);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (auction) {
+      if (auction.currentHighestBid) {
+        dispatch(getBidById(auction.currentHighestBid._id)).then(
+          ({ payload }) => {
+            setBid(payload.data.bid);
+          }
+        );
+      } else {
+        setBid({ amount: auction.startingPrice, auction: auction._id });
+      }
+    }
+  }, [auction, dispatch]);
+
+  return (
+    <div className="flex flex-col justify-center items-center h-fit w-full">
+      <div className="flex flex-col gap-1 justify-center items-center">
+        <span className="font-semibold text-3xl text-green-500">
+          {highestBid({ bid, auction })}
+        </span>
+        <span>Highest Bid</span>
+      </div>
+      <table className="table-fixed w-full text-center text-sm">
+        <thead>
+          <tr>
+            <th className="px-4">{auction?.minimumBidInterval || 0} TL</th>
+            <th className="px-4 ">{auction?.bids?.length || 0}</th>
+            <th className="px-4 ">
+              {auction?.currentHighestBid._id.slice(0, 8) || "-"}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td className="px-4">Price Interval</td>
+            <td className="px-4"> Bids</td>
+            <td className="px-4"> Highest Bid</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
 const ActiveAuctionController = ({
   auctionId,
   setJoinModal,
@@ -234,6 +284,7 @@ const ActiveAuctionController = ({
   const { user } = useSelector((state) => state.user);
   const { bid } = useSelector((state) => state.bid);
   const [userId, setUserId] = useState(null);
+  const [bidAmount, setBidAmount] = useState(0);
 
   useEffect(() => {
     if (bid && bid.auction === auctionId) setUserId(bid.user);
@@ -244,51 +295,67 @@ const ActiveAuctionController = ({
       setUserId(auction.currentHighestBid.user);
   }, [auction]);
 
+  const handleValueChange = (e) => {
+    let value = e.target.value;
+    if (value < 0) value = 0;
+    setBidAmount(value);
+  };
   return (
     <>
-      <div className="flex flex-col h-fit w-full p-2 gap-1 rounded-lg bg-dark-2">
-        <h1 className="text-lg text-light-2 font-semibold text-center">
-          Teklif Ver
-        </h1>
-        <HorizontalLine />
-        {user.auctions?.includes(auctionId) ? (
-          <>
-            <div
-              className={`${userId === user._id ? "bg-light-7 cursor-not-allowed" : "bg-success cursor-pointer"} p-3 rounded-lg`}
+      <hr className="w-full border-green-200 border" />
+      <h1 className="font-semibold text-center">{timeLeft}</h1>
+      <h1 className="text-center">Time Left</h1>
+      <hr className="w-full border-green-200 border" />
+      <span className="font-medium text-center">Offer</span>
+
+      {user.auctions?.includes(auctionId) ? (
+        <>
+          <div className="flex flex-row justify-center items-center w-full gap-1">
+            <button
+              className={`${userId === user._id ? "bg-gray-300 cursor-not-allowed" : "text-white bg-green-500 "} p-2 rounded-lg`}
               onClick={() => setBidModal(1000)}
             >
-              <h1 className="text-center font-semibold text-light-2">
-                + 1000 TL
-              </h1>
-            </div>
-            <div
-              className={`${userId === user._id ? "bg-light-7 cursor-not-allowed" : "bg-success cursor-pointer"} p-3 rounded-lg `}
+              + 1000 TL
+            </button>
+            <button
+              className={`${userId === user._id ? "bg-gray-300 cursor-not-allowed" : "text-white bg-green-500 "} p-2 rounded-lg`}
               onClick={() => setBidModal(2000)}
             >
-              <h1 className="text-center font-semibold text-light-2">
-                + 2000 TL
-              </h1>
-            </div>
-          </>
-        ) : (
-          <div
-            className="bg-success p-3 rounded-lg cursor-pointer"
-            onClick={setJoinModal}
-          >
-            <h1 className="text-center font-semibold text-light-2">
-              Açık Arttırmaya Katıl
-            </h1>
+              + 2000 TL
+            </button>
           </div>
-        )}
-      </div>
+          <div className="flex flex-row self-center justify-center items-center w-[20%] gap-2">
+            <hr className="w-full border-green-200 border" />
+            <span>Or</span>
+            <hr className="w-full border-green-200 border" />
+          </div>
 
-      <div className="flex flex-col h-fit w-full p-2 gap-1 rounded-lg bg-dark-2">
-        <h1 className="text-lg text-light-2 font-semibold text-center">
-          Kalan Süre
-        </h1>
-        <HorizontalLine />
-        <h1 className="text-center font-semibold text-light-2">{timeLeft}</h1>
-      </div>
+          <div className="flex flex-row gap-1">
+            <input
+              type="number"
+              name="bidAmount"
+              className="w-full py-2 px-3 border-2 outline-none rounded-lg"
+              value={bidAmount}
+              onChange={handleValueChange}
+              onClick={(e) => e.target.select()}
+              disabled={userId === user._id}
+            />
+            <button
+              className={`${userId === user._id ? "bg-gray-300 cursor-not-allowed" : "text-white bg-green-500 "} py-2 px-8 rounded-lg`}
+              onClick={() => setBidModal(bidAmount)}
+            >
+              Bid
+            </button>
+          </div>
+        </>
+      ) : (
+        <button
+          className="p-2 text-lg text-white bg-green-500 rounded-lg"
+          onClick={setJoinModal}
+        >
+          Join
+        </button>
+      )}
     </>
   );
 };
