@@ -196,7 +196,7 @@ const AuctionsView = ({
       <Grid2
         container
         spacing={1}
-        columns={{ xs: 4, sm: 8, md: 12, lg: 16 }}
+        columns={{ xs: 2, sm: 2, md: 2, lg: 3 }}
         className="overflow-auto"
       >
         {auctions?.length > 0

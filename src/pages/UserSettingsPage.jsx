@@ -52,13 +52,13 @@ const UserSettingsPage = () => {
 
         <hr className="w-full border-green-200 border" />
 
+        <button
+          className={`rounded-md text-white bg-green-500 py-1 whitespace-nowrap overflow-hidden text-ellipsis`}
+          onClick={() => handleViewSelect(1)}
+        >
+          + New User
+        </button>
         <div className="flex flex-col w-full h-fit gap-2 overflow-auto">
-          <button
-            className={`rounded-md text-white bg-green-500 py-1 whitespace-nowrap overflow-hidden text-ellipsis`}
-            onClick={() => handleViewSelect(1)}
-          >
-            + New User
-          </button>
           <UsersTable users={users} handleEditClick={handleViewSelect} />
         </div>
       </div>

@@ -12,16 +12,20 @@ import ProfilePage from "./pages/ProfilePage";
 import RegisterPage from "./pages/RegisterPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { logoutUser, validateToken } from "./store/slices/authSlice";
+import { useAuth } from "./contexts/AuthContext";
 
 function App() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const { logout } = useAuth();
+
   useEffect(() => {
     const jwt = localStorage.getItem("token");
 
     if (jwt) {
       dispatch(validateToken(jwt)).then((data) => {
         if (!data.payload) {
+          logout();
           dispatch(logoutUser());
         }
       });

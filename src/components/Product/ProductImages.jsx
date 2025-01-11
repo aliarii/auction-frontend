@@ -21,7 +21,7 @@ function ProductImages({ product, showPreviews }) {
   return (
     <>
       <div
-        className="relative"
+        className="relative h-full shadow-lg"
         onMouseEnter={() => setIsMouseOverImage(true)}
         onMouseLeave={() => setIsMouseOverImage(false)}
       >
@@ -32,7 +32,6 @@ function ProductImages({ product, showPreviews }) {
           }
         >
           {isMouseOverImage && product?.images.length > 0 && (
-            // <ArrowBackIosNewIcon className="text-dark-8" fontSize="large" />
             <FaAngleLeft style={{ fontSize: 35 }} />
           )}
         </div>
@@ -40,7 +39,7 @@ function ProductImages({ product, showPreviews }) {
           src={selectedImage}
           alt={`Product Selected Image`}
           // className="h-fit max-h-60 w-full rounded-lg"
-          className="h-fit w-full rounded-lg"
+          className="h-full w-full rounded-lg"
         />
         <div
           className="absolute flex top-0 right-0 justify-end items-center h-full w-1/4 cursor-pointer outline-none select-none"
@@ -49,8 +48,6 @@ function ProductImages({ product, showPreviews }) {
           }
         >
           {isMouseOverImage && product?.images.length > 0 && (
-            // <ArrowForwardIosIcon className=" text-dark-8" fontSize="large" />
-
             <FaAngleRight style={{ fontSize: 35 }} />
           )}
         </div>

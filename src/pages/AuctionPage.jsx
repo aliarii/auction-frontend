@@ -258,7 +258,7 @@ const HighestBidCard = () => {
             <th className="px-4">{auction?.minimumBidInterval || 0} TL</th>
             <th className="px-4 ">{auction?.bids?.length || 0}</th>
             <th className="px-4 ">
-              {auction?.currentHighestBid._id.slice(0, 8) || "-"}
+              {auction?.currentHighestBid?._id?.slice(0, 8) || "-"}
             </th>
           </tr>
         </thead>

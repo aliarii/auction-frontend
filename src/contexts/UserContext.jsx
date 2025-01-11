@@ -10,7 +10,9 @@ export const UserProvider = ({ children }) => {
     const jwt = localStorage.getItem("token");
     if (jwt) {
       dispatch(getUserByToken(jwt)).then((data) => {
-        setRole(data.payload.data.user.role);
+        // console.log(data);
+        if (data.error) setRole("");
+        else setRole(data.payload.data.user.role);
       });
     }
   }, [dispatch]);

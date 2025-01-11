@@ -112,7 +112,7 @@ const AuctionsPage = () => {
   return (
     <div className="flex flex-row self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
       {/* Filters */}
-      <div className="flex flex-col h-fit w-72 max-w-72 p-2 gap-2 rounded-lg ">
+      <div className="flex flex-col h-fit w-72 max-w-72 p-2 gap-2 bg-white shadow-md rounded-lg ">
         <h1 className="font-medium">Filters</h1>
         <HorizontalLine />
 
@@ -180,15 +180,13 @@ const AuctionsPage = () => {
       </div>
 
       {/* Auctions */}
-      <div className="flex flex-col h-full w-full p-2 gap-2 rounded-lg overflow-auto">
-        <div className="flex flex-row w-full justify-between">
-          <h1 className="font-medium">Auctions</h1>
-        </div>
+      <div className="flex flex-col h-full w-full p-2 gap-2 bg-white shadow-md rounded-lg  overflow-auto">
+        <h1 className="font-medium">Auctions</h1>
         <HorizontalLine />
         <Grid2
           container
           spacing={1}
-          columns={{ xs: 2, sm: 6, md: 12, lg: 16 }}
+          columns={{ xs: 2, sm: 2, md: 3, lg: 3 }}
           className="size-full overflow-auto"
         >
           {filteredAuctions.map((auction, idx) => (

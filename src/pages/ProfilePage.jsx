@@ -29,7 +29,7 @@ const ProfilePage = () => {
   return (
     <div className="flex flex-row self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
       {/* Left Side */}
-      <div className="flex flex-col h-full min-w-72 w-72 max-w-72 p-2 gap-2 rounded-lg bg-white">
+      <div className="flex flex-col h-full min-w-72 w-72 max-w-72 p-2 gap-2 rounded-lg bg-white shadow-md">
         <div className="flex flex-col justify-center items-center w-full">
           <AccountCircleIcon sx={{ fontSize: 90 }} className="text-light-7" />
           <span className="font-medium text-lg">
@@ -37,7 +37,8 @@ const ProfilePage = () => {
             {userProfile?.surname.toUpperCase()}
           </span>
         </div>
-        <hr className="w-full border-green-200 border" />
+        {/* <hr className="w-full border-green-200 border" /> */}
+        <HorizontalLine />
         <div className="flex flex-col w-full gap-2">
           {settings.map((setting, idx) => (
             <div
@@ -57,11 +58,12 @@ const ProfilePage = () => {
       </div>
 
       {/* Right Side */}
-      <div className="flex flex-col h-full w-full p-2 gap-2 rounded-lg bg-white overflow-auto">
+      <div className="flex flex-col h-full w-full p-2 gap-2 rounded-lg bg-white shadow-md overflow-auto">
         <div className="flex flex-row w-full justify-between">
           <h1 className="font-medium">{selectedSetting.name}</h1>
         </div>
-        <hr className="w-full border-green-200 border" />
+        {/* <hr className="w-full border-green-200 border" /> */}
+        <HorizontalLine />
         {selectedSetting.element}
       </div>
     </div>

@@ -49,39 +49,31 @@ function AuctionCard({ auction, onView }) {
 
   return (
     <Grid2
-      size={{ xs: 2, sm: 3, md: 4, lg: 4 }}
-      className="flex flex-col h-fit pb-2 bg-white rounded-lg border shadow-sm"
+      size={{ xs: 1, sm: 1, md: 1, lg: 1 }}
+      className="flex flex-col h-fit pb-2 bg-white rounded-lg border shadow-md"
     >
       {/* Image Container */}
 
-      <div className="relative h-fit w-full">
-        <div className="m-2 border rounded-md">
-          <ProductImages product={auction?.product} />
-        </div>
-        {/* <FaRegBookmark
-          className="absolute right-4 top-4 text-green-500"
-          style={{ fontSize: 30 }}
-        /> */}
-        {/* <FaBookmark /> */}
-        <h1
-          className={`absolute flex justify-center items-center right-4 bottom-4 w-24 py-1 rounded-full text-white font-medium ${auction?.status === "Active" ? "bg-green-200 !text-success" : auction?.status === "Pending" ? "bg-info" : "bg-danger"}`}
+      <div className="relative h-40 w-full rounded-md">
+        <ProductImages product={auction?.product} />
+
+        <span
+          className={`absolute flex justify-center items-center right-2 bottom-2 w-24 py-1 rounded-full text-white font-medium ${auction?.status === "Active" ? "bg-green-200 !text-success" : auction?.status === "Pending" ? "bg-info" : "bg-danger"}`}
         >
           {auction?.status === "Active"
             ? timeLeft
             : auction?.status === "Pending"
               ? "Bekleyen"
               : "Biten"}
-        </h1>
+        </span>
       </div>
 
-      {/* Auction Details */}
-      <div className="flex flex-col h-fit px-2 gap-1 mb-2">
-        <span className="font-medium p-1">{auction?.name}</span>
-        {/* <HorizontalLine /> */}
+      <div className="flex flex-col h-fit px-2 gap-1 my-2">
+        <span className="p-1 line-clamp-2 font-medium">{auction?.name}</span>
+
         <hr />
 
         <div className="flex flex-row items-center gap-4 py-1">
-          {/* <GavelIcon sx={{ fontSize: 40 }} className="text-success" /> */}
           <RiAuctionFill style={{ fontSize: 45 }} className="text-green-500" />
           <div className="flex flex-col w-full">
             <span className="text-success">Current Bid</span>

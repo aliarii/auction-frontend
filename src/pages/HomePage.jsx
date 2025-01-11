@@ -18,8 +18,8 @@ function HomePage() {
 
   return (
     <div className="flex flex-col self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
-      <div className="flex flex-col size-full p-2 gap-2 rounded-lg overflow-auto">
-        <div className="flex flex-row justify-between h-fit px-1 font-medium">
+      <div className="flex flex-col size-full p-2 gap-2 bg-white shadow-md rounded-lg overflow-auto">
+        <div className="flex flex-row justify-between h-fit  px-1 font-medium">
           <h1>Live Auctions</h1>
           <Link to={"/auctions"} state={{ status: "Active" }}>
             See All
@@ -28,11 +28,11 @@ function HomePage() {
         <HorizontalLine />
         {isLoading ? (
           <Loading />
-        ) : auctions && auctions?.activeAuctions.length > 0 ? (
+        ) : auctions && auctions?.activeAuctions?.length > 0 ? (
           <Grid2
             container
             spacing={1}
-            columns={{ xs: 2, sm: 6, md: 12, lg: 16 }}
+            columns={{ xs: 2, sm: 3, md: 4, lg: 4 }}
             className="size-full overflow-auto"
           >
             {auctions &&

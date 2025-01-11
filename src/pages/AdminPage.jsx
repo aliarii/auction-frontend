@@ -19,7 +19,7 @@ const AdminPage = () => {
   };
   return (
     <div className="flex flex-row self-center h-full w-full max-w-6xl p-2 gap-2 overflow-auto">
-      <div className="flex flex-col h-full w-72 max-w-72 p-2 gap-2 bg-white rounded-lg">
+      <div className="flex flex-col h-full w-72 max-w-72 p-2 gap-2 bg-white shadow-md rounded-lg">
         <h1 className="font-medium">Settings</h1>
         <HorizontalLine />
 
@@ -41,7 +41,7 @@ const AdminPage = () => {
         ))}
       </div>
 
-      <div className="flex flex-col h-full w-full p-2 gap-2 rounded-lg bg-white overflow-auto">
+      <div className="flex flex-col h-full w-full p-2 gap-2 rounded-lg bg-white shadow-md overflow-auto">
         <div className="flex flex-row w-full justify-between">
           <h1 className="font-medium">{selectedSetting.name}</h1>
         </div>

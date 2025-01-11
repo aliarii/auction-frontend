@@ -18,19 +18,19 @@ function ProductDetails() {
         </div>
         <div className="flex flex-row gap-1">
           <label className="whitespace-nowrap min-w-[calc(25%)] font-medium">
-            Product Adedi:
+            Product Quantity:
           </label>
           <span>{auction?.product.quantity}</span>
         </div>
         <div className="flex flex-row gap-1">
           <label className="whitespace-nowrap min-w-[calc(25%)] font-medium">
-            Product Durumu:
+            Product Condition:
           </label>
           <span>{auction?.condition}</span>
         </div>
         <div className="flex flex-row gap-1">
           <label className="whitespace-nowrap min-w-[calc(25%)] font-medium">
-            Product Açıklaması:
+            Product Description:
           </label>
           <span>{auction?.product.description}</span>
         </div>
