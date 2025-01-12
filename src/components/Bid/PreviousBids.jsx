@@ -37,40 +37,41 @@ function PreviousBids() {
   }
 
   return (
-    <div className="flex flex-col size-full p-2 gap-1 rounded-lg bg-white shadow-sm border overflow-auto">
+    <div className="flex flex-col min-h-96 h-96 sm:min-h-40 sm:h-full  w-full p-2 gap-1 rounded-lg bg-white shadow-sm border overflow-auto">
       <h1>Previous Bids</h1>
       <HorizontalLine />
-      {bids && bids.length > 0 ? (
-        <div className="overflow-x-auto">
-          <table className="table-auto w-full text-left text-sm">
-            <thead className="font-semibold">
-              <tr>
-                <th className="px-4 py-2">#</th>
-                <th className="px-4 py-2">Bid</th>
-                <th className="px-4 py-2">Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {bids
-                .slice()
-                .reverse()
-                .map((bid) => (
-                  <tr key={bid._id} className="border-t">
-                    <td className="px-4 py-2">{bid._id.slice(0, 8)}</td>
-                    <td className="px-4 py-2">{bid.amount} TL</td>
-                    <td className="px-4 py-2">
-                      {new Date(bid.createdAt).toLocaleString()}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <p>No bids yet.</p>
-      )}
+      <div className="flex flex-col size-full gap-1 overflow-auto">
+        {bids && bids.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="table-auto w-full text-left text-sm">
+              <thead className="font-semibold">
+                <tr>
+                  <th className="px-4 py-2">#</th>
+                  <th className="px-4 py-2">Bid</th>
+                  <th className="px-4 py-2">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bids
+                  .slice()
+                  .reverse()
+                  .map((bid) => (
+                    <tr key={bid._id} className="border-t">
+                      <td className="px-4 py-2">{bid._id.slice(0, 8)}</td>
+                      <td className="px-4 py-2">{bid.amount} TL</td>
+                      <td className="px-4 py-2">
+                        {new Date(bid.createdAt).toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p>No bids yet.</p>
+        )}
+      </div>
     </div>
-    // </div>
   );
 }
 

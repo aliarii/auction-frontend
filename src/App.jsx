@@ -34,7 +34,7 @@ function App() {
 
   return (
     <UserProvider>
-      <div className="flex flex-col h-screen bg-light-2 font-poppins">
+      <div className="flex flex-col h-screen w-full bg-light-2 font-poppins overflow-auto">
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />

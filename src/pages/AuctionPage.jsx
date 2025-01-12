@@ -166,7 +166,7 @@ function AuctionPage() {
   };
 
   return (
-    <div className="flex flex-col self-center size-full max-w-6xl p-2 gap-1 overflow-auto">
+    <div className="flex flex-col self-center size-full max-w-6xl p-2 gap-1 sm:overflow-auto">
       <div className="flex flex-row items-center gap-2 text-sm">
         <Link to={"/"}>Home</Link>
         <span>{">"}</span>
@@ -175,10 +175,10 @@ function AuctionPage() {
         <Link>{auction?.name}</Link>
       </div>
 
-      <div className="flex flex-row size-full gap-2 overflow-auto">
+      <div className="flex flex-col sm:flex-row size-full gap-2 sm:overflow-auto">
         {/* Left Side */}
-        <div className="w-[60%] flex flex-col gap-2">
-          <div className="flex flex-col min-h-[640px] p-2 gap-1 bg-white rounded-lg border shadow-sm">
+        <div className="w-full sm:w-[60%] flex flex-col gap-2">
+          <div className="flex flex-col h-fit sm:min-h-[640px] p-2 gap-1 bg-white rounded-lg border shadow-sm">
             <h1>Images</h1>
             <HorizontalLine />
             <ProductImages product={auction?.product} showPreviews={true} />
@@ -188,7 +188,7 @@ function AuctionPage() {
 
         {/* Right Side */}
 
-        <div className="h-full w-[40%] flex flex-col gap-2 overflow-auto">
+        <div className="h-full w-full sm:w-[40%] flex flex-col gap-2">
           <AuctionDetails />
           <div className="flex flex-col h-fit w-full py-6 px-2 gap-2 rounded-lg bg-white shadow-sm border">
             <HighestBidCard />
