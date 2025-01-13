@@ -27,10 +27,10 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className="flex flex-row self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
+    <div className="flex flex-col md:flex-row self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
       {/* Left Side */}
-      <div className="flex flex-col h-full min-w-72 w-72 max-w-72 p-2 gap-2 rounded-lg bg-white shadow-md">
-        <div className="flex flex-col justify-center items-center w-full">
+      <div className="flex flex-row sm:flex-col h-fit sm:h-full w-full sm:w-72 sm:max-w-72 p-2 gap-2 bg-white shadow-md rounded-lg overflow-auto">
+        <div className="hidden sm:flex flex-col justify-center items-center w-full">
           <AccountCircleIcon sx={{ fontSize: 90 }} className="text-light-7" />
           <span className="font-medium text-lg">
             {userProfile?.name.toUpperCase()}{" "}
@@ -38,8 +38,10 @@ const ProfilePage = () => {
           </span>
         </div>
         {/* <hr className="w-full border-green-200 border" /> */}
-        <HorizontalLine />
-        <div className="flex flex-col w-full gap-2">
+        {/* <HorizontalLine /> */}
+        <div className="hidden sm:block py-0.5 rounded-full bg-green-400" />
+
+        <div className="flex flex-row sm:flex-col w-full gap-2">
           {settings.map((setting, idx) => (
             <div
               key={idx}
@@ -50,7 +52,9 @@ const ProfilePage = () => {
                 {setting.name}
               </span>
               {selectedSetting.name === setting.name && (
-                <ChevronRightIcon className="absolute right-0" />
+                <div className="hidden sm:inline-block absolute right-0">
+                  <ChevronRightIcon />
+                </div>
               )}
             </div>
           ))}
@@ -227,12 +231,6 @@ const AuctionsInfo = () => {
     }
   }, [userProfile]);
 
-  useEffect(() => {
-    if (userProfile) {
-      console.log("userProfile", userProfile);
-    }
-  }, [userProfile]);
-
   return (
     <div className="flex flex-col size-full ">
       {sortedAuctions.length === 0 ? (
@@ -339,12 +337,6 @@ const WonAuctionsInfo = () => {
         (a, b) => new Date(a.auctionStartTime) - new Date(b.auctionStartTime)
       );
       setSortedAuctions(auctions);
-    }
-  }, [userProfile]);
-
-  useEffect(() => {
-    if (userProfile) {
-      console.log("userProfile", userProfile);
     }
   }, [userProfile]);
 

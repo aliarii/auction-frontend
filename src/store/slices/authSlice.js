@@ -56,8 +56,6 @@ export const logoutUser = createAsyncThunk(
     "/auth/logout",
 
     async () => {
-        console.log("logOut 3");
-
         const response = await api.post(
             "/api/auth/logout",
             {

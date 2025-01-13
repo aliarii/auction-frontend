@@ -30,35 +30,35 @@ const RegisterPage = () => {
     let newErrors = { ...errors };
 
     if (!userData.name) {
-      newErrors.nameError = "Boş Olamaz";
+      newErrors.nameError = "Enter Name";
       isValid = false;
     } else {
       newErrors.nameError = "";
     }
 
     if (!userData.surname) {
-      newErrors.surnameError = "Boş Olamaz";
+      newErrors.surnameError = "Enter Surname";
       isValid = false;
     } else {
       newErrors.surnameError = "";
     }
 
     if (!userData.username) {
-      newErrors.usernameError = "Boş Olamaz";
+      newErrors.usernameError = "Enter Username";
       isValid = false;
     } else {
       newErrors.usernameError = "";
     }
 
     if (!userData.email) {
-      newErrors.emailError = "Boş Olamaz";
+      newErrors.emailError = "Enter Email";
       isValid = false;
     } else {
       newErrors.emailError = "";
     }
 
     if (!userData.password) {
-      newErrors.passwordError = "Boş Olamaz";
+      newErrors.passwordError = "Enter Password";
       isValid = false;
     } else {
       newErrors.passwordError = "";
@@ -77,7 +77,6 @@ const RegisterPage = () => {
     // Dispatch register action if no errors
     dispatch(registerUser(userData)).then((data) => {
       if (data.payload.success) {
-        console.log("başarılı");
         navigate("/login"); // You can redirect to login page after successful registration
       } else {
         setError(data.payload.message);
@@ -90,18 +89,16 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen bg-white dark:bg-dark-7">
-      <div className="flex flex-col w-80 md:w-96 m-auto p-4 rounded-xl bg-light-3 dark:bg-dark-5 gap-4">
-        <h1 className="text-dark-7 dark:text-light-8 text-4xl font-semibold ">
-          Kayıt Ol
-        </h1>
+    <div className="flex justify-center items-center w-screen h-screen">
+      <div className="flex flex-col w-80 md:w-96 m-auto p-4 gap-4 rounded-xl bg-white border shadow-lg">
+        <h1 className="text-4xl font-medium">Register</h1>
         {error && <div className="text-red-500">{error || "Error"}</div>}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="text"
             autoCapitalize="off"
             className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
-            placeholder="Ad"
+            placeholder="Name"
             name="name"
             value={userData.name}
             onChange={(e) => setUserData({ ...userData, name: e.target.value })}
@@ -113,7 +110,7 @@ const RegisterPage = () => {
             type="text"
             autoCapitalize="off"
             className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
-            placeholder="Soyad"
+            placeholder="Surname"
             name="surname"
             value={userData.surname}
             onChange={(e) =>
@@ -129,7 +126,7 @@ const RegisterPage = () => {
             type="text"
             autoCapitalize="off"
             className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
-            placeholder="Kullanıcı Adı"
+            placeholder="Username"
             name="username"
             value={userData.username}
             onChange={(e) =>
@@ -145,7 +142,7 @@ const RegisterPage = () => {
             type="email"
             autoCapitalize="off"
             className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
-            placeholder="E-posta"
+            placeholder="Email"
             name="email"
             value={userData.email}
             onChange={(e) =>
@@ -160,7 +157,7 @@ const RegisterPage = () => {
               type={showPassword ? "text" : "password"}
               autoCapitalize="off"
               className="w-full py-3 px-3 border-l border-y border-light-10 outline-none bg-white rounded-l-lg"
-              placeholder="Şifre"
+              placeholder="Password"
               name="password"
               value={userData.password}
               onChange={(e) =>
@@ -181,17 +178,17 @@ const RegisterPage = () => {
           )}
 
           <button
-            className="w-full rounded-lg py-2 px-3 cursor-pointer bg-light-8 font-semibold text-xl"
+            className="w-full rounded-lg py-2 px-3 bg-green-400 text-white font-medium text-xl"
             type="submit"
           >
-            Kayıt Ol
+            Register
           </button>
         </form>
         <Link
           className=" text-center text-blue-700 dark:text-blue-500 font-bold no-underline text-sm"
           to={"/login"}
         >
-          Giriş Yap
+          Login
         </Link>
       </div>
     </div>

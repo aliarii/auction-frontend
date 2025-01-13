@@ -37,7 +37,6 @@ function AuctionPage() {
   useEffect(() => {
     socket.emit("joinAuction", auctionId);
     socket.on("closeAuction", (completedAuction) => {
-      console.log("closeAuction event received:", completedAuction);
       if (completedAuction.auction._id === auctionId) {
         handleAuctionEnd(completedAuction);
       }
@@ -67,17 +66,10 @@ function AuctionPage() {
     }
   }, [dispatch, auctionId]);
 
-  // useEffect(() => {
-  //   if (auction) {
-  //     console.log("auction", auction);
-  //   }
-  // }, [auction]);
-
   const calcTimeLeftMemo = useCallback(() => {
     if (auction && auction.auctionEndTime) {
       const newTimeLeft = calculateTimeLeft(auction.auctionEndTime);
       setTimeLeft(newTimeLeft);
-      // console.log(auction);
     }
   }, [auction]);
 
@@ -106,34 +98,45 @@ function AuctionPage() {
       dispatch(joinAuction(reqData));
     };
     setConfirmAction(() => joinAction);
-    setShowConfirm(true); // Show confirmation modal
+    setConfirmMessage({
+      message: "Do you want to join?",
+    });
+    setShowConfirm(true);
   };
 
-  const setBidModal = (amount) => {
+  const setBidModal = (amount, willAdd) => {
     if (bid?.auction === auctionId && bid.user === user._id) return;
+
+    const newOffer =
+      Number.parseInt(amount) +
+      (willAdd ? bid?.amount || auction.startingPrice || 0 : 0);
 
     const bidAction = async () => {
       const result = await dispatch(
         createBid({
           auctionId,
           userId: user._id,
-          amount: amount + (bid?.amount || auction.startingPrice || 0),
+          amount: newOffer,
         })
       );
       if (result.error) {
         setInfoData({
-          title: "Teklif başarısız oldu.",
+          title: "Rejected.",
           success: false,
         });
         setShowInfo(true);
       } else {
         setInfoData({
-          title: "Teklif başarıyla verildi.",
+          title: "Successful.",
           success: true,
         });
         setShowInfo(true);
       }
     };
+    setConfirmMessage({
+      title: "Do you confirm the transaction?",
+      message: `Bid amount: ${newOffer} TL`,
+    });
     setConfirmAction(() => bidAction);
     setShowConfirm(true); // Show confirmation modal
   };
@@ -141,14 +144,14 @@ function AuctionPage() {
   const setEndModal = (winnerBid) => {
     if (winnerBid.user === user._id)
       setInfoData({
-        title: "Açık Arttırma Sona Erdi.",
-        message: "Tebrikler! Kazandınız.",
+        title: "Auction Ended.",
+        message: "Congratulations! You Won.",
         success: true,
       });
     else
       setInfoData({
-        title: "Açık Arttırma Sona Erdi.",
-        message: "Kazanamadınız.",
+        title: "Auction Ended.",
+        message: "You Lost.",
         success: false,
       });
     setShowInfo(true);
@@ -166,7 +169,7 @@ function AuctionPage() {
   };
 
   return (
-    <div className="flex flex-col self-center size-full max-w-6xl p-2 gap-1 sm:overflow-auto">
+    <div className="flex flex-col self-center size-full max-w-6xl p-2 gap-1 ">
       <div className="flex flex-row items-center gap-2 text-sm">
         <Link to={"/"}>Home</Link>
         <span>{">"}</span>
@@ -175,7 +178,7 @@ function AuctionPage() {
         <Link>{auction?.name}</Link>
       </div>
 
-      <div className="flex flex-col sm:flex-row size-full gap-2 sm:overflow-auto">
+      <div className="flex flex-col sm:flex-row size-full gap-2 ">
         {/* Left Side */}
         <div className="w-full sm:w-[60%] flex flex-col gap-2">
           <div className="flex flex-col h-fit sm:min-h-[640px] p-2 gap-1 bg-white rounded-lg border shadow-sm">
@@ -217,7 +220,7 @@ function AuctionPage() {
         isVisible={showConfirm}
         onClose={cancelHandler}
         onConfirm={confirmHandler}
-        message={"İşlemi onaylıyor musunuz?"}
+        data={confirmMessage}
       />
     </div>
   );
@@ -252,7 +255,7 @@ const HighestBidCard = () => {
         </span>
         <span>Highest Bid</span>
       </div>
-      <table className="table-fixed w-full text-center text-sm">
+      <table className="table-fixed w-full text-center text-sm whitespace-nowrap">
         <thead>
           <tr>
             <th className="px-4">{auction?.minimumBidInterval || 0} TL</th>
@@ -313,13 +316,13 @@ const ActiveAuctionController = ({
           <div className="flex flex-row justify-center items-center w-full gap-1">
             <button
               className={`${userId === user._id ? "bg-gray-300 cursor-not-allowed" : "text-white bg-green-500 "} p-2 rounded-lg`}
-              onClick={() => setBidModal(1000)}
+              onClick={() => setBidModal(1000, true)}
             >
               + 1000 TL
             </button>
             <button
               className={`${userId === user._id ? "bg-gray-300 cursor-not-allowed" : "text-white bg-green-500 "} p-2 rounded-lg`}
-              onClick={() => setBidModal(2000)}
+              onClick={() => setBidModal(2000, true)}
             >
               + 2000 TL
             </button>

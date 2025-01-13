@@ -66,12 +66,10 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen bg-white dark:bg-dark-7">
-      <div className="flex flex-col w-80 md:w-96 m-auto p-4 rounded-xl bg-light-2 dark:bg-dark-5 gap-4">
+    <div className="flex justify-center items-center w-screen h-screen">
+      <div className="flex flex-col w-80 md:w-96 m-auto p-4 gap-4 rounded-xl bg-white border shadow-lg">
         <div className="flex justify-between items-center">
-          <h1 className="text-dark-7 dark:text-light-8 text-4xl font-semibold ">
-            Giriş Yap
-          </h1>
+          <h1 className="text-4xl font-medium">Login</h1>
         </div>
         {error && <div className="text-red-500">{error || "Error"}</div>}
 
@@ -82,7 +80,7 @@ const LoginPage = () => {
             autoCapitalize="off"
             autoComplete="on"
             className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
-            placeholder="E-posta"
+            placeholder="Email"
             value={userData.email}
             onChange={handleEmailChange}
           />
@@ -95,7 +93,7 @@ const LoginPage = () => {
               autoCapitalize="off"
               name="password"
               className="w-full py-3 px-3 border-l border-y border-light-10 outline-none bg-white rounded-l-lg"
-              placeholder="Şifre"
+              placeholder="Password"
               value={userData.password}
               onChange={handlePasswordChange}
             />
@@ -110,27 +108,19 @@ const LoginPage = () => {
             <h2 className="-mt-4 text-sm text-red-500">*{passwordError}</h2>
           )}
           <button
-            className="w-full rounded-lg py-2 px-3 cursor-pointer bg-light-8 font-semibold text-xl"
+            className="w-full rounded-lg py-2 px-3 bg-green-400 text-white font-medium text-xl"
             type="submit"
           >
-            <h2>Giriş Yap</h2>
+            <h2>Login</h2>
           </button>
 
-          {/* <a
-            className="text-center cursor-pointer text-blue-700 dark:text-blue-500 font-bold no-underline text-sm"
-            href="https://www.google.com"
-          >
-            {"Forgot password?"}
-          </a> */}
-          <span className="text-dark-7 dark:text-light-8 text-center font-medium">
-            Veya
-          </span>
+          <span className="text-center font-medium">Or</span>
 
           <Link
-            className="text-center w-full rounded-lg py-2 px-3 bg-light-8 font-semibold text-xl"
+            className="text-center w-full rounded-lg py-2 px-3 bg-green-400 text-white font-medium text-xl"
             to={"/register"}
           >
-            Hesap Oluştur
+            Register
           </Link>
         </form>
       </div>

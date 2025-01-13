@@ -1,6 +1,6 @@
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
-function ConfirmModal({ isVisible, onClose, onConfirm, message }) {
+function ConfirmModal({ isVisible, onClose, onConfirm, data }) {
   if (!isVisible) return null; // Modal görünür değilse hiçbir şey render etme
   return (
     <div
@@ -12,25 +12,26 @@ function ConfirmModal({ isVisible, onClose, onConfirm, message }) {
         onClick={(e) => e.stopPropagation()}
       >
         <CloseIcon
-          className="absolute right-2 top-2 text-dark-8 cursor-pointer"
+          className="absolute right-2 top-2 cursor-pointer"
           fontSize="large"
           onClick={onClose}
         />
-        <div className="flex items-center justify-center min-h-48 w-full">
-          <h2 className="text-xl font-bold">{message}</h2>
+        <div className="flex flex-col items-center justify-center min-h-48 w-full gap-2">
+          <h2 className="font-medium">{data?.title}</h2>
+          <h2 className="font-medium">{data?.message}</h2>
         </div>
-        <div className="flex flex-row gap-1 w-full">
+        <div className="flex flex-row w-full p-2 gap-2 ">
           <button
             onClick={onClose}
-            className={`w-full bg-danger text-white p-2 rounded`}
+            className={`w-full bg-danger text-white p-2 rounded-lg`}
           >
-            İptal
+            Cancel
           </button>
           <button
             onClick={onConfirm}
-            className={`w-full bg-success text-white p-2 rounded`}
+            className={`w-full bg-green-500 text-white p-2 rounded-lg`}
           >
-            Onay
+            Yes
           </button>
         </div>
       </div>

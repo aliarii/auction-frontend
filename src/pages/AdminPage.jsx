@@ -18,10 +18,11 @@ const AdminPage = () => {
     setSelectedSetting(setting);
   };
   return (
-    <div className="flex flex-row self-center h-full w-full max-w-6xl p-2 gap-2 overflow-auto">
-      <div className="flex flex-col h-full w-72 max-w-72 p-2 gap-2 bg-white shadow-md rounded-lg">
-        <h1 className="font-medium">Settings</h1>
-        <HorizontalLine />
+    <div className="flex flex-col sm:flex-row self-center h-full w-full max-w-6xl p-2 gap-2 overflow-auto">
+      <div className="flex flex-row sm:flex-col h-fit sm:h-full w-full sm:w-72 sm:max-w-72 p-2 gap-2 bg-white shadow-md rounded-lg overflow-auto">
+        <h1 className="hidden sm:block font-medium">Settings</h1>
+
+        <div className="hidden sm:block py-0.5 rounded-full bg-green-400" />
 
         {settings.map((item, index) => (
           <div
@@ -33,7 +34,7 @@ const AdminPage = () => {
               {item.name}
             </h2>
             {selectedSetting?.name === item.name && (
-              <div className="flex justify-center">
+              <div className="hidden sm:flex justify-center">
                 <ChevronRightIcon />
               </div>
             )}

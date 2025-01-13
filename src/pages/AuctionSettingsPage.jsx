@@ -155,7 +155,9 @@ const AuctionSettingsPage = () => {
         </div>
       </div>
 
-      <div className="h-full w-0.5 bg-green-200" />
+      <div className="hidden sm:flex h-full w-0.5 bg-green-200" />
+      <div className="block sm:hidden py-0.5 rounded-full bg-green-400" />
+
       <div className="w-full md:w-[calc(80%)] h-full overflow-auto">
         {selectedView}
       </div>
@@ -172,14 +174,14 @@ const AuctionsView = ({
   handleAddNewAuctionSelect,
   handleUpdateCategorySelect,
 }) => {
-  // console.log(auctions);
-
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
       <div className="flex justify-between items-end w-full min-h-6">
         <h1>{name}</h1>
         {name !== "All" ? (
-          <BtnMdEdit handleClick={() => handleUpdateCategorySelect()} />
+          <div className="absolute bottom-0 right-0">
+            <BtnMdEdit handleClick={() => handleUpdateCategorySelect()} />
+          </div>
         ) : (
           ""
         )}
@@ -225,7 +227,6 @@ const AddNewCategoryView = ({ auctions, handleCancel }) => {
       image: "",
       auctions: selectedAuctions,
     };
-    console.log(selectedAuctions);
 
     dispatch(createAuctionCategory(reqData))
       .then(() => dispatch(getAuctionCategories()))
@@ -246,9 +247,11 @@ const AddNewCategoryView = ({ auctions, handleCancel }) => {
   };
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="flex justify-between items-end w-full min-h-6">
+      <div className="relative flex justify-between items-end w-full min-h-6">
         <h2>New Category</h2>
-        <BtnMdCancel clickEvent={() => handleCancel()} />
+        <div className="absolute right-0">
+          <BtnMdCancel clickEvent={() => handleCancel()} />
+        </div>
       </div>
 
       <HorizontalLine />
@@ -371,9 +374,11 @@ const UpdateCategoryView = ({
   };
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="flex justify-between items-end w-full min-h-6">
+      <div className="relative flex justify-between items-end w-full min-h-6">
         <h2>Update Category: {name}</h2>
-        <BtnMdCancel clickEvent={() => handleCancel()} />
+        <div className="absolute bottom-0 right-0">
+          <BtnMdCancel clickEvent={() => handleCancel()} />
+        </div>
       </div>
 
       <hr className="w-full border-green-200 border" />
@@ -482,9 +487,11 @@ const AddNewAuctionView = ({ _id, name, handleCancel }) => {
   };
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="flex justify-between items-end w-full min-h-6">
+      <div className="relative flex justify-between items-end w-full min-h-6">
         <h2>Add</h2>
-        <BtnMdCancel clickEvent={() => handleCancel()} />
+        <div className="absolute bottom-0 right-0">
+          <BtnMdCancel clickEvent={() => handleCancel()} />
+        </div>
       </div>
 
       <hr className="w-full border-green-200 border" />
@@ -674,9 +681,11 @@ const UpdateAuctionView = ({ auction, handleCancel }) => {
 
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="flex justify-between items-end w-full min-h-6">
+      <div className="relative flex justify-between items-end w-full min-h-6">
         <h2>Update Auction: {auction?.name}</h2>
-        <BtnMdCancel clickEvent={() => handleCancel()} />
+        <div className="absolute bottom-0 right-0">
+          <BtnMdCancel clickEvent={() => handleCancel()} />
+        </div>
       </div>
 
       <hr className="w-full border-green-200 border" />

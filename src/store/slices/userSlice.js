@@ -59,7 +59,6 @@ export const getUsers = createAsyncThunk(
 export const getUserById = createAsyncThunk(
     "user/user",
     async (id) => {
-        // console.log(localStorage.getItem("token"));
 
         const response = await api.get(`/api/users/${id}`, {
             headers: {
@@ -158,31 +157,24 @@ const userSlice = createSlice({
                 state.user = null;
             })
             .addCase(getUserByToken.pending, (state) => {
-                console.log("getUserByToken.pending");
-
                 state.isLoading = true;
             })
             .addCase(getUserByToken.fulfilled, (state, action) => {
-                console.log("getUserByToken.fulfilled");
                 state.isLoading = false;
                 state.user = action.payload.success ? action.payload.data.user : null;
             })
             .addCase(getUserByToken.rejected, (state) => {
-                console.log("getUserByToken.rejected");
                 state.isLoading = false;
                 state.user = null;
             })
             .addCase(getUserProfile.pending, (state) => {
-                console.log("getUserProfile.pending");
                 state.isLoading = true;
             })
             .addCase(getUserProfile.fulfilled, (state, action) => {
-                console.log("getUserProfile.fulfilled");
                 state.isLoading = false;
                 state.userProfile = action.payload.success ? action.payload.data.user : null;
             })
             .addCase(getUserProfile.rejected, (state) => {
-                console.log("getUserProfile.rejected");
                 state.isLoading = false;
                 state.userProfile = null;
             })

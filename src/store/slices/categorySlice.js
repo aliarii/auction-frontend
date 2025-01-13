@@ -50,7 +50,6 @@ export const getAuctionCategories = createAsyncThunk(
     async () => {
 
         const response = await api.get("/api/auction-categories");
-        // console.log("response", response);
         return response.data;
     }
 );

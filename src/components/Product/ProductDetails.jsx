@@ -5,7 +5,7 @@ import HorizontalLine from "../HorizontalLine";
 function ProductDetails() {
   const { auction } = useSelector((state) => state.auction);
   return (
-    <div className="flex flex-col size-full p-2 gap-1 rounded-lg bg-white shadow-sm border overflow-auto">
+    <div className="flex flex-col min-h-40 h-40 sm:min-h-40 sm:h-full p-2 gap-1 rounded-lg bg-white shadow-sm border overflow-auto">
       <h1>Product Details</h1>
       <HorizontalLine />
 

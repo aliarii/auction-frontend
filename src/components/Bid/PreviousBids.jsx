@@ -23,7 +23,6 @@ function PreviousBids() {
       if (newBid.auctionId === auction._id) {
         dispatch(getBidsByAuction(auction._id));
         dispatch(getBidById(newBid.bid._id));
-        // console.log(newBid);
       }
     });
 

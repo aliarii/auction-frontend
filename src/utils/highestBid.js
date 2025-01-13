@@ -11,9 +11,9 @@ export function highestBid({ bid, auction, fontSize }) {
 
   useEffect(() => {
     socket.on("updateBid", (newBid) => {
-      console.log("Yeni teklif alındı:", newBid);
+
       if (newBid.auctionId === auction._id) {
-        console.log(newBid);
+
         setBidAmount(newBid.bid.amount);
       }
     });

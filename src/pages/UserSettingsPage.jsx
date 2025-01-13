@@ -1,20 +1,18 @@
-import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import React, { useEffect, useState } from "react";
+import { FaUserEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import BtnMdCancel from "../components/Button/BtnMdCancel";
 import BtnMdDelete from "../components/Button/BtnMdDelete";
 import BtnMdSave from "../components/Button/BtnMdSave";
+import { registerUser } from "../store/slices/authSlice";
 import {
   deleteUser,
   getUserById,
   getUsers,
   updateUser,
 } from "../store/slices/userSlice";
-import HorizontalLine from "../components/HorizontalLine";
-import { registerUser } from "../store/slices/authSlice";
-import { FaUserEdit } from "react-icons/fa";
 
 const UserSettingsPage = () => {
   const views = [
@@ -70,8 +68,6 @@ const UserSettingsPage = () => {
 export default UserSettingsPage;
 
 const UsersTable = ({ users, handleEditClick }) => {
-  // console.log(users);
-
   return (
     <div className="flex flex-col h-full w-full rounded-md text-xs  text-left overflow-auto">
       <table className="table-auto w-full text-left text-sm">
@@ -144,9 +140,11 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
 
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="flex justify-between items-end w-full min-h-6">
+      <div className="relative flex justify-between items-end w-full min-h-6">
         <h2>User Details</h2>
-        {user && <BtnMdCancel clickEvent={handleCancelClick} />}
+        <div className="absolute bottom-0 right-0">
+          {user && <BtnMdCancel clickEvent={handleCancelClick} />}
+        </div>
       </div>
       <hr className="w-full border-green-200 border" />
 
@@ -278,9 +276,11 @@ const AddNewUserView = ({ handleCancelClick }) => {
 
   return (
     <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="flex justify-between items-end w-full min-h-6">
+      <div className="relative flex justify-between items-end w-full min-h-6">
         <h2>New User</h2>
-        <BtnMdCancel clickEvent={handleCancelClick} />
+        <div className="absolute bottom-0 right-0">
+          <BtnMdCancel clickEvent={handleCancelClick} />
+        </div>
       </div>
 
       <hr className="w-full border-green-200 border" />
