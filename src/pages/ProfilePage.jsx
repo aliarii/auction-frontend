@@ -256,7 +256,7 @@ const AuctionsInfo = () => {
                   <td className="px-4 py-3">{auction.status}</td>
                   <td className="px-4 py-3">
                     <Link
-                      to={`/auction/${auction._id}`}
+                      to={`/auction-frontend/auction/${auction._id}`}
                       className="px-3 py-2 text-white font-medium bg-info rounded-md"
                     >
                       View
@@ -310,7 +310,7 @@ const BidsInfo = () => {
                   </td>
                   <td className="px-4 py-3">
                     <Link
-                      to={`/auction/${bid.auction}`}
+                      to={`/auction-frontend/auction/${bid.auction}`}
                       className="px-3 py-2 text-white font-medium bg-info rounded-md"
                     >
                       View
@@ -365,7 +365,7 @@ const WonAuctionsInfo = () => {
                   <td className="px-4 py-3">{auction.status}</td>
                   <td className="px-4 py-3">
                     <Link
-                      to={`/auction/${auction._id}`}
+                      to={`/auction-frontend/auction/${auction._id}`}
                       className="px-3 py-2 text-white font-medium bg-info rounded-md"
                     >
                       View

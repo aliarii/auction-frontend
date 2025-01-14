@@ -43,7 +43,7 @@ const LoginPage = () => {
         });
         await setRole(result.payload.data.user.role);
         await dispatch(getUserById(result.payload.data.user._id));
-        navigate("/");
+        navigate("/auction-frontend/");
       } catch (error) {
         console.error(error);
         setError(error.response.data.error);
@@ -118,7 +118,7 @@ const LoginPage = () => {
 
           <Link
             className="text-center w-full rounded-lg py-2 px-3 bg-green-400 text-white font-medium text-xl"
-            to={"/register"}
+            to={"/auction-frontend/register"}
           >
             Register
           </Link>

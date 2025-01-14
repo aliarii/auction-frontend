@@ -77,7 +77,7 @@ const RegisterPage = () => {
     // Dispatch register action if no errors
     dispatch(registerUser(userData)).then((data) => {
       if (data.payload.success) {
-        navigate("/login"); // You can redirect to login page after successful registration
+        navigate("/auction-frontend/login"); // You can redirect to login page after successful registration
       } else {
         setError(data.payload.message);
       }
@@ -186,7 +186,7 @@ const RegisterPage = () => {
         </form>
         <Link
           className=" text-center text-blue-700 dark:text-blue-500 font-bold no-underline text-sm"
-          to={"/login"}
+          to={"/auction-frontend/login"}
         >
           Login
         </Link>

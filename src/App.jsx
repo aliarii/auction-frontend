@@ -37,10 +37,10 @@ function App() {
       <div className="flex flex-col h-screen w-full bg-light-2 font-poppins overflow-auto">
         <Navbar />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/auctions" element={<AuctionsPage />} />
+          <Route path="/auction-frontend/" element={<HomePage />} />
+          <Route path="/auction-frontend/auctions" element={<AuctionsPage />} />
           <Route
-            path="/profile"
+            path="/auction-frontend/profile"
             element={
               <ProtectedRoute roles={["user", "admin"]} user={user}>
                 <ProfilePage />
@@ -48,7 +48,7 @@ function App() {
             }
           />
           <Route
-            path="/auction/:auctionId"
+            path="/auction-frontend/auction/:auctionId"
             element={
               <ProtectedRoute roles={["user", "admin"]} user={user}>
                 <AuctionPage />
@@ -56,15 +56,15 @@ function App() {
             }
           />
           <Route
-            path="/admin"
+            path="/auction-frontend/admin"
             element={
               <ProtectedRoute roles={["admin"]} user={user}>
                 <AdminPage />
               </ProtectedRoute>
             }
           />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/auction-frontend/login" element={<LoginPage />} />
+          <Route path="/auction-frontend/register" element={<RegisterPage />} />
 
           {/* 404 Sayfası */}
           {/* <Route path="*" element={<NotFound />} /> */}

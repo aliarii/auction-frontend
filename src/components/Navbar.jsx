@@ -19,7 +19,7 @@ function Navbar() {
     setRole("");
     logout();
     await dispatch(logoutUser());
-    navigate("/");
+    navigate("/auction-frontend/");
   };
 
   return (
@@ -29,15 +29,17 @@ function Navbar() {
           className="md:hidden text-3xl"
           onClick={() => setMenuOpen(!menuOpen)}
         />
-        <Link to={`/`} className="text-2xl font-bold">
+        <Link to={`/auction-frontend/`} className="text-2xl font-bold">
           Auction.com
         </Link>
 
         <div className="hidden md:flex flex-row pl-3 gap-5">
-          <Link to={`/`}>Home</Link>
+          <Link to={`/auction-frontend/`}>Home</Link>
 
-          <Link to={`/auctions`}>Auctions</Link>
-          {role === "admin" && <Link to={`/admin`}>Admin</Link>}
+          <Link to={`/auction-frontend/auctions`}>Auctions</Link>
+          {role === "admin" && (
+            <Link to={`/auction-frontend/admin`}>Admin</Link>
+          )}
         </div>
       </div>
 
@@ -45,7 +47,7 @@ function Navbar() {
       <div className="hidden md:flex flex-row items-center w-fit whitespace-nowrap gap-5 p-2">
         {auth?.isAuthenticated && auth?.user ? (
           <>
-            <Link to={"/profile"}>
+            <Link to={"/auction-frontend/profile"}>
               {auth?.user ? auth?.user.name : "Loading..."}
             </Link>
             <p className="cursor-pointer" onClick={handleLogout}>
@@ -54,8 +56,8 @@ function Navbar() {
           </>
         ) : (
           <>
-            <Link to={`/login`}>Login</Link>
-            <Link to={`/register`}>Register</Link>
+            <Link to={`/auction-frontend/login`}>Login</Link>
+            <Link to={`/auction-frontend/register`}>Register</Link>
           </>
         )}
       </div>
@@ -89,21 +91,27 @@ const SideMenu = ({ auth, role, menuOpen, setMenuOpen, handleLogout }) => {
       >
         <div className="flex flex-col justify-between pb-6 px-2 h-full">
           <Link
-            to={`/`}
+            to={`/auction-frontend/`}
             className="min-h-14 h-14 text-center content-center border-b-2 border-green-400 text-2xl font-bold"
           >
             Auction.com
           </Link>
 
           <div className="flex flex-col items-center size-full text-lg py-2 gap-5">
-            <Link to={`/`} onClick={() => setMenuOpen(false)}>
+            <Link to={`/auction-frontend/`} onClick={() => setMenuOpen(false)}>
               Home
             </Link>
-            <Link to={`/auctions`} onClick={() => setMenuOpen(false)}>
+            <Link
+              to={`/auction-frontend/auctions`}
+              onClick={() => setMenuOpen(false)}
+            >
               Auctions
             </Link>
             {role === "admin" && (
-              <Link to={`/admin`} onClick={() => setMenuOpen(false)}>
+              <Link
+                to={`/auction-frontend/admin`}
+                onClick={() => setMenuOpen(false)}
+              >
                 Admin
               </Link>
             )}
@@ -112,7 +120,10 @@ const SideMenu = ({ auth, role, menuOpen, setMenuOpen, handleLogout }) => {
           <div className="flex flex-col items-center h-fit w-full gap-5 text-lg">
             {auth?.isAuthenticated && auth?.user ? (
               <>
-                <Link to={"/profile"} onClick={() => setMenuOpen(false)}>
+                <Link
+                  to={"/auction-frontend/profile"}
+                  onClick={() => setMenuOpen(false)}
+                >
                   {auth?.user ? auth?.user.name : "Loading..."}
                 </Link>
                 <p className="cursor-pointer " onClick={handleLogout}>
@@ -121,10 +132,16 @@ const SideMenu = ({ auth, role, menuOpen, setMenuOpen, handleLogout }) => {
               </>
             ) : (
               <>
-                <Link to={`/login`} onClick={() => setMenuOpen(false)}>
+                <Link
+                  to={`/auction-frontend/login`}
+                  onClick={() => setMenuOpen(false)}
+                >
                   Login
                 </Link>
-                <Link to={`/register`} onClick={() => setMenuOpen(false)}>
+                <Link
+                  to={`/auction-frontend/register`}
+                  onClick={() => setMenuOpen(false)}
+                >
                   Register
                 </Link>
               </>

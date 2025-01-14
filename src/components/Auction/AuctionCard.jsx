@@ -94,7 +94,7 @@ function AuctionCard({ auction, onView }) {
         </div>
       ) : (
         <Link
-          to={`/auction/${auction?._id}`}
+          to={`/auction-frontend/auction/${auction?._id}`}
           className="h-8 w-[85%] max-w-56 self-center text-center place-content-center text-white font-semibold rounded-full bg-green-500"
         >
           View

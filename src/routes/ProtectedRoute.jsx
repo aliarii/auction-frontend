@@ -14,11 +14,11 @@ function ProtectedRoute({ children, roles, user }) {
     if (roles.includes(auth.user?.role)) {
       return children;
     } else {
-      return <Navigate to="/" />;
+      return <Navigate to="/auction-frontend/" />;
     }
   }
 
-  if (!auth.user) return <Navigate to="/" />;
+  if (!auth.user) return <Navigate to="/auction-frontend/" />;
   return children;
 }
 

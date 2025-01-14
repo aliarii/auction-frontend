@@ -61,7 +61,7 @@ function AuctionPage() {
   useEffect(() => {
     if (auctionId) {
       dispatch(getAuctionById(auctionId)).then((data) => {
-        if (data.error) navigate("/");
+        if (data.error) navigate("/auction-frontend/");
       });
     }
   }, [dispatch, auctionId]);
@@ -171,9 +171,9 @@ function AuctionPage() {
   return (
     <div className="flex flex-col self-center size-full max-w-6xl p-2 gap-1 ">
       <div className="flex flex-row items-center gap-2 text-sm">
-        <Link to={"/"}>Home</Link>
+        <Link to={"/auction-frontend/"}>Home</Link>
         <span>{">"}</span>
-        <Link to={"/auctions"}>Auctions</Link>
+        <Link to={"/auction-frontend/auctions"}>Auctions</Link>
         <span>{">"}</span>
         <Link>{auction?.name}</Link>
       </div>

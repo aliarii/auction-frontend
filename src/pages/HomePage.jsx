@@ -21,7 +21,7 @@ function HomePage() {
       <div className="flex flex-col size-full p-2 gap-2 bg-white shadow-md rounded-lg overflow-auto">
         <div className="flex flex-row justify-between h-fit  px-1 font-medium">
           <h1>Live Auctions</h1>
-          <Link to={"/auctions"} state={{ status: "Active" }}>
+          <Link to={"/auction-frontend/auctions"} state={{ status: "Active" }}>
             See All
           </Link>
         </div>
