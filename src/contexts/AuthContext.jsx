@@ -6,7 +6,7 @@ const initialState = {
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    initialState.isAuthenticated
+    initialState.isAuthenticated,
   );
 
   const login = (userData) => {

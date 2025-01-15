@@ -66,9 +66,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen">
-      <div className="flex flex-col w-80 md:w-96 m-auto p-4 gap-4 rounded-xl bg-white border shadow-lg">
-        <div className="flex justify-between items-center">
+    <div className="flex h-screen w-screen items-center justify-center">
+      <div className="m-auto flex w-80 flex-col gap-4 rounded-xl border bg-white p-4 shadow-lg md:w-96">
+        <div className="flex items-center justify-between">
           <h1 className="text-4xl font-medium">Login</h1>
         </div>
         {error && <div className="text-red-500">{error || "Error"}</div>}
@@ -79,7 +79,7 @@ const LoginPage = () => {
             name="email"
             autoCapitalize="off"
             autoComplete="on"
-            className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
+            className="w-full rounded-lg border border-light-10 bg-white px-3 py-3 outline-none"
             placeholder="Email"
             value={userData.email}
             onChange={handleEmailChange}
@@ -92,13 +92,13 @@ const LoginPage = () => {
               type={showPassword ? "text" : "password"}
               autoCapitalize="off"
               name="password"
-              className="w-full py-3 px-3 border-l border-y border-light-10 outline-none bg-white rounded-l-lg"
+              className="w-full rounded-l-lg border-y border-l border-light-10 bg-white px-3 py-3 outline-none"
               placeholder="Password"
               value={userData.password}
               onChange={handlePasswordChange}
             />
             <div
-              className="px-3 flex items-center rounded-r-lg border-r border-y border-light-10 outline-none bg-white cursor-pointer"
+              className="flex cursor-pointer items-center rounded-r-lg border-y border-r border-light-10 bg-white px-3 outline-none"
               onClick={togglePasswordVisibility}
             >
               {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
@@ -108,7 +108,7 @@ const LoginPage = () => {
             <h2 className="-mt-4 text-sm text-red-500">*{passwordError}</h2>
           )}
           <button
-            className="w-full rounded-lg py-2 px-3 bg-green-400 text-white font-medium text-xl"
+            className="w-full rounded-lg bg-green-400 px-3 py-2 text-xl font-medium text-white"
             type="submit"
           >
             <h2>Login</h2>
@@ -117,7 +117,7 @@ const LoginPage = () => {
           <span className="text-center font-medium">Or</span>
 
           <Link
-            className="text-center w-full rounded-lg py-2 px-3 bg-green-400 text-white font-medium text-xl"
+            className="w-full rounded-lg bg-green-400 px-3 py-2 text-center text-xl font-medium text-white"
             to={"/register"}
           >
             Register

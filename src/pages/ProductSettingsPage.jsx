@@ -120,31 +120,31 @@ const ProductSettingsPage = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-full gap-1 overflow-auto">
-      <div className="flex flex-col w-full md:w-[calc(20%)] min-h-fit md:h-full p-2 gap-2 overflow-auto">
+    <div className="flex h-full w-full flex-col gap-1 overflow-auto md:flex-row">
+      <div className="flex min-h-fit w-full flex-col gap-2 overflow-auto p-2 md:h-full md:w-[calc(20%)]">
         <h1>Categories</h1>
-        <hr className="w-full border-green-200 border" />
+        <hr className="w-full border border-green-200" />
 
-        <div className="flex flex-col w-full h-fit gap-2 overflow-auto">
+        <div className="flex h-fit w-full flex-col gap-2 overflow-auto">
           <button
-            className={`rounded-md text-white bg-green-500 py-1 whitespace-nowrap overflow-hidden text-ellipsis`}
+            className={`overflow-hidden text-ellipsis whitespace-nowrap rounded-md bg-green-500 py-1 text-white`}
             onClick={() => handleAddNewCategorySelect()}
           >
             + New Category
           </button>
 
-          <div className="flex md:flex-col gap-1 overflow-auto">
+          <div className="flex gap-1 overflow-auto md:flex-col">
             {categories?.map((category, index) => (
               <div
-                className={`flex justify-between items-center py-1 rounded-md cursor-pointer hover:bg-green-200 ${selectedViewId !== 1 && category.name === selectedCategory.name ? "bg-green-200 " : ""}`}
+                className={`flex cursor-pointer items-center justify-between rounded-md py-1 hover:bg-green-200 ${selectedViewId !== 1 && category.name === selectedCategory.name ? "bg-green-200" : ""}`}
                 key={index}
                 onClick={() => handleCategorySelect(category)}
               >
-                <span className="mr-2 md:mr-0 ml-2 whitespace-nowrap">
+                <span className="ml-2 mr-2 whitespace-nowrap md:mr-0">
                   {category.name}
                 </span>
                 {category === selectedCategory && (
-                  <div className="hidden md:inline-flex justify-center">
+                  <div className="hidden justify-center md:inline-flex">
                     <ChevronRightIcon />
                   </div>
                 )}
@@ -154,10 +154,10 @@ const ProductSettingsPage = () => {
         </div>
       </div>
 
-      <div className="hidden sm:flex h-full w-0.5 bg-green-200" />
-      <div className="block sm:hidden py-0.5 rounded-full bg-green-400" />
+      <div className="hidden h-full w-0.5 bg-green-200 sm:flex" />
+      <div className="block rounded-full bg-green-400 py-0.5 sm:hidden" />
 
-      <div className="w-full md:w-[calc(80%)] h-full overflow-auto">
+      <div className="h-full w-full overflow-auto md:w-[calc(80%)]">
         {selectedView}
       </div>
     </div>
@@ -174,8 +174,8 @@ const ProductsView = ({
   handleUpdateCategorySelect,
 }) => {
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="relative flex justify-between items-end w-full min-h-6">
+    <div className="flex h-full w-full flex-col gap-2 overflow-auto p-2">
+      <div className="relative flex min-h-6 w-full items-end justify-between">
         <h1>{name}</h1>
         {name !== "All" ? (
           <div className="absolute bottom-0 right-0">
@@ -185,10 +185,10 @@ const ProductsView = ({
           ""
         )}
       </div>
-      <hr className="w-full border-green-200 border" />
+      <hr className="w-full border border-green-200" />
 
       <button
-        className={`py-1 rounded-md text-white bg-green-500 `}
+        className={`rounded-md bg-green-500 py-1 text-white`}
         onClick={() => handleAddNewProductSelect()}
       >
         + New Product
@@ -234,7 +234,7 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
 
   const handleProductAdd = (product) => {
     setNotSelectedProducts(
-      notSelectedProducts.filter((p) => p._id !== product._id)
+      notSelectedProducts.filter((p) => p._id !== product._id),
     );
     setSelectedProducts([...selectedProducts, product]);
   };
@@ -243,33 +243,33 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
     setNotSelectedProducts([...notSelectedProducts, product]);
   };
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="relative flex justify-between items-end w-full min-h-6">
+    <div className="flex h-full w-full flex-col gap-2 overflow-auto p-2">
+      <div className="relative flex min-h-6 w-full items-end justify-between">
         <h2>New Category</h2>
         <div className="absolute bottom-0 right-0">
           <BtnMdCancel clickEvent={() => handleCancel()} />
         </div>
       </div>
 
-      <hr className="w-full border-green-200 border" />
+      <hr className="w-full border border-green-200" />
 
-      <div className="flex flex-col w-full h-full gap-2 overflow-auto">
-        <div className="flex flex-col w-full gap-2 px-2 pb-2">
+      <div className="flex h-full w-full flex-col gap-2 overflow-auto">
+        <div className="flex w-full flex-col gap-2 px-2 pb-2">
           <h2>Category Name:</h2>
           <input
             type="text"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg"
+            className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none"
             placeholder="Category Name"
             name="categoryName"
             value={categoryName}
             onChange={(e) => setCategoryName(e.target.value)}
           />
         </div>
-        <div className="flex w-full h-full gap-1 overflow-auto">
-          <div className="flex flex-col w-full h-full p-2 gap-1 rounded-lg border-2 shadow-md overflow-auto">
+        <div className="flex h-full w-full gap-1 overflow-auto">
+          <div className="flex h-full w-full flex-col gap-1 overflow-auto rounded-lg border-2 p-2 shadow-md">
             <h2>All Products</h2>
-            <hr className="w-full border-green-200 border" />
+            <hr className="w-full border border-green-200" />
 
             <div className="h-full overflow-auto">
               {notSelectedProducts?.map((product) => (
@@ -284,14 +284,14 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
             </div>
           </div>
 
-          <div className="flex flex-col h-full justify-center">
+          <div className="flex h-full flex-col justify-center">
             <ArrowRightAltIcon />
             <ArrowRightAltIcon className="rotate-180" />
           </div>
 
-          <div className="flex flex-col w-full h-full p-2 gap-1 rounded-lg border-2 shadow-md overflow-auto">
+          <div className="flex h-full w-full flex-col gap-1 overflow-auto rounded-lg border-2 p-2 shadow-md">
             <h2>Selected Products</h2>
-            <hr className="w-full border-green-200 border" />
+            <hr className="w-full border border-green-200" />
 
             <div className="h-full overflow-auto">
               {selectedProducts.length > 0 ? (
@@ -310,7 +310,7 @@ const AddNewCategoryView = ({ products, handleCancel }) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-end w-full gap-2">
+        <div className="flex w-full justify-end gap-2">
           <BtnMdSave clickEvent={handleCategorySave} />
         </div>
       </div>
@@ -331,9 +331,9 @@ const UpdateCategoryView = ({
     products?.filter(
       (pr) =>
         !existingProducts.some(
-          (selectedProduct) => selectedProduct._id === pr._id
-        )
-    ) || []
+          (selectedProduct) => selectedProduct._id === pr._id,
+        ),
+    ) || [],
   );
   const [selectedProducts, setSelectedProducts] = useState(existingProducts);
 
@@ -356,12 +356,12 @@ const UpdateCategoryView = ({
       id: _id,
     };
     dispatch(deleteProductCategory(reqData)).then(() =>
-      dispatch(getProductCategories())
+      dispatch(getProductCategories()),
     );
   };
   const handleProductAdd = (product) => {
     setNotSelectedProducts(
-      notSelectedProducts.filter((p) => p._id !== product._id)
+      notSelectedProducts.filter((p) => p._id !== product._id),
     );
     setSelectedProducts([...selectedProducts, product]);
   };
@@ -370,34 +370,34 @@ const UpdateCategoryView = ({
     setNotSelectedProducts([...notSelectedProducts, product]);
   };
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="relative flex justify-between items-end w-full min-h-6">
+    <div className="flex h-full w-full flex-col gap-2 overflow-auto p-2">
+      <div className="relative flex min-h-6 w-full items-end justify-between">
         <h2>Update Category: {name}</h2>
         <div className="absolute bottom-0 right-0">
           <BtnMdCancel clickEvent={() => handleCancel()} />
         </div>
       </div>
 
-      <hr className="w-full border-green-200 border" />
+      <hr className="w-full border border-green-200" />
 
-      <div className="flex flex-col w-full h-full overflow-auto">
-        <div className="flex flex-col w-full h-full gap-2 overflow-auto">
-          <div className="flex flex-col w-full gap-2 px-2 pb-2">
+      <div className="flex h-full w-full flex-col overflow-auto">
+        <div className="flex h-full w-full flex-col gap-2 overflow-auto">
+          <div className="flex w-full flex-col gap-2 px-2 pb-2">
             <h2>Category Name:</h2>
             <input
               type="text"
               autoCapitalize="off"
-              className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg "
+              className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none"
               placeholder="Category Name"
               name="categoryName"
               value={categoryName}
               onChange={(e) => setCategoryName(e.target.value)}
             />
           </div>
-          <div className="flex w-full h-full gap-1 overflow-auto">
-            <div className="flex flex-col w-full h-full p-2 gap-1 rounded-lg border-2 shadow-md overflow-auto">
+          <div className="flex h-full w-full gap-1 overflow-auto">
+            <div className="flex h-full w-full flex-col gap-1 overflow-auto rounded-lg border-2 p-2 shadow-md">
               <h2>All Products</h2>
-              <hr className="w-full border-green-200 border" />
+              <hr className="w-full border border-green-200" />
 
               <div className="h-full overflow-auto">
                 {notSelectedProducts?.map((product) => (
@@ -412,14 +412,14 @@ const UpdateCategoryView = ({
               </div>
             </div>
 
-            <div className="flex flex-col h-full justify-center">
+            <div className="flex h-full flex-col justify-center">
               <ArrowRightAltIcon />
               <ArrowRightAltIcon className="rotate-180" />
             </div>
 
-            <div className="flex flex-col w-full h-full p-2 gap-1 rounded-lg border-2 shadow-md overflow-auto">
+            <div className="flex h-full w-full flex-col gap-1 overflow-auto rounded-lg border-2 p-2 shadow-md">
               <h2>Selected Products</h2>
-              <hr className="w-full border-green-200 border" />
+              <hr className="w-full border border-green-200" />
 
               <div className="h-full overflow-auto">
                 {selectedProducts.length > 0 ? (
@@ -438,7 +438,7 @@ const UpdateCategoryView = ({
               </div>
             </div>
           </div>
-          <div className="flex justify-end w-full gap-2">
+          <div className="flex w-full justify-end gap-2">
             <BtnMdDelete clickEvent={handleCategoryDelete} />
             <BtnMdSave clickEvent={handleCategorySave} />
           </div>
@@ -476,7 +476,7 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
           description: "",
           category: null,
           images: [],
-        })
+        }),
       );
   };
   const handleFileChange = (e) => {
@@ -491,24 +491,24 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
     }
   };
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="relative flex justify-between items-end w-full min-h-6">
+    <div className="flex h-full w-full flex-col gap-2 overflow-auto p-2">
+      <div className="relative flex min-h-6 w-full items-end justify-between">
         <h2>Add Product</h2>
         <div className="absolute bottom-0 right-0">
           <BtnMdCancel clickEvent={() => handleCancel()} />
         </div>
       </div>
 
-      <hr className="w-full border-green-200 border" />
+      <hr className="w-full border border-green-200" />
 
-      <div className="flex flex-col w-full h-full overflow-auto">
-        <div className="flex flex-col w-full gap-2 px-2 pb-2 overflow-auto">
-          <div className="flex flex-col w-full gap-2 ">
+      <div className="flex h-full w-full flex-col overflow-auto">
+        <div className="flex w-full flex-col gap-2 overflow-auto px-2 pb-2">
+          <div className="flex w-full flex-col gap-2">
             <h2>Product Name:</h2>
             <input
               type="text"
               autoCapitalize="off"
-              className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg "
+              className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none"
               placeholder="Product Name"
               name="name"
               value={productData.name}
@@ -520,7 +520,7 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
             <input
               type="number"
               autoCapitalize="off"
-              className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg "
+              className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none"
               placeholder="Product Quantity"
               name="quantity"
               value={productData.quantity}
@@ -536,18 +536,18 @@ const AddNewProductView = ({ _id, name, handleCancel }) => {
               }
               placeholder="Description"
               rows="4"
-              className="w-full py-1 px-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-md border px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <input
               type="file"
               name="images"
               onChange={handleFileChange}
               multiple
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full rounded-md border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
             <p className="text-sm text-gray-500">Max 5 file.</p>
           </div>
-          <div className="flex justify-end w-full gap-2">
+          <div className="flex w-full justify-end gap-2">
             <BtnMdSave clickEvent={handleProductSave} />
           </div>
         </div>
@@ -578,7 +578,7 @@ const UpdateProductView = ({ product, handleCancel }) => {
           description: "",
           category: null,
           images: [],
-        })
+        }),
       );
   };
   const handleProductDelete = () => {
@@ -594,27 +594,27 @@ const UpdateProductView = ({ product, handleCancel }) => {
           description: "",
           category: null,
           images: [],
-        })
+        }),
       );
   };
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="relative flex justify-between items-end w-full min-h-6">
+    <div className="flex h-full w-full flex-col gap-2 overflow-auto p-2">
+      <div className="relative flex min-h-6 w-full items-end justify-between">
         <h2>Update Product: {product?.name}</h2>
         <div className="absolute bottom-0 right-0">
           <BtnMdCancel clickEvent={() => handleCancel()} />
         </div>
       </div>
 
-      <hr className="w-full border-green-200 border" />
+      <hr className="w-full border border-green-200" />
 
-      <div className="flex flex-col w-full h-full overflow-auto">
-        <div className="flex flex-col w-full h-full gap-2 px-2 pb-2 overflow-auto">
+      <div className="flex h-full w-full flex-col overflow-auto">
+        <div className="flex h-full w-full flex-col gap-2 overflow-auto px-2 pb-2">
           <h2>Product Name:</h2>
           <input
             type="text"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg "
+            className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none"
             placeholder="Product Name"
             name="name"
             value={productData?.name}
@@ -626,7 +626,7 @@ const UpdateProductView = ({ product, handleCancel }) => {
           <input
             type="number"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg "
+            className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none"
             placeholder="Product Quantity"
             name="quantity"
             value={productData?.quantity}
@@ -642,9 +642,9 @@ const UpdateProductView = ({ product, handleCancel }) => {
             }
             placeholder="Description"
             rows="4"
-            className="w-full py-1 px-2 border border-light-10 outline-none rounded-md"
+            className="w-full rounded-md border border-light-10 px-2 py-1 outline-none"
           />
-          <div className="flex justify-end w-full gap-2">
+          <div className="flex w-full justify-end gap-2">
             <BtnMdDelete clickEvent={handleProductDelete} />
             <BtnMdSave clickEvent={handleProductUpdate} />
           </div>

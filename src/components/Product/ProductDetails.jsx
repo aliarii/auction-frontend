@@ -5,31 +5,31 @@ import HorizontalLine from "../HorizontalLine";
 function ProductDetails() {
   const { auction } = useSelector((state) => state.auction);
   return (
-    <div className="flex flex-col min-h-40 h-40 sm:min-h-40 sm:h-full p-2 gap-1 rounded-lg bg-white shadow-sm border overflow-auto">
+    <div className="flex h-40 min-h-40 flex-col gap-1 overflow-auto rounded-lg border bg-white p-2 shadow-sm sm:h-full sm:min-h-40">
       <h1>Product Details</h1>
       <HorizontalLine />
 
-      <div className="flex flex-col size-full gap-1 overflow-auto text-sm">
+      <div className="flex size-full flex-col gap-1 overflow-auto text-sm">
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(27%)] font-medium">
+          <label className="min-w-[calc(27%)] whitespace-nowrap font-medium">
             Product Name:
           </label>
           <span>{auction?.product.name}</span>
         </div>
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(27%)] font-medium">
+          <label className="min-w-[calc(27%)] whitespace-nowrap font-medium">
             Product Quantity:
           </label>
           <span>{auction?.product.quantity}</span>
         </div>
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(27%)] font-medium">
+          <label className="min-w-[calc(27%)] whitespace-nowrap font-medium">
             Product Condition:
           </label>
           <span>{auction?.condition}</span>
         </div>
         <div className="flex flex-row gap-1">
-          <label className="whitespace-nowrap min-w-[calc(27%)] font-medium">
+          <label className="min-w-[calc(27%)] whitespace-nowrap font-medium">
             Product Description:
           </label>
           <span>{auction?.product.description}</span>

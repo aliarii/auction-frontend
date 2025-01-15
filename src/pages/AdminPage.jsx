@@ -18,23 +18,23 @@ const AdminPage = () => {
     setSelectedSetting(setting);
   };
   return (
-    <div className="flex flex-col sm:flex-row self-center h-full w-full max-w-6xl p-2 gap-2 overflow-auto">
-      <div className="flex flex-row sm:flex-col h-fit sm:h-full w-full sm:w-72 sm:max-w-72 p-2 gap-2 bg-white shadow-md rounded-lg overflow-auto">
-        <h1 className="hidden sm:block font-medium">Settings</h1>
+    <div className="flex h-full w-full max-w-6xl flex-col gap-2 self-center overflow-auto p-2 sm:flex-row">
+      <div className="flex h-fit w-full flex-row gap-2 overflow-auto rounded-lg bg-white p-2 shadow-md sm:h-full sm:w-72 sm:max-w-72 sm:flex-col">
+        <h1 className="hidden font-medium sm:block">Settings</h1>
 
-        <div className="hidden sm:block py-0.5 rounded-full bg-green-400" />
+        <div className="hidden rounded-full bg-green-400 py-0.5 sm:block" />
 
         {settings.map((item, index) => (
           <div
-            className={`flex justify-between items-center py-2 cursor-pointer rounded-lg hover:bg-green-200 ${selectedSetting?.name === item.name ? "bg-green-200" : ""}`}
+            className={`flex cursor-pointer items-center justify-between rounded-lg py-2 hover:bg-green-200 ${selectedSetting?.name === item.name ? "bg-green-200" : ""}`}
             key={index}
             onClick={() => handleNavigate(item)}
           >
-            <h2 className="mr-2 ml-2 whitespace-nowrap overflow-hidden text-ellipsis">
+            <h2 className="ml-2 mr-2 overflow-hidden text-ellipsis whitespace-nowrap">
               {item.name}
             </h2>
             {selectedSetting?.name === item.name && (
-              <div className="hidden sm:flex justify-center">
+              <div className="hidden justify-center sm:flex">
                 <ChevronRightIcon />
               </div>
             )}
@@ -42,12 +42,12 @@ const AdminPage = () => {
         ))}
       </div>
 
-      <div className="flex flex-col h-full w-full p-2 gap-2 rounded-lg bg-white shadow-md overflow-auto">
-        <div className="flex flex-row w-full justify-between">
+      <div className="flex h-full w-full flex-col gap-2 overflow-auto rounded-lg bg-white p-2 shadow-md">
+        <div className="flex w-full flex-row justify-between">
           <h1 className="font-medium">{selectedSetting.name}</h1>
         </div>
         <HorizontalLine />
-        <div className="flex flex-col size-full overflow-auto">
+        <div className="flex size-full flex-col overflow-auto">
           {selectedSetting?.element}
         </div>
       </div>

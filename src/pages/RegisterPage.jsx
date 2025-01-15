@@ -89,15 +89,15 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen">
-      <div className="flex flex-col w-80 md:w-96 m-auto p-4 gap-4 rounded-xl bg-white border shadow-lg">
+    <div className="flex h-screen w-screen items-center justify-center">
+      <div className="m-auto flex w-80 flex-col gap-4 rounded-xl border bg-white p-4 shadow-lg md:w-96">
         <h1 className="text-4xl font-medium">Register</h1>
         {error && <div className="text-red-500">{error || "Error"}</div>}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
             type="text"
             autoCapitalize="off"
-            className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
+            className="w-full rounded-lg border border-light-10 bg-white px-3 py-3 outline-none"
             placeholder="Name"
             name="name"
             value={userData.name}
@@ -109,7 +109,7 @@ const RegisterPage = () => {
           <input
             type="text"
             autoCapitalize="off"
-            className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
+            className="w-full rounded-lg border border-light-10 bg-white px-3 py-3 outline-none"
             placeholder="Surname"
             name="surname"
             value={userData.surname}
@@ -125,7 +125,7 @@ const RegisterPage = () => {
           <input
             type="text"
             autoCapitalize="off"
-            className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
+            className="w-full rounded-lg border border-light-10 bg-white px-3 py-3 outline-none"
             placeholder="Username"
             name="username"
             value={userData.username}
@@ -141,7 +141,7 @@ const RegisterPage = () => {
           <input
             type="email"
             autoCapitalize="off"
-            className="w-full py-3 px-3 border border-light-10 outline-none bg-white rounded-lg"
+            className="w-full rounded-lg border border-light-10 bg-white px-3 py-3 outline-none"
             placeholder="Email"
             name="email"
             value={userData.email}
@@ -156,7 +156,7 @@ const RegisterPage = () => {
             <input
               type={showPassword ? "text" : "password"}
               autoCapitalize="off"
-              className="w-full py-3 px-3 border-l border-y border-light-10 outline-none bg-white rounded-l-lg"
+              className="w-full rounded-l-lg border-y border-l border-light-10 bg-white px-3 py-3 outline-none"
               placeholder="Password"
               name="password"
               value={userData.password}
@@ -165,7 +165,7 @@ const RegisterPage = () => {
               }
             />
             <div
-              className="px-3 flex items-center rounded-r-lg border-r border-y border-light-10 outline-none bg-white cursor-pointer"
+              className="flex cursor-pointer items-center rounded-r-lg border-y border-r border-light-10 bg-white px-3 outline-none"
               onClick={togglePasswordVisibility}
             >
               {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
@@ -178,14 +178,14 @@ const RegisterPage = () => {
           )}
 
           <button
-            className="w-full rounded-lg py-2 px-3 bg-green-400 text-white font-medium text-xl"
+            className="w-full rounded-lg bg-green-400 px-3 py-2 text-xl font-medium text-white"
             type="submit"
           >
             Register
           </button>
         </form>
         <Link
-          className=" text-center text-blue-700 dark:text-blue-500 font-bold no-underline text-sm"
+          className="text-center text-sm font-bold text-blue-700 no-underline dark:text-blue-500"
           to={"/login"}
         >
           Login

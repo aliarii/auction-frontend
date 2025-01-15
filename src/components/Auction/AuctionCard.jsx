@@ -39,7 +39,7 @@ function AuctionCard({ auction, onView }) {
         dispatch(getBidById(auction.currentHighestBid._id)).then(
           ({ payload }) => {
             setBid(payload.data.bid);
-          }
+          },
         );
       } else {
         setBid({ amount: auction.startingPrice, auction: auction._id });
@@ -50,7 +50,7 @@ function AuctionCard({ auction, onView }) {
   return (
     <Grid2
       size={{ xs: 1, sm: 1, md: 1, lg: 1 }}
-      className="flex flex-col h-fit pb-2 bg-white rounded-lg border shadow-md"
+      className="flex h-fit flex-col rounded-lg border bg-white pb-2 shadow-md"
     >
       {/* Image Container */}
 
@@ -58,7 +58,7 @@ function AuctionCard({ auction, onView }) {
         <ProductImages product={auction?.product} />
 
         <span
-          className={`absolute flex justify-center items-center right-2 bottom-2 w-24 py-1 rounded-full text-white font-medium ${auction?.status === "Active" ? "bg-green-200 !text-success" : auction?.status === "Pending" ? "bg-info" : "bg-danger"}`}
+          className={`absolute bottom-2 right-2 flex w-24 items-center justify-center rounded-full py-1 font-medium text-white ${auction?.status === "Active" ? "bg-green-200 !text-success" : auction?.status === "Pending" ? "bg-info" : "bg-danger"}`}
         >
           {auction?.status === "Active"
             ? timeLeft
@@ -68,14 +68,14 @@ function AuctionCard({ auction, onView }) {
         </span>
       </div>
 
-      <div className="flex flex-col h-fit px-2 gap-1 my-2">
-        <span className="p-1 line-clamp-2 font-medium">{auction?.name}</span>
+      <div className="my-2 flex h-fit flex-col gap-1 px-2">
+        <span className="line-clamp-2 p-1 font-medium">{auction?.name}</span>
 
         <hr />
 
         <div className="flex flex-row items-center gap-4 py-1">
           <RiAuctionFill style={{ fontSize: 45 }} className="text-green-500" />
-          <div className="flex flex-col w-full">
+          <div className="flex w-full flex-col">
             <span className="text-success">Current Bid</span>
             <span className="text-lg font-semibold">
               {highestBid({ bid, auction, fontSize: "text-lg" })}
@@ -87,7 +87,7 @@ function AuctionCard({ auction, onView }) {
 
       {onView ? (
         <div
-          className="h-8 w-[85%] max-w-56 self-center text-center place-content-center text-light-2 font-semibold rounded-full bg-info cursor-pointer"
+          className="h-8 w-[85%] max-w-56 cursor-pointer place-content-center self-center rounded-full bg-info text-center font-semibold text-light-2"
           onClick={onView}
         >
           <span>View</span>
@@ -95,7 +95,7 @@ function AuctionCard({ auction, onView }) {
       ) : (
         <Link
           to={`/auction/${auction?._id}`}
-          className="h-8 w-[85%] max-w-56 self-center text-center place-content-center text-white font-semibold rounded-full bg-green-500"
+          className="h-8 w-[85%] max-w-56 place-content-center self-center rounded-full bg-green-500 text-center font-semibold text-white"
         >
           View
         </Link>

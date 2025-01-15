@@ -17,9 +17,9 @@ function HomePage() {
   }, []);
 
   return (
-    <div className="flex flex-col self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
-      <div className="flex flex-col size-full p-2 gap-2 bg-white shadow-md rounded-lg overflow-auto">
-        <div className="flex flex-row justify-between h-fit  px-1 font-medium">
+    <div className="flex size-full max-w-6xl flex-col gap-2 self-center overflow-auto p-2">
+      <div className="flex size-full flex-col gap-2 overflow-auto rounded-lg bg-white p-2 shadow-md">
+        <div className="flex h-fit flex-row justify-between px-1 font-medium">
           <h1>Live Auctions</h1>
           <Link to={"/auctions"} state={{ status: "Active" }}>
             See All

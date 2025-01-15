@@ -14,7 +14,7 @@ function ProductImages({ product, showPreviews }) {
 
   const handleImage = (index) => {
     setSelectedImage(
-      product?.images[index < 0 ? product?.images.length - 1 : index]
+      product?.images[index < 0 ? product?.images.length - 1 : index],
     );
     setSelectedImageIndex(index < 0 ? product?.images.length - 1 : index);
   };
@@ -26,7 +26,7 @@ function ProductImages({ product, showPreviews }) {
         onMouseLeave={() => setIsMouseOverImage(false)}
       >
         <div
-          className="absolute flex top-0 left-0 justify-start items-center h-full w-1/4 cursor-pointer outline-none select-none"
+          className="absolute left-0 top-0 flex h-full w-1/4 cursor-pointer select-none items-center justify-start outline-none"
           onClick={() =>
             handleImage((selectedImageIndex - 1) % product?.images.length)
           }
@@ -42,7 +42,7 @@ function ProductImages({ product, showPreviews }) {
           className="h-full w-full rounded-lg"
         />
         <div
-          className="absolute flex top-0 right-0 justify-end items-center h-full w-1/4 cursor-pointer outline-none select-none"
+          className="absolute right-0 top-0 flex h-full w-1/4 cursor-pointer select-none items-center justify-end outline-none"
           onClick={() =>
             handleImage((selectedImageIndex + 1) % product?.images.length)
           }
@@ -53,7 +53,7 @@ function ProductImages({ product, showPreviews }) {
         </div>
       </div>
       {showPreviews && (
-        <div className="flex w-full h-fit gap-1 py-1 overflow-auto">
+        <div className="flex h-fit w-full gap-1 overflow-auto py-1">
           {product?.images && product?.images.length > 0 ? (
             product?.images.map((image, index) => (
               <img
