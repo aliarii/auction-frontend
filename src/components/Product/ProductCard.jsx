@@ -6,7 +6,7 @@ const ProductCard = ({ product, onView }) => {
   return (
     <Grid2
       size={{ xs: 1, sm: 1, md: 1, lg: 1 }}
-      className="flex flex-col h-fit pb-2 bg-white rounded-lg border shadow-md"
+      className="flex h-fit flex-col rounded-lg border bg-white pb-2 shadow-md"
     >
       {/* Image Container */}
 
@@ -15,12 +15,12 @@ const ProductCard = ({ product, onView }) => {
       </div>
 
       {/* Product Details */}
-      <div className="flex flex-col h-fit px-2 gap-1 my-2 ">
-        <span className="p-1 line-clamp-2 font-medium">{product?.name}</span>
+      <div className="my-2 flex h-fit flex-col gap-1 px-2">
+        <span className="line-clamp-2 p-1 font-medium">{product?.name}</span>
         <hr />
       </div>
       <div
-        className="h-8 w-[85%] max-w-56 self-center text-center place-content-center text-light-2 font-semibold rounded-full bg-info cursor-pointer"
+        className="h-8 w-[85%] max-w-56 cursor-pointer place-content-center self-center rounded-full bg-info text-center font-semibold text-light-2"
         onClick={onView}
       >
         <span>View</span>

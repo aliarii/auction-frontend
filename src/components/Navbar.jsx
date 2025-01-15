@@ -23,17 +23,17 @@ function Navbar() {
   };
 
   return (
-    <div className="sticky top-0 z-[40] flex flex-row items-center min-h-14 h-14 md:px-16 bg-white border-b-2 border-green-400 shadow-md shadow-green-100">
-      <div className="flex flex-row items-center h-full w-full gap-2 p-2 ">
+    <div className="sticky top-0 z-[40] flex h-14 min-h-14 flex-row items-center border-b-2 border-green-400 bg-white shadow-md shadow-green-100 md:px-16">
+      <div className="flex h-full w-full flex-row items-center gap-2 p-2">
         <LuMenu
-          className="md:hidden text-3xl"
+          className="text-3xl md:hidden"
           onClick={() => setMenuOpen(!menuOpen)}
         />
         <Link to={`/auction-frontend/`} className="text-2xl font-bold">
           Auction.com
         </Link>
 
-        <div className="hidden md:flex flex-row pl-3 gap-5">
+        <div className="hidden flex-row gap-5 pl-3 md:flex">
           <Link to={`/auction-frontend/`}>Home</Link>
 
           <Link to={`/auction-frontend/auctions`}>Auctions</Link>
@@ -44,7 +44,7 @@ function Navbar() {
       </div>
 
       {/* Links for large screens */}
-      <div className="hidden md:flex flex-row items-center w-fit whitespace-nowrap gap-5 p-2">
+      <div className="hidden w-fit flex-row items-center gap-5 whitespace-nowrap p-2 md:flex">
         {auth?.isAuthenticated && auth?.user ? (
           <>
             <Link to={"/auction-frontend/profile"}>
@@ -79,25 +79,25 @@ export default Navbar;
 const SideMenu = ({ auth, role, menuOpen, setMenuOpen, handleLogout }) => {
   return (
     <div
-      className={`fixed inset-0 bg-gray-800 bg-opacity-50 z-50 transition-all ${
+      className={`fixed inset-0 z-50 bg-gray-800 bg-opacity-50 transition-all ${
         menuOpen ? "block" : "hidden"
       }`}
       onClick={() => setMenuOpen(false)} // Close menu when clicking outside
     >
       <div
-        className={`fixed left-0 top-0 w-52 bg-white h-full shadow-lg transition-all ${
+        className={`fixed left-0 top-0 h-full w-52 bg-white shadow-lg transition-all ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex flex-col justify-between pb-6 px-2 h-full">
+        <div className="flex h-full flex-col justify-between px-2 pb-6">
           <Link
             to={`/auction-frontend/`}
-            className="min-h-14 h-14 text-center content-center border-b-2 border-green-400 text-2xl font-bold"
+            className="h-14 min-h-14 content-center border-b-2 border-green-400 text-center text-2xl font-bold"
           >
             Auction.com
           </Link>
 
-          <div className="flex flex-col items-center size-full text-lg py-2 gap-5">
+          <div className="flex size-full flex-col items-center gap-5 py-2 text-lg">
             <Link to={`/auction-frontend/`} onClick={() => setMenuOpen(false)}>
               Home
             </Link>
@@ -117,7 +117,7 @@ const SideMenu = ({ auth, role, menuOpen, setMenuOpen, handleLogout }) => {
             )}
           </div>
 
-          <div className="flex flex-col items-center h-fit w-full gap-5 text-lg">
+          <div className="flex h-fit w-full flex-col items-center gap-5 text-lg">
             {auth?.isAuthenticated && auth?.user ? (
               <>
                 <Link
@@ -126,7 +126,7 @@ const SideMenu = ({ auth, role, menuOpen, setMenuOpen, handleLogout }) => {
                 >
                   {auth?.user ? auth?.user.name : "Loading..."}
                 </Link>
-                <p className="cursor-pointer " onClick={handleLogout}>
+                <p className="cursor-pointer" onClick={handleLogout}>
                   Logout
                 </p>
               </>

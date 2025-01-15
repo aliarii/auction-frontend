@@ -4,7 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 const BtnMdEdit = ({ handleClick }) => {
   return (
     <div
-      className="flex justify-center items-center py-1 px-2 gap-1 rounded-lg cursor-pointer outline-none select-none text-light-1 bg-info"
+      className="flex cursor-pointer select-none items-center justify-center gap-1 rounded-lg bg-info px-2 py-1 text-light-1 outline-none"
       onClick={handleClick}
     >
       <h2 className="font-semibold">Edit</h2>

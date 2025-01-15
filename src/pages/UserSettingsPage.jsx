@@ -44,19 +44,19 @@ const UserSettingsPage = () => {
     setSelectedView(views[index].element(props));
   };
   return (
-    <div className="flex flex-col md:flex-row w-full h-full gap-2 overflow-auto">
-      <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
+    <div className="flex h-full w-full flex-col gap-2 overflow-auto md:flex-row">
+      <div className="flex h-full w-full flex-col gap-2 overflow-auto p-2">
         <h2>Users</h2>
 
-        <hr className="w-full border-green-200 border" />
+        <hr className="w-full border border-green-200" />
 
         <button
-          className={`rounded-md text-white bg-green-500 py-1 whitespace-nowrap overflow-hidden text-ellipsis`}
+          className={`overflow-hidden text-ellipsis whitespace-nowrap rounded-md bg-green-500 py-1 text-white`}
           onClick={() => handleViewSelect(1)}
         >
           + New User
         </button>
-        <div className="flex flex-col w-full h-fit gap-2 overflow-auto">
+        <div className="flex h-fit w-full flex-col gap-2 overflow-auto">
           <UsersTable users={users} handleEditClick={handleViewSelect} />
         </div>
       </div>
@@ -69,8 +69,8 @@ export default UserSettingsPage;
 
 const UsersTable = ({ users, handleEditClick }) => {
   return (
-    <div className="flex flex-col h-full w-full rounded-md text-xs  text-left overflow-auto">
-      <table className="table-auto w-full text-left text-sm">
+    <div className="flex h-full w-full flex-col overflow-auto rounded-md text-left text-xs">
+      <table className="w-full table-auto text-left text-sm">
         <thead>
           <tr>
             <th className="px-4">#</th>
@@ -89,9 +89,9 @@ const UsersTable = ({ users, handleEditClick }) => {
               </td>
               <td className="px-4 py-2">{user.username}</td>
               <td className="px-4 py-2">{user.role}</td>
-              <td className="pl-5 pr-4 py-2">
+              <td className="py-2 pl-5 pr-4">
                 <FaUserEdit
-                  className="cursor-pointer text-2xl text-green-500 "
+                  className="cursor-pointer text-2xl text-green-500"
                   onClick={() => handleEditClick(0, user)}
                 />
               </td>
@@ -139,25 +139,25 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="relative flex justify-between items-end w-full min-h-6">
+    <div className="flex h-full w-full flex-col gap-2 overflow-auto p-2">
+      <div className="relative flex min-h-6 w-full items-end justify-between">
         <h2>User Details</h2>
         <div className="absolute bottom-0 right-0">
           {user && <BtnMdCancel clickEvent={handleCancelClick} />}
         </div>
       </div>
-      <hr className="w-full border-green-200 border" />
+      <hr className="w-full border border-green-200" />
 
-      <div className="flex flex-col w-full h-full overflow-auto px-2 pb-2">
+      <div className="flex h-full w-full flex-col overflow-auto px-2 pb-2">
         {user ? (
-          <div className="flex flex-col w-full h-full gap-2 overflow-auto">
-            <div className="flex flex-col w-full h-full gap-2 overflow-auto">
+          <div className="flex h-full w-full flex-col gap-2 overflow-auto">
+            <div className="flex h-full w-full flex-col gap-2 overflow-auto">
               <h2>{userData.id}</h2>
               <h2>Name:</h2>
               <input
                 type="text"
                 autoCapitalize="off"
-                className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+                className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
                 placeholder="Name"
                 name="name"
                 value={userData.name}
@@ -170,7 +170,7 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
               <input
                 type="text"
                 autoCapitalize="off"
-                className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+                className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
                 placeholder="Surname"
                 name="surname"
                 value={userData.surname}
@@ -182,7 +182,7 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
               <input
                 type="text"
                 autoCapitalize="off"
-                className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+                className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
                 placeholder="Username"
                 name="username"
                 value={userData.username}
@@ -194,7 +194,7 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
               <input
                 type="email"
                 autoCapitalize="off"
-                className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+                className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
                 placeholder="Email"
                 name="email"
                 value={userData.email}
@@ -206,7 +206,7 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
               <input
                 type="number"
                 autoCapitalize="off"
-                className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+                className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
                 placeholder="Bid Limit"
                 name="bidlimit"
                 value={userData.bidLimit}
@@ -221,14 +221,14 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
                 onChange={(e) =>
                   setUserData({ ...userData, role: e.target.value })
                 }
-                className="w-full py-1 px-2 border border-light-10 bg-white rounded-lg focus:outline-none "
+                className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 focus:outline-none"
               >
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
               </select>
               <h2>Password:</h2>
               <input
-                className="w-full py-1 px-2 border border-light-10 outline-none bg-white rounded-lg dark:text-dark-8"
+                className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
                 type="password"
                 placeholder="Password"
                 name="password"
@@ -238,7 +238,7 @@ const UserDetailsView = ({ _id, handleCancelClick }) => {
                 }
               />
             </div>
-            <div className="flex justify-end w-full gap-2">
+            <div className="flex w-full justify-end gap-2">
               <BtnMdDelete clickEvent={handleUserDelete} />
               <BtnMdSave clickEvent={handleUserUpdate} />
             </div>
@@ -275,24 +275,24 @@ const AddNewUserView = ({ handleCancelClick }) => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full p-2 gap-2 overflow-auto">
-      <div className="relative flex justify-between items-end w-full min-h-6">
+    <div className="flex h-full w-full flex-col gap-2 overflow-auto p-2">
+      <div className="relative flex min-h-6 w-full items-end justify-between">
         <h2>New User</h2>
         <div className="absolute bottom-0 right-0">
           <BtnMdCancel clickEvent={handleCancelClick} />
         </div>
       </div>
 
-      <hr className="w-full border-green-200 border" />
+      <hr className="w-full border border-green-200" />
 
-      <div className="flex flex-col w-full h-full overflow-auto px-2 pb-2">
-        <div className="flex flex-col w-full h-full gap-2 overflow-auto">
+      <div className="flex h-full w-full flex-col overflow-auto px-2 pb-2">
+        <div className="flex h-full w-full flex-col gap-2 overflow-auto">
           <h2>{userData.id}</h2>
           <h2>Name:</h2>
           <input
             type="text"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+            className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
             placeholder="Name"
             name="name"
             value={userData.name}
@@ -302,7 +302,7 @@ const AddNewUserView = ({ handleCancelClick }) => {
           <input
             type="text"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+            className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
             placeholder="Surname"
             name="surname"
             value={userData.surname}
@@ -314,7 +314,7 @@ const AddNewUserView = ({ handleCancelClick }) => {
           <input
             type="text"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+            className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
             placeholder="Username"
             name="username"
             value={userData.username}
@@ -326,7 +326,7 @@ const AddNewUserView = ({ handleCancelClick }) => {
           <input
             type="email"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+            className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
             placeholder="Email"
             name="email"
             value={userData.email}
@@ -338,7 +338,7 @@ const AddNewUserView = ({ handleCancelClick }) => {
           <input
             type="number"
             autoCapitalize="off"
-            className="w-full py-1 px-2 border border-light-10 outline-none  bg-white rounded-lg dark:text-dark-8"
+            className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
             placeholder="Bid Limit"
             name="bidlimit"
             value={userData.bidLimit}
@@ -351,7 +351,7 @@ const AddNewUserView = ({ handleCancelClick }) => {
             name="role"
             value={userData.role}
             onChange={(e) => setUserData({ ...userData, role: e.target.value })}
-            className="w-full py-1 px-2 border border-light-10 bg-white rounded-lg focus:outline-none "
+            className="w-full rounded-lg border border-light-10 bg-white px-2 py-1 focus:outline-none"
           >
             <option value="user">User</option>
             <option value="admin">Admin</option>
@@ -361,7 +361,7 @@ const AddNewUserView = ({ handleCancelClick }) => {
             <input
               type={showPassword ? "text" : "password"}
               autoCapitalize="off"
-              className="w-full py-1 px-2 border-l border-y border-light-10 outline-none bg-white rounded-l-lg dark:text-dark-8"
+              className="w-full rounded-l-lg border-y border-l border-light-10 bg-white px-2 py-1 outline-none dark:text-dark-8"
               placeholder="Password"
               name="password"
               value={userData.password}
@@ -370,13 +370,13 @@ const AddNewUserView = ({ handleCancelClick }) => {
               }
             />
             <div
-              className="px-3 flex items-center rounded-r-lg border-r border-y border-light-10 outline-none bg-white cursor-pointer dark:text-dark-8"
+              className="flex cursor-pointer items-center rounded-r-lg border-y border-r border-light-10 bg-white px-3 outline-none dark:text-dark-8"
               onClick={togglePasswordVisibility}
             >
               {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
             </div>
           </div>
-          <div className="flex justify-end w-full gap-2">
+          <div className="flex w-full justify-end gap-2">
             <BtnMdSave clickEvent={handleUserSave} />
           </div>
         </div>

@@ -27,32 +27,32 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
+    <div className="flex size-full max-w-6xl flex-col gap-2 self-center overflow-auto p-2 md:flex-row">
       {/* Left Side */}
-      <div className="flex flex-row sm:flex-col h-fit sm:h-full w-full sm:w-72 sm:max-w-72 p-2 gap-2 bg-white shadow-md rounded-lg overflow-auto">
-        <div className="hidden sm:flex flex-col justify-center items-center w-full">
+      <div className="flex h-fit w-full flex-row gap-2 overflow-auto rounded-lg bg-white p-2 shadow-md sm:h-full sm:w-72 sm:max-w-72 sm:flex-col">
+        <div className="hidden w-full flex-col items-center justify-center sm:flex">
           <AccountCircleIcon sx={{ fontSize: 90 }} className="text-light-7" />
-          <span className="font-medium text-lg">
+          <span className="text-lg font-medium">
             {userProfile?.name.toUpperCase()}{" "}
             {userProfile?.surname.toUpperCase()}
           </span>
         </div>
         {/* <hr className="w-full border-green-200 border" /> */}
         {/* <HorizontalLine /> */}
-        <div className="hidden sm:block py-0.5 rounded-full bg-green-400" />
+        <div className="hidden rounded-full bg-green-400 py-0.5 sm:block" />
 
-        <div className="flex flex-row sm:flex-col w-full gap-2">
+        <div className="flex w-full flex-row gap-2 sm:flex-col">
           {settings.map((setting, idx) => (
             <div
               key={idx}
-              className={`relative flex flex-row w-full p-2 ${selectedSetting.name === setting.name ? "bg-green-200" : ""} hover:bg-green-200 rounded-md cursor-pointer`}
+              className={`relative flex w-full flex-row p-2 ${selectedSetting.name === setting.name ? "bg-green-200" : ""} cursor-pointer rounded-md hover:bg-green-200`}
               onClick={() => setSelectedSetting(setting)}
             >
-              <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+              <span className="overflow-hidden text-ellipsis whitespace-nowrap">
                 {setting.name}
               </span>
               {selectedSetting.name === setting.name && (
-                <div className="hidden sm:inline-block absolute right-0">
+                <div className="absolute right-0 hidden sm:inline-block">
                   <ChevronRightIcon />
                 </div>
               )}
@@ -62,8 +62,8 @@ const ProfilePage = () => {
       </div>
 
       {/* Right Side */}
-      <div className="flex flex-col h-full w-full p-2 gap-2 rounded-lg bg-white shadow-md overflow-auto">
-        <div className="flex flex-row w-full justify-between">
+      <div className="flex h-full w-full flex-col gap-2 overflow-auto rounded-lg bg-white p-2 shadow-md">
+        <div className="flex w-full flex-row justify-between">
           <h1 className="font-medium">{selectedSetting.name}</h1>
         </div>
         {/* <hr className="w-full border-green-200 border" /> */}
@@ -80,8 +80,8 @@ const PersonalInfo = () => {
   const { userProfile } = useSelector((state) => state.user);
   const [isEditing, setIsEditing] = useState(false);
   return (
-    <div className="flex flex-col gap-2 size-full">
-      <div className="place-self-end w-fit">
+    <div className="flex size-full flex-col gap-2">
+      <div className="w-fit place-self-end">
         {isEditing ? (
           <BtnMdCancel clickEvent={() => setIsEditing(false)} />
         ) : (
@@ -89,9 +89,9 @@ const PersonalInfo = () => {
         )}
       </div>
 
-      <div className="flex flex-col size-full p-2 rounded-md text-lg ">
+      <div className="flex size-full flex-col rounded-md p-2 text-lg">
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+          <dt className="table-cell w-[35%] border-r-2 border-green-200 px-4 py-3 text-right align-middle">
             Name:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
@@ -100,7 +100,7 @@ const PersonalInfo = () => {
               name="name"
               autoCapitalize="off"
               autoComplete="on"
-              className="w-full py-3 px-3 border border-light-10 outline-none  rounded-lg"
+              className="w-full rounded-lg border border-light-10 px-3 py-3 outline-none"
               placeholder="Name"
               value={userProfile?.name || "-"}
               disabled={!isEditing}
@@ -108,7 +108,7 @@ const PersonalInfo = () => {
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+          <dt className="table-cell w-[35%] border-r-2 border-green-200 px-4 py-3 text-right align-middle">
             Surname:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
@@ -117,7 +117,7 @@ const PersonalInfo = () => {
               name="surname"
               autoCapitalize="off"
               autoComplete="on"
-              className="w-full py-3 px-3 border border-light-10 outline-none rounded-lg"
+              className="w-full rounded-lg border border-light-10 px-3 py-3 outline-none"
               placeholder={"Surname"}
               value={userProfile?.surname || "-"}
               disabled={!isEditing}
@@ -125,7 +125,7 @@ const PersonalInfo = () => {
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+          <dt className="table-cell w-[35%] border-r-2 border-green-200 px-4 py-3 text-right align-middle">
             Username:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
@@ -134,7 +134,7 @@ const PersonalInfo = () => {
               name="username"
               autoCapitalize="off"
               autoComplete="on"
-              className="w-full py-3 px-3 border border-light-10 outline-none rounded-lg"
+              className="w-full rounded-lg border border-light-10 px-3 py-3 outline-none"
               placeholder={"Username"}
               value={userProfile?.username || "-"}
               disabled={!isEditing}
@@ -142,7 +142,7 @@ const PersonalInfo = () => {
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+          <dt className="table-cell w-[35%] border-r-2 border-green-200 px-4 py-3 text-right align-middle">
             Email:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
@@ -151,7 +151,7 @@ const PersonalInfo = () => {
               name="email"
               autoCapitalize="off"
               autoComplete="on"
-              className="w-full py-3 px-3 border border-light-10 outline-none rounded-lg"
+              className="w-full rounded-lg border border-light-10 px-3 py-3 outline-none"
               placeholder={"Email address"}
               value={userProfile?.email || "-"}
               disabled={!isEditing}
@@ -159,7 +159,7 @@ const PersonalInfo = () => {
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+          <dt className="table-cell w-[35%] border-r-2 border-green-200 px-4 py-3 text-right align-middle">
             Address:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
@@ -168,7 +168,7 @@ const PersonalInfo = () => {
               name="address"
               autoCapitalize="off"
               autoComplete="on"
-              className="w-full py-3 px-3 border border-light-10 outline-none rounded-lg"
+              className="w-full rounded-lg border border-light-10 px-3 py-3 outline-none"
               placeholder={"Address"}
               value={userProfile?.address || "-"}
               disabled
@@ -176,7 +176,7 @@ const PersonalInfo = () => {
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+          <dt className="table-cell w-[35%] border-r-2 border-green-200 px-4 py-3 text-right align-middle">
             Phone:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
@@ -185,7 +185,7 @@ const PersonalInfo = () => {
               name="phone"
               autoCapitalize="off"
               autoComplete="on"
-              className="w-full py-3 px-3 border border-light-10 outline-none rounded-lg"
+              className="w-full rounded-lg border border-light-10 px-3 py-3 outline-none"
               placeholder={"Phone Number"}
               value={userProfile?.phone || "-"}
               disabled
@@ -193,17 +193,17 @@ const PersonalInfo = () => {
           </dd>
         </dl>
         <dl className="table w-full table-fixed">
-          <dt className="table-cell w-[35%] px-4 py-3 align-middle border-r-2 text-right border-green-200 ">
+          <dt className="table-cell w-[35%] border-r-2 border-green-200 px-4 py-3 text-right align-middle">
             Bid Limit:
           </dt>
           <dd className="table-cell w-[65%] px-4 py-3 align-middle">
-            <div className="flex flex-row w-full items-center gap-1">
+            <div className="flex w-full flex-row items-center gap-1">
               <input
                 type="number"
                 name="limit"
                 autoCapitalize="off"
                 autoComplete="on"
-                className="w-full py-3 px-3 border border-light-10 outline-none rounded-lg"
+                className="w-full rounded-lg border border-light-10 px-3 py-3 outline-none"
                 placeholder={"limit"}
                 value={userProfile?.bidLimit || 0}
                 disabled
@@ -225,19 +225,19 @@ const AuctionsInfo = () => {
   useEffect(() => {
     if (userProfile && userProfile.auctions.length > 0) {
       const auctions = [...(userProfile?.auctions || [])].sort(
-        (a, b) => new Date(a.auctionStartTime) - new Date(b.auctionStartTime)
+        (a, b) => new Date(a.auctionStartTime) - new Date(b.auctionStartTime),
       );
       setSortedAuctions(auctions);
     }
   }, [userProfile]);
 
   return (
-    <div className="flex flex-col size-full ">
+    <div className="flex size-full flex-col">
       {sortedAuctions.length === 0 ? (
-        <p className="text-center ">Not found.</p>
+        <p className="text-center">Not found.</p>
       ) : (
         <div>
-          <table className="table-auto w-full text-sm">
+          <table className="w-full table-auto text-sm">
             <thead>
               <tr className="text-left">
                 <th className="px-4 py-2">Name</th>
@@ -257,7 +257,7 @@ const AuctionsInfo = () => {
                   <td className="px-4 py-3">
                     <Link
                       to={`/auction-frontend/auction/${auction._id}`}
-                      className="px-3 py-2 text-white font-medium bg-info rounded-md"
+                      className="rounded-md bg-info px-3 py-2 font-medium text-white"
                     >
                       View
                     </Link>
@@ -279,19 +279,19 @@ const BidsInfo = () => {
   useEffect(() => {
     if (userProfile && userProfile.bids.length > 0) {
       const bids = [...(userProfile?.bids || [])].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
       );
       setSortedBids(bids);
     }
   }, [userProfile]);
 
   return (
-    <div className="flex flex-col size-full ">
+    <div className="flex size-full flex-col">
       {sortedBids.length === 0 ? (
         <p className="text-center">Not found.</p>
       ) : (
         <div>
-          <table className="table-auto w-full text-sm">
+          <table className="w-full table-auto text-sm">
             <thead>
               <tr className="text-left">
                 <th className="px-4 py-2">Id</th>
@@ -302,7 +302,7 @@ const BidsInfo = () => {
             </thead>
             <tbody>
               {sortedBids.map((bid) => (
-                <tr key={bid._id} className="border-t ">
+                <tr key={bid._id} className="border-t">
                   <td className="px-4 py-3">{bid.auction.slice(0, 8)}</td>
                   <td className="px-4 py-3">{bid.amount} TL</td>
                   <td className="px-4 py-3">
@@ -311,7 +311,7 @@ const BidsInfo = () => {
                   <td className="px-4 py-3">
                     <Link
                       to={`/auction-frontend/auction/${bid.auction}`}
-                      className="px-3 py-2 text-white font-medium bg-info rounded-md"
+                      className="rounded-md bg-info px-3 py-2 font-medium text-white"
                     >
                       View
                     </Link>
@@ -334,25 +334,25 @@ const WonAuctionsInfo = () => {
   useEffect(() => {
     if (userProfile && userProfile.auctionsWon.length > 0) {
       const auctions = [...(userProfile?.auctionsWon || [])].sort(
-        (a, b) => new Date(a.auctionStartTime) - new Date(b.auctionStartTime)
+        (a, b) => new Date(a.auctionStartTime) - new Date(b.auctionStartTime),
       );
       setSortedAuctions(auctions);
     }
   }, [userProfile]);
 
   return (
-    <div className="flex flex-col size-full ">
+    <div className="flex size-full flex-col">
       {sortedAuctions.length === 0 ? (
         <p className="text-center">Not found.</p>
       ) : (
         <div>
-          <table className="table-auto w-full text-sm">
+          <table className="w-full table-auto text-sm">
             <thead>
               <tr className="text-left">
-                <th className="px-4 py-2 ">Name</th>
-                <th className="px-4 py-2 ">Start Date</th>
-                <th className="px-4 py-2 ">Status</th>
-                <th className="px-9 py-2 ">#</th>
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">Start Date</th>
+                <th className="px-4 py-2">Status</th>
+                <th className="px-9 py-2">#</th>
               </tr>
             </thead>
             <tbody>
@@ -366,7 +366,7 @@ const WonAuctionsInfo = () => {
                   <td className="px-4 py-3">
                     <Link
                       to={`/auction-frontend/auction/${auction._id}`}
-                      className="px-3 py-2 text-white font-medium bg-info rounded-md"
+                      className="rounded-md bg-info px-3 py-2 font-medium text-white"
                     >
                       View
                     </Link>

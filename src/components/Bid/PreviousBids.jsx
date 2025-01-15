@@ -36,13 +36,13 @@ function PreviousBids() {
   }
 
   return (
-    <div className="flex flex-col min-h-96 h-96 sm:min-h-40 sm:h-full  w-full p-2 gap-1 rounded-lg bg-white shadow-sm border overflow-auto">
+    <div className="flex h-96 min-h-96 w-full flex-col gap-1 overflow-auto rounded-lg border bg-white p-2 shadow-sm sm:h-full sm:min-h-40">
       <h1>Previous Bids</h1>
       <HorizontalLine />
-      <div className="flex flex-col size-full gap-1 overflow-auto">
+      <div className="flex size-full flex-col gap-1 overflow-auto">
         {bids && bids.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="table-auto w-full text-left text-sm">
+            <table className="w-full table-auto text-left text-sm">
               <thead className="font-semibold">
                 <tr>
                   <th className="px-4 py-2">#</th>

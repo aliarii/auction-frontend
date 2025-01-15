@@ -60,7 +60,7 @@ const AuctionsPage = () => {
     // Duruma göre filtreleme
     if (selectedStatus.length > 0 && !selectedStatus.includes("All")) {
       filtered = filtered.filter((auction) =>
-        selectedStatus.includes(auction.status)
+        selectedStatus.includes(auction.status),
       );
     }
 
@@ -82,7 +82,7 @@ const AuctionsPage = () => {
           (prevSelectedCategories) =>
             checked
               ? [...prevSelectedCategories.filter((cat) => cat !== "All"), name] // "All" yı kaldır ve yeni kategoriyi ekle
-              : prevSelectedCategories.filter((category) => category !== name) // Seçili kategoriyi kaldır
+              : prevSelectedCategories.filter((category) => category !== name), // Seçili kategoriyi kaldır
         );
       }
     }
@@ -105,7 +105,7 @@ const AuctionsPage = () => {
                   ...prevSelectedStatus.filter((status) => status !== "All"),
                   name,
                 ]
-              : prevSelectedStatus.filter((status) => status !== name) // Seçili durumu kaldır
+              : prevSelectedStatus.filter((status) => status !== name), // Seçili durumu kaldır
         );
       }
     }
@@ -116,21 +116,21 @@ const AuctionsPage = () => {
     setSelectedStatus(filterStatus);
   };
   return (
-    <div className="flex flex-col sm:flex-row self-center size-full max-w-6xl p-2 gap-2 overflow-auto">
+    <div className="flex size-full max-w-6xl flex-col gap-2 self-center overflow-auto p-2 sm:flex-row">
       {/* Filters */}
       <button
-        className="block sm:hidden w-full py-2 rounded-lg bg-green-400 text-white font-medium"
+        className="block w-full rounded-lg bg-green-400 py-2 font-medium text-white sm:hidden"
         onClick={() => setShowFilters(true)}
       >
         Filters
       </button>
 
-      <div className="hidden sm:flex flex-col h-fit w-72 max-w-72 p-2 gap-2 bg-white shadow-md rounded-lg ">
+      <div className="hidden h-fit w-72 max-w-72 flex-col gap-2 rounded-lg bg-white p-2 shadow-md sm:flex">
         <h1 className="font-medium">Filters</h1>
         <HorizontalLine />
 
         {/* Categories */}
-        <div className="flex flex-col h-60 max-h-60 p-2 bg-white shadow-sm border rounded-lg overflow-auto">
+        <div className="flex h-60 max-h-60 flex-col overflow-auto rounded-lg border bg-white p-2 shadow-sm">
           <h1>Categories</h1>
           <hr className="border-green-300" />
           {categories &&
@@ -162,7 +162,7 @@ const AuctionsPage = () => {
         <HorizontalLine />
 
         {/* Status */}
-        <div className="flex flex-col h-60 max-h-60 p-2 bg-white shadow-sm border rounded-lg overflow-auto">
+        <div className="flex h-60 max-h-60 flex-col overflow-auto rounded-lg border bg-white p-2 shadow-sm">
           <h1>Status</h1>
           <hr className="border-green-300" />
           {["All", "Active", "Pending", "Closed"].map((status, idx) => (
@@ -193,7 +193,7 @@ const AuctionsPage = () => {
       </div>
 
       {/* Auctions */}
-      <div className="flex flex-col h-full w-full p-2 gap-2 bg-white shadow-md rounded-lg  overflow-auto">
+      <div className="flex h-full w-full flex-col gap-2 overflow-auto rounded-lg bg-white p-2 shadow-md">
         <h1 className="font-medium">Auctions</h1>
         <HorizontalLine />
         <Grid2
@@ -230,7 +230,7 @@ const FiltersModal = ({
   applyFilter,
 }) => {
   const [selectedCategories, setSelectedCategories] = useState(
-    currentSelectedCategories
+    currentSelectedCategories,
   );
   const [selectedStatus, setSelectedStatus] = useState(currentSelectedStatus);
 
@@ -251,7 +251,7 @@ const FiltersModal = ({
           (prevSelectedCategories) =>
             checked
               ? [...prevSelectedCategories.filter((cat) => cat !== "All"), name] // "All" yı kaldır ve yeni kategoriyi ekle
-              : prevSelectedCategories.filter((category) => category !== name) // Seçili kategoriyi kaldır
+              : prevSelectedCategories.filter((category) => category !== name), // Seçili kategoriyi kaldır
         );
       }
     }
@@ -274,7 +274,7 @@ const FiltersModal = ({
                   ...prevSelectedStatus.filter((status) => status !== "All"),
                   name,
                 ]
-              : prevSelectedStatus.filter((status) => status !== name) // Seçili durumu kaldır
+              : prevSelectedStatus.filter((status) => status !== name), // Seçili durumu kaldır
         );
       }
     }
@@ -291,10 +291,10 @@ const FiltersModal = ({
     onClose();
   };
   return (
-    <div className="flex justify-center items-center p-2 fixed inset-0 z-50 bg-white">
-      <div className="flex flex-col size-full">
-        <div className="relative flex flex-row justify-center items-center w-full p-1">
-          <button onClick={handleClose} className="absolute top-0 left-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white p-2">
+      <div className="flex size-full flex-col">
+        <div className="relative flex w-full flex-row items-center justify-center p-1">
+          <button onClick={handleClose} className="absolute left-0 top-0">
             <CloseIcon sx={{ fontSize: 30 }} />
           </button>
           <h1>Filters</h1>
@@ -361,9 +361,9 @@ const FiltersModal = ({
           ))}
         </div>
       </div>
-      <div className="absolute bottom-0 p-2 w-full border">
+      <div className="absolute bottom-0 w-full border p-2">
         <button
-          className="w-full py-2 rounded-lg bg-green-400 text-white font-medium"
+          className="w-full rounded-lg bg-green-400 py-2 font-medium text-white"
           onClick={handleApply}
         >
           Apply
