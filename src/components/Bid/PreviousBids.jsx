@@ -31,16 +31,18 @@ function PreviousBids() {
     };
   }, [auction, dispatch]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  // if (isLoading) {
+  //   return <Loading />;
+  // }
 
   return (
     <div className="flex h-96 min-h-96 w-full flex-col gap-1 overflow-auto rounded-lg border bg-white p-2 shadow-sm sm:h-full sm:min-h-40">
       <h1>Previous Bids</h1>
       <HorizontalLine />
       <div className="flex size-full flex-col gap-1 overflow-auto">
-        {bids && bids.length > 0 ? (
+        {isLoading ? (
+          <Loading />
+        ) : bids && bids.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full table-auto text-left text-sm">
               <thead className="font-semibold">
